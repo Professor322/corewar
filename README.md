@@ -1,6 +1,6 @@
 # corewar
 ## первая часть
-- [ ] Kolya pishet readme.txt
+- [X] Kolya pishet readme.txt
 - [ ] парсим файл
 - [ ] Tanya пишем ассемблер
 - [ ] Таня пишет вм
