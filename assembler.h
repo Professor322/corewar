@@ -13,6 +13,16 @@
 #ifndef __ASSEMBLER_H
 #define __ASSEMBLER_H
 
+#include "./libft/includes/libft.h"
 
+typedef struct	s_pair
+{
+	char	*key;
+	char 	*value;
+}				t_pair;
+
+extern t_pair *g_commands[16];
+
+void	parse(int fd);
 
 #endif

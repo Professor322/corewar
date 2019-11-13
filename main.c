@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/includes/libft.h"
+#include "assembler.h"
 
-int 	main()
+int 	main(int argc, char **argv)
 {
-
+	parse(open(argv[1], O_RDONLY));
 	return (0);
 }
