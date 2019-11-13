@@ -15,6 +15,9 @@
 
 #include "./libft/includes/libft.h"
 
+#define BYTE 8
+#define COMMANDS_NUM 16
+
 typedef struct	s_pair
 {
 	char	*key;
