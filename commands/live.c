@@ -1,6 +1,14 @@
-//
-// Created by Dacey mormont Jon connington on 16/11/2019.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   live.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jziemann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/17 17:42:57 by jziemann          #+#    #+#             */
+/*   Updated: 2019/11/17 17:43:30 by jziemann         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../assembler.h"
 
@@ -21,9 +29,25 @@ int			ft_is_numeric(char *str)
  */
 char		*int_to_bin(int num, int byte)
 {
+	char *bin_str;
+	int len;
 
-
-	return (bin_str)
+	len = byte * 8 + byte - 1;
+	bin_str = ft_strnew(len + 1);
+	printf("%d\n", len);
+	bin_str = (char *)ft_memset(bin_str, '0', len);
+	while (len - 1 > 0)
+	{
+		if (len + 1 % 8 == 0 && len != 0    )
+		{
+			bin_str[len--] = ' ';
+			continue;
+		}
+		bin_str[len--] = num % 2 + '0';
+		if (num)
+			num /= 2;
+	}
+	return (bin_str);
 }
 
 /**
@@ -45,7 +69,7 @@ t_arg		get_arg(char *arg, int pos, int dir_size)
 		printf("REG %d\n",r_val);
 		arg_parse.size = 1;
 		arg_parse.type = T_REG;
-		arg_parse.bin = int_to_bin(r_val)
+		arg_parse.bin = int_to_bin(r_val, 1);
 		printf("size %d\n type %u\n", arg_parse.size, arg_parse.type);
 		//register
 	}
@@ -55,7 +79,7 @@ t_arg		get_arg(char *arg, int pos, int dir_size)
 		printf("DIR %d\n", dir_val);
 		arg_parse.size = dir_size;
 		arg_parse.type = T_DIR;
-		arg_parse.bin = int_to_bin(dir_val)
+		arg_parse.bin = int_to_bin(dir_val, dir_size);
 		printf("size %d\n type %u\n", arg_parse.size, arg_parse.type);
 		//direct
 	}
@@ -72,9 +96,9 @@ t_arg		get_arg(char *arg, int pos, int dir_size)
 	{
 		int ind_val = ft_atoi(arg);
 		printf("INDIR %d\n", ind_val);
-		arg_parse.type = 3;
-		arg_parse.size = T_IND;
-		arg_parse.bin = int_to_bin(int_val)
+		arg_parse.type = T_IND;
+		arg_parse.size = 2;
+		arg_parse.bin = int_to_bin(ind_val, 2);
 		printf("size %d\n type %u\n", arg_parse.size, arg_parse.type);
 		//indirect
 	}
@@ -126,6 +150,7 @@ int main(int argc, char **argv)
 
 	i = 1;
 	//while (i < argc)
-	get_arg(argv[1], ft_atoi(argv[2]),ft_atoi(argv[3]));
+	//get_arg(argv[1], ft_atoi(argv[2]),ft_atoi(argv[3]));
+	printf("%s\n", int_to_bin(ft_atoi(argv[1]), ft_atoi(argv[2])));
 	return (0);
 }
