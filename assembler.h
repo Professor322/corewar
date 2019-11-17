@@ -20,6 +20,7 @@
 
 enum e_arg_type
 {
+	T_LABEL,
 	T_REG,
 	T_DIR,
 	T_IND
@@ -29,7 +30,7 @@ typedef struct	s_label 	// структура для сохранения одн
 {
 	char	*name;			// имя метки
 	int		position;		// позиция вызова метки
-	int		size;			// размер аргумента
+	int		size;			// размер аргумента ИЗЛИШНЕ
 }				t_label;
 
 typedef struct	s_arg		// структура одного аргумента
