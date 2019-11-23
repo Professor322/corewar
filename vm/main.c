@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 20:48:06 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/23 20:50:59 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_arena(int champs_count, t_cbox *cbox)
 		if (cbox->champs[i].id != 0)
 		{
 			ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
-			push_que(cbox->timeline[0], make_car(cbox, -i, cell), cbox->carry_counter);
+			push_que(cbox->timeline[0], make_car(cbox, -i, cell), -cbox->carry_counter);
 			cbox->arena.last_alive = &cbox->champs[i - 1];
 			cell += MEM_SIZE / champs_count;
 		}
