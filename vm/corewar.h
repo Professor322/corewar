@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 18:46:20 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/23 20:28:12 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ typedef enum	e_code_exit
 void			get_champion(char *file, t_champ *champ, int i, t_cbox *cbox);
 void			greet_champions(t_champ *champs, int size);
 
-t_car			*make_car(t_cbox *cbox, char player);
+t_car			*make_car(t_cbox *cbox, char player, unsigned int pos);
+void			print_car(t_car *car); // just for debug
+
+int				do_the_fight(t_cbox *cbox, size_t cycle);
 
 int				clean_all(t_cbox *cbox, char code_exit);
 void 			dump_arena(unsigned char *arena);

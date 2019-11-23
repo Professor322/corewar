@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 20:05:26 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/23 20:48:06 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_timeline(t_cbox *cbox)
 void	init_arena(int champs_count, t_cbox *cbox)
 {
 	int i;
-	int	cell;
+	unsigned int	cell;
 
 	ft_bzero(&cbox->arena, sizeof(t_arena));
 	if (!(cbox->arena.arena = ft_memalloc(MEM_SIZE)))
@@ -37,15 +37,15 @@ void	init_arena(int champs_count, t_cbox *cbox)
 		if (cbox->champs[i].id != 0)
 		{
 			ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
+			push_que(cbox->timeline[0], make_car(cbox, -i, cell), cbox->carry_counter);
 			cbox->arena.last_alive = &cbox->champs[i - 1];
 			cell += MEM_SIZE / champs_count;
-			push_que(cbox->timeline[0], make_car(cbox, -i), cbox->carry_counter - 1);
 		}
 }
 
 int		main(int argc, char **argv)
 {
-	int 		i;
+	size_t 		i;
 	int 		n;  // number of players
 	t_cbox		cbox;  // corewar-box: champions, arena, timeline
 
@@ -68,6 +68,10 @@ int		main(int argc, char **argv)
 
 	init_arena(n, &cbox);
 	dump_arena(cbox.arena.arena);
+
+	i = 0;
+	while (do_the_fight(&cbox, i))
+		i++;
 
 	return (clean_all(&cbox, SUCCESS));
 }

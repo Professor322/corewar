@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cars.c                                             :+:      :+:    :+:   */
+/*   fight.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/23 18:47:18 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 20:48:06 by mbartole         ###   ########.fr       */
+/*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
+/*   Updated: 2019/11/23 20:33:12 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-t_car	*make_car(t_cbox *cbox, char player, unsigned int pos)
+// TODO check end of the game
+int check(cycle)
 {
-	t_car	*new;
-
-	if (!(new = ft_memalloc(sizeof(t_car))))
-		exit(clean_all(cbox, MALLOC_ERROR));
-	cbox->carry_counter += 1;
-	new->id = cbox->carry_counter;
-	new->regs[0] = player;
-	new->pos = pos;
-	// TODO init new car
-	return new;
+	return (cycle > 10 ? 0 : 1);
 }
 
-void	print_car(t_car *car)
+int	do_the_fight(t_cbox *cbox, size_t cycle)
 {
-	ft_printf(
-			"\nid=%d carry=%b pos=%d\n",
-			car->id,
-			car->carry,
-			car->pos
-			);
+	t_car	*car;
+
+	ft_printf("\nIt is now cycle %d", cycle + 1);
+	cycle = cycle % SIZE_OF_TIMELINE;
+	while (cbox->timeline[cycle]->len)
+	{
+		car = (t_car *) pop_que(cbox->timeline[cycle]).data;
+		print_car(car);
+	}
+	return (check(cycle));
 }
