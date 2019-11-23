@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/21 16:02:27 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/23 18:46:20 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,48 @@
 # define COREWAR
 
 # include "libft.h"
+# include "pque.h"
+# include "vector.h"
 # include "op.h"
 
-typedef struct	t_champ
+# define SIZE_OF_QUE 100
+# define SIZE_OF_TIMELINE 1000
+
+typedef struct	s_champ
 {
-	char	id;
+	unsigned char	id;
 	char 	*name;
 	char 	*comm;
-	int 	code_size;
+	unsigned int 	code_size;
 	char 	*code;
-}				s_champ;
+}				t_champ;
 
-typedef struct	t_arena
+typedef struct	s_arena
 {
-	char 	*arena;
-	s_champ	*last_alive;
+	unsigned char 	*arena;
+	t_champ	*last_alive;
 	size_t 	cycle;
+	size_t 	cycles_to_die;
 	size_t 	live_count;
 	size_t 	checks_count;
-}				s_arena;
+}				t_arena;
+
+typedef struct	s_car
+{
+	size_t			id;
+	unsigned char 	carry;
+	unsigned char 	oper;
+	unsigned int	pos;
+	char 			regs[REG_NUMBER];
+}				t_car;
+
+typedef struct	s_cbox
+{
+	t_arena		arena;  // just arena
+	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
+	t_vector	*timeline[SIZE_OF_TIMELINE];  // array of bin-heaps with priority
+	size_t		carry_counter;
+}				t_cbox;
 
 typedef enum	e_code_exit
 {
@@ -40,7 +63,12 @@ typedef enum	e_code_exit
 	MALLOC_ERROR
 }				t_code_exit;
 
-int				clean_all(s_arena *arena, char code_exit);
-void 			dump_arena(char *arena);
+void			get_champion(char *file, t_champ *champ, int i, t_cbox *cbox);
+void			greet_champions(t_champ *champs, int size);
+
+t_car			*make_car(t_cbox *cbox, char player);
+
+int				clean_all(t_cbox *cbox, char code_exit);
+void 			dump_arena(unsigned char *arena);
 
 #endif

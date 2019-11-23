@@ -6,78 +6,68 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/21 16:55:33 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/23 20:05:26 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	get_champion(char *file, s_champ *champ, int i)
+void	init_timeline(t_cbox *cbox)
 {
-	champ->id = i;
-	// TODO read evrth from champion file, validate and set properties of champ[i]
-	// TODO if smth wrong just exit() with some exit_code
-	// moke up jumper.cor
-	champ->code_size = 0;
-	champ->name = "Jumper !";
-	champ->comm = "en fait C forker !";
-	champ[i].code = NULL;
-}
+	int i;
 
-void	greet_champions(s_champ *champs, int size)
-{
-	int 	i;
-
-	ft_printf("{YELLOW}Introducing contestants...\n");
 	i = -1;
-	while (++i < size)
-		if (champs[i].id)
-			ft_printf("* Player %i, weighing %i bytes, \"%s\" (\"%s\") !\n",
-					champs[i].id, champs[i].code_size,
-					champs[i].name, champs[i].comm);
+	while (++i < SIZE_OF_TIMELINE)
+		if (!(ft_vnew(&(cbox->timeline[i]), SIZE_OF_QUE)))
+			exit(clean_all(cbox, MALLOC_ERROR));
 }
 
-void	init_arena(s_arena *arena, s_champ *champs, int champs_count)
+void	init_arena(int champs_count, t_cbox *cbox)
 {
 	int i;
 	int	cell;
 
-	ft_bzero(arena, sizeof(s_arena));
-	if (!(arena->arena = ft_memalloc(MEM_SIZE)))
-		exit(clean_all(NULL, MALLOC_ERROR));
+	ft_bzero(&cbox->arena, sizeof(t_arena));
+	if (!(cbox->arena.arena = ft_memalloc(MEM_SIZE)))
+		exit(clean_all(cbox, MALLOC_ERROR));
+	cbox->arena.cycles_to_die = CYCLE_TO_DIE;
 	i = -1;
 	cell = 0;
 	while (++i < MAX_PLAYERS)
-	{
-		ft_memmove(champs[i].code, &arena->arena[cell], champs[i].code_size);
-		arena->last_alive = &champs[i - 1];
-		cell += MEM_SIZE / champs_count;
-	}
+		if (cbox->champs[i].id != 0)
+		{
+			ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
+			cbox->arena.last_alive = &cbox->champs[i - 1];
+			cell += MEM_SIZE / champs_count;
+			push_que(cbox->timeline[0], make_car(cbox, -i), cbox->carry_counter - 1);
+		}
 }
 
 int		main(int argc, char **argv)
 {
 	int 		i;
 	int 		n;  // number of players
-	s_arena		arena;
-	s_champ		champs[MAX_PLAYERS];
+	t_cbox		cbox;  // corewar-box: champions, arena, timeline
 
-//	validate args
-//	validate files of players
+//	TODO validate args
+//	TODO validate files of players
+//  TODO parse flags
 
 	ft_printf("\n{RED}welcome back to HELLLLL\n\n");
 
-	ft_bzero(champs, sizeof(s_champ) * MAX_PLAYERS);
+	ft_bzero(&cbox, sizeof(t_cbox));
 	i = 0;
 	n = 0;
 	while (++i < argc)
-		if (argv[i][0] != '-' && ++n)  // TODO parse flags
-			get_champion(argv[i], &champs[i], i);
+		if (argv[i][0] != '-' && ++n)
+			get_champion(argv[i], &cbox.champs[i - 1], i, &cbox);
 
-	greet_champions(champs, MAX_PLAYERS);
+	greet_champions(cbox.champs, MAX_PLAYERS);
 
-	init_arena(&arena, champs, n);
-	dump_arena(arena.arena);
+	init_timeline(&cbox);
 
-	return (clean_all(NULL, SUCCESS));
+	init_arena(n, &cbox);
+	dump_arena(cbox.arena.arena);
+
+	return (clean_all(&cbox, SUCCESS));
 }

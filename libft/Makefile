@@ -80,6 +80,12 @@ RESOURCES = $(addprefix ./str_funcs/, ft_putchar.c \
 	ft_del_twodem_arr.c \
 	ft_swap.c \
 	get_next_line.c) \
+	$(addprefix ./vector/, ft_vadd.c \
+    ft_vdel.c \
+    ft_vnew.c \
+    ft_vprint.c \
+    ft_vreset.c \
+    ft_vresize.c) \
 	$(addprefix ./vec_funcs/, int_vec/ft_int_vec_enlarge.c \
 	int_vec/ft_int_vec_pushback.c \
 	int_vec/ft_int_vec_pushfront.c \
