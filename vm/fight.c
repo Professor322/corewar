@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 20:33:12 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/23 20:37:35 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	do_the_fight(t_cbox *cbox, size_t cycle)
 	while (cbox->timeline[cycle]->len)
 	{
 		car = (t_car *) pop_que(cbox->timeline[cycle]).data;
+		if (car->oper == 0)
+			car->oper = cbox->arena.arena[car->pos];
 		print_car(car);
 	}
 	return (check(cycle));

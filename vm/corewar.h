@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 20:28:12 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/25 14:08:27 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ typedef struct	s_cbox
 	size_t		carry_counter;
 }				t_cbox;
 
+typedef struct	s_oper
+{
+	char name[5];
+	void	(*f)();
+}				t_oper;
+
 typedef enum	e_code_exit
 {
 	SUCCESS,
@@ -68,6 +74,8 @@ void			greet_champions(t_champ *champs, int size);
 
 t_car			*make_car(t_cbox *cbox, char player, unsigned int pos);
 void			print_car(t_car *car); // just for debug
+
+t_oper			get_operation(char code);
 
 int				do_the_fight(t_cbox *cbox, size_t cycle);
 

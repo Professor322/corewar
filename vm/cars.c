@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 18:47:18 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 20:48:06 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/25 14:18:15 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ t_car	*make_car(t_cbox *cbox, char player, unsigned int pos)
 
 void	print_car(t_car *car)
 {
-	ft_printf(
-			"\nid=%d carry=%b pos=%d\n",
+	ft_printf("\nP\t%d | %s | pos=%-4d, carry=%d",
 			car->id,
-			car->carry,
-			car->pos
-			);
+			get_operation(car->oper).name,
+			car->pos,
+			car->carry);
+	ft_printf(" regs=[");
+	int i = -1;
+	while (++i < REG_NUMBER)
+		ft_printf("r%d %-2d, ", i+1, car->regs[i]);
+	ft_printf("]");
 }
