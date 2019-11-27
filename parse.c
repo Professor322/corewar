@@ -26,16 +26,6 @@ char	*dec_to_bin(int n) {
 	return result;
 }
 
-int 	find_command(char *command)
-{
-	int i = -1;
-
-	while (++i < COMMANDS_NUM) {
-		if (!ft_strcmp(g_commands[i]->key, command))
-			return (i);
-	}
-	return (-1);
-}
 
 
 /**
@@ -61,17 +51,20 @@ int 	find_command(char *command)
 
 int 	is_command(const char *it_begin, const char *it_end)
 {
-	if (it_end)
-	{
-		while (it_begin != it_end)
-		{
-			if (*it_begin == ' ' || *it_begin == '\t')
-				return (0);
-			it_begin++;
-		}
-		return (1);
-	}
-	return (0);
+	char *comamnds[16] = {"live", "ld" ,"st","add"
+  "sub"
+  "and"
+  "or"
+  "xor"
+  "zjmp"
+  "ldi"
+  "sti"
+  "fork"
+  "lld"
+  "lldi"
+  "lfork"
+  "aff"};
+	return (1);
 }
 
 int		is_label(const char *it_begin, const char *it_end)
@@ -96,8 +89,7 @@ char	*get_label(char *line)
 	if (is_label(line, end_of_label))
 	{
 		*end_of_label = '\0';
-		///add label to array of labels
-		//printf("%s\n", line);
+		printf("parsed label: |%s|\n", line);
 		return (end_of_label + 1) && *(end_of_label + 1) != '\0' ?
 		end_of_label + 1 : NULL;
 	}
@@ -112,31 +104,65 @@ void	delete_comment(char *line)
 		*comment_start = '\0';
 }
 
-void	get_command(char *line)
+t_pair	*command_index_and_line(int index, char *line)
 {
-	char *command = ft_strtrim(line);
+	t_pair *pair;
 
-	if (is_command())
-	{
-
-	}
-	ft_memdel((void**)&command);
+	pair = (t_pair*)malloc(sizeof(t_pair));
+	pair->first = index;
+	pair->second = line;
+	return (pair);
 }
+
+t_pair	*get_command_name(char *line)
+{
+	char	*end;
+	char	*begin;
+	int		command_index;
+
+	end = ft_strtrim(line);
+	begin = end;
+	while (*end && *end != '\t' && *end != ' ' && *end != '%')
+		end++;
+	if ((command_index = is_command(begin, end)) != -1)
+		return (command_index_and_line(command_index, end));
+	return (NULL);
+}
+
+char	**get_args(const char *line)
+{
+	char **args = ft_strsplit(line, ',');
+	char **it = args;
+
+	while (*it)
+	{
+		*it = ft_strtrim(*it);
+		it++;
+	}
+	return (args);
+}
+
+/**
+ * написать функицю трим, которая не будет выделять память для нового указателя
+ */
 
 void	parse(int fd)
 {
 	char *line;
 	char *to_parse;
+	t_pair *pair;
 
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
-		to_parse = get_label(line);
-		if (to_parse)
+		pair = get_command_name(line);
+		char **args = get_args(pair->second);
+		while (*args)
 		{
-			delete_comment(to_parse);
-
+			printf("%s ", *args);
+			args++;
 		}
+		printf("\n\n");
 		ft_memdel((void**)&line);
 	}
 }
