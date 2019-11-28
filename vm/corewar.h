@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/25 14:08:27 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/28 18:40:12 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 
 # define SIZE_OF_QUE 100
 # define SIZE_OF_TIMELINE 1000
+
+# define NUMBER_OF_OPERATIONS 16
+
+struct s_car;
 
 typedef struct	s_champ
 {
@@ -40,11 +44,18 @@ typedef struct	s_arena
 	size_t 	checks_count;
 }				t_arena;
 
+typedef struct	s_oper
+{
+	char 	name[5];
+	void	(*f)(struct s_car*);
+	int 	delay;
+}				t_oper;
+
 typedef struct	s_car
 {
 	size_t			id;
 	unsigned char 	carry;
-	unsigned char 	oper;
+	struct s_oper 	oper;
 	unsigned int	pos;
 	char 			regs[REG_NUMBER];
 }				t_car;
@@ -55,13 +66,8 @@ typedef struct	s_cbox
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
 	t_vector	*timeline[SIZE_OF_TIMELINE];  // array of bin-heaps with priority
 	size_t		carry_counter;
+	size_t 		cycle_counter;
 }				t_cbox;
-
-typedef struct	s_oper
-{
-	char name[5];
-	void	(*f)();
-}				t_oper;
 
 typedef enum	e_code_exit
 {
@@ -77,7 +83,7 @@ void			print_car(t_car *car); // just for debug
 
 t_oper			get_operation(char code);
 
-int				do_the_fight(t_cbox *cbox, size_t cycle);
+int				do_the_fight(t_cbox *cbox);
 
 int				clean_all(t_cbox *cbox, char code_exit);
 void 			dump_arena(unsigned char *arena);

@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 20:50:59 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/25 14:19:04 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ int		main(int argc, char **argv)
 	init_arena(n, &cbox);
 	dump_arena(cbox.arena.arena);
 
-	i = 0;
-	while (do_the_fight(&cbox, i))
-		i++;
+	while (do_the_fight(&cbox))
+		cbox.cycle_counter++;
 
 	return (clean_all(&cbox, SUCCESS));
 }

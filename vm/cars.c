@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 18:47:18 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/25 14:18:15 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/25 14:41:45 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_car(t_car *car)
 {
 	ft_printf("\nP\t%d | %s | pos=%-4d, carry=%d",
 			car->id,
-			get_operation(car->oper).name,
+			car->oper.f != NULL ? car->oper.name : "NULL",
 			car->pos,
 			car->carry);
 	ft_printf(" regs=[");

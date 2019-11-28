@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 18:31:34 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/23 18:39:00 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/28 18:32:21 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_champion(char *file, t_champ *champ, int i, t_cbox *cbox)
 	champ->comm = "en fait C forker !";
 	if (!(champ->code = ft_memalloc(champ->code_size)))
 		exit(clean_all(cbox, MALLOC_ERROR));
-	char tab[320] = {0x3, 0x70, 0x1, 0, 0x49, 0x3, 0x70, 0x6, 255, 0xfc,
+	char tab[320] = {0x33, 0x70, 0x1, 0, 0x49, 0x3, 0x70, 0x6, 255, 0xfc,
 					 0x2, 0xd0, 0x00, 0x3f, 0x01, 0x02, 0x90, 0x00, 0x00, 0x00, 0x00, 0x07, 0x09, 0x00,
 					 0x37, 0x01, 0x00, 0x00, 0x00, 0x42, 0x0a, 0x94, 0xff, 0xfb, 0x03, 0x01, 0x0b, 0x64,
 					 0x01, 0xff, 0x53, 0x03, 0x04, 0x54, 0x03, 0x04, 0x03, 0x08, 0x54, 0x05, 0x03, 0x06,
