@@ -55,18 +55,22 @@ typedef struct	s_command
 	char 	*arg2;
 	char 	*arg3;
 }				t_command;
-
+/*
 typedef struct	s_pair
 {
 	char	*key;
 	t_foo	*(*to_binary)(t_command command); // возвращает размер команды в байтах
+} t_pair;*/
+
+typedef struct s_pair
+{
+	void	*first;
+	void	*second;
 }				t_pair;
 
 extern t_pair	*g_commands[16];
 
 void			parse(int fd);
 void			ft_exit(char *str);
-
-
 
 #endif

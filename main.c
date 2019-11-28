@@ -11,9 +11,13 @@
 /* ************************************************************************** */
 
 #include "assembler.h"
+#include "tests_for_parser/tests.h"
 
 int 	main(int argc, char **argv)
 {
-	parse(open(argv[1], O_RDONLY));
+	if (argc == 4)
+	printf("test_all_separetly: %d", test_all(argv[1], argv[2], argv[3]));
+
+
 	return (0);
 }
