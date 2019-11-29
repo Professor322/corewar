@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/28 18:40:12 by mbartole         ###   ########.fr       */
+/*   Updated: 2019/11/29 22:07:40 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,28 @@
 # define NUMBER_OF_OPERATIONS 16
 
 struct s_car;
+struct s_cbox;
+
+enum e_arg_type
+{
+	REG,
+	DIR,
+	IND
+};
+
+typedef struct	s_arg		// структура одного аргумента
+{
+	enum e_arg_type	type;
+	int 			size;	// размер в байтах
+}				t_arg;
 
 typedef struct	s_champ
 {
 	unsigned char	id;
-	char 	*name;
-	char 	*comm;
+	char 			*name;
+	char 			*comm;
 	unsigned int 	code_size;
-	char 	*code;
+	char 			*code;
 }				t_champ;
 
 typedef struct	s_arena
@@ -46,9 +60,11 @@ typedef struct	s_arena
 
 typedef struct	s_oper
 {
-	char 	name[5];
-	void	(*f)(struct s_car*);
+	char 	name[6];
+	void	(*f)(struct s_car*, struct s_cbox*);
 	int 	delay;
+	int		changes_carry;
+	int 	has_type_byte;
 }				t_oper;
 
 typedef struct	s_car
