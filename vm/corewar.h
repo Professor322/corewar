@@ -79,12 +79,12 @@ typedef struct	s_champ
 
 typedef struct	s_arena
 {
-	unsigned char 	*arena;
-	t_champ	*last_alive;
-	size_t 	cycle;
-	size_t 	cycles_to_die;
-	size_t 	live_count;
-	size_t 	checks_count;
+	unsigned char	*arena;
+	t_champ			*last_alive;
+	size_t			cycle;
+	size_t			cycles_to_die;
+	size_t			live_count;
+	size_t			checks_count;
 }				t_arena;
 
 typedef enum	e_boolean
@@ -107,6 +107,7 @@ typedef struct	s_car
 	unsigned char 	carry;
 	struct s_oper 	oper;
 	unsigned int	pos;
+	t_boolean 		is_alive;
 	int 			regs[REG_NUMBER];
 }				t_car;
 
@@ -114,6 +115,7 @@ typedef struct	s_cbox
 {
 	t_arena		arena;  // just arena
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
+	int			champs_amount;
 	t_vector	*timeline[SIZE_OF_TIMELINE];  // array of bin-heaps with priority
 	size_t		carry_counter;
 	size_t 		cycle_counter;
@@ -123,6 +125,7 @@ typedef struct	s_carbox
 {
 	t_car		*car;
 	t_cbox		*cbox;
+	int 		op_command_code;
 }				t_carbox;
 
 typedef enum	e_code_exit
@@ -136,6 +139,7 @@ typedef struct	s_valid_args
 	t_arg_type	*args;
 	int 		valid; //boolean
 }				t_valid_args;
+
 
 void	init_timeline(t_cbox *cbox);
 void	init_arena(int champs_count, t_cbox *cbox);
@@ -155,26 +159,53 @@ int				clean_all(t_cbox *cbox, char code_exit);
 void 			dump_arena(unsigned char *arena);
 
 
-int				prepare_arguments(t_carbox carbox, t_arg args[CW_MAX_ARGS], int (*get_arg_size)(t_arg_type), int (*validate_permitted_types)(t_arg*));
+int				prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS], int (*get_arg_size)(t_arg_type), int (*validate_permitted_types)(t_arg*));
 
 int				get_default_arg_size(t_arg_type type);
 void			cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args, int (*get_arg_size)(t_arg_type));
 int				get_arg_values(t_car *car, t_cbox *cbox, t_arg *args);
+int 			get_int_from_arg(t_car *car, t_cbox *cbox, t_arg arg);
+
+void	 		move_car(t_car *car, t_arg *args);
 
 int				get_int_from_bytes(unsigned char *arr, unsigned int pos, int size);
-void	 		move_car(t_car *car, t_arg *args);
+void			write_int_to_bytes(unsigned char *arr, unsigned int pos, unsigned int val);
+void	write_to_reg(t_car *car, int reg, int value);
+int 	read_from_reg(t_car *car, int reg);
 
 
 
 int				valid_reg_number(int value);
-int 			validate_command_byte(t_car *car, t_cbox *cbox, int command_byte);
+int				validate_command_byte(t_carbox *carbox);
+int				validate_user(t_cbox *cbox, int value);
+
+void		exec_command(t_carbox *carbox,
+						 void (*op_unique_commands)(t_car*, t_cbox*, t_arg[CW_MAX_ARGS]),
+						 int (*get_arg_size)(t_arg_type),
+						 int (*validate_permitted_types)(t_arg*));
 
 
 /*
  * OPERATIONS
  */
-void 			ld(t_car *car, t_cbox *cbox);
-void 			st(t_car *car, t_cbox *cbox);
+
+void			ft_live(t_car *car, t_cbox *cbox);
+void			ft_ld(t_car *car, t_cbox *cbox);
+void			ft_st(t_car *car, t_cbox *cbox);
+void			ft_add(t_car *car, t_cbox *cbox);
+void			ft_sub(t_car *car, t_cbox *cbox);
+void			ft_and(t_car *car, t_cbox *cbox);
+void			ft_or(t_car *car, t_cbox *cbox);
+void			ft_xor(t_car *car, t_cbox *cbox);
+void			ft_zjmp(t_car *car, t_cbox *cbox);
+void			ft_ldi(t_car *car, t_cbox *cbox);
+void			ft_sti(t_car *car, t_cbox *cbox);
+void			ft_fork(t_car *car, t_cbox *cbox);
+void			ft_lld(t_car *car, t_cbox *cbox);
+void			ft_lldi(t_car *car, t_cbox *cbox);
+void			ft_lfork(t_car *car, t_cbox *cbox);
+void			ft_aff(t_car *car, t_cbox *cbox);
+
 
 
 

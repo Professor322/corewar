@@ -35,12 +35,12 @@ int		get_default_arg_size(t_arg_type type)
 	return 0;
 }
 
-int		prepare_arguments(t_carbox carbox, t_arg args[CW_MAX_ARGS], int (*get_arg_size)(t_arg_type), int (*validate_permitted_types)(t_arg*))
+int		prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS], int (*get_arg_size)(t_arg_type), int (*validate_permitted_types)(t_arg*))
 {
-	cw_get_arg_types(carbox.car, carbox.cbox, args, get_arg_size);
+	cw_get_arg_types(carbox->car, carbox->cbox, args, get_arg_size);
 	if (!validate_permitted_types(args))
 		return 0;
-	if (!get_arg_values(carbox.car, carbox.cbox, args))
+	if (!get_arg_values(carbox->car, carbox->cbox, args))
 		return 0;
 	return 1;
 }
@@ -64,7 +64,6 @@ int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 	char 	c;
 	short	s;
 	int		i;
-	ft_printf("\n%b\n", arr);
 	if (size == 1)
 	{
 		c = arr[POS(pos)];
@@ -87,6 +86,30 @@ int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 	exit(-42);
 }
 
+int 	get_int_from_arg(t_car *car, t_cbox *cbox, t_arg arg)
+{
+	if (arg.type == IND)
+		return get_int_from_bytes(cbox->arena.arena, car->pos + IND_OFFSET(arg.value), REG_SIZE);
+	else if (arg.type == DIR )
+		return arg.value;
+	else if (arg.type == REG)
+		return car->regs[REG(arg.value)];
+	else
+		return 0;
+//	else if (arg.type == REG)
+//		return car->regs[REG(arg.value)];
+}
+
+void	write_to_reg(t_car *car, int reg, int value)
+{
+	car->regs[reg - 1] = value;
+}
+
+int 	read_from_reg(t_car *car, int reg)
+{
+	return car->regs[reg - 1];
+}
+
 int		get_arg_values(t_car *car, t_cbox *cbox, t_arg *args)
 {
 	unsigned char	*arr;
@@ -103,6 +126,7 @@ int		get_arg_values(t_car *car, t_cbox *cbox, t_arg *args)
 		arr_i += args[arg_i].size;
 		if (args[arg_i].type == REG && !valid_reg_number(args[arg_i].value))
 		{
+			//todo remove printf before release
 			ft_printf("BAD REG NUMBER\n");
 			return 0;
 		}
@@ -111,10 +135,43 @@ int		get_arg_values(t_car *car, t_cbox *cbox, t_arg *args)
 	return 1;
 }
 
-int validate_command_byte(t_car *car, t_cbox *cbox, int command_byte)
+int		validate_command_byte(t_carbox *carbox)
 {
 	unsigned char c;
 
-	c = cbox->arena.arena[car->pos];
-	return c == command_byte;
+	c = carbox->cbox->arena.arena[carbox->car->pos];
+	return c == carbox->op_command_code;
+}
+
+int		validate_user(t_cbox *cbox, int value)
+{
+	if (value < 0 || value > cbox->champs_amount)
+		return 0;
+	return 1;
+}
+
+void	exec_command(t_carbox *carbox,
+		void (*op_unique_commands)(t_car*, t_cbox*, t_arg[CW_MAX_ARGS]),
+		int (*get_arg_size)(t_arg_type),
+		int (*validate_permitted_types)(t_arg*))
+{
+	t_arg		args[CW_MAX_ARGS];
+
+	if (!validate_command_byte(carbox))
+	{
+		carbox->car->pos = POS(carbox->car->pos + 1);
+		return ;
+	}
+	if (prepare_arguments(carbox, args, get_arg_size, validate_permitted_types))
+		op_unique_commands(carbox->car, carbox->cbox, args);
+	move_car(carbox->car, args);
+}
+
+
+void	write_int_to_bytes(unsigned char *arr, unsigned int pos, unsigned int val)
+{
+	arr[pos++] = val >> 24;
+	arr[pos++] = val >> 16;
+	arr[pos++] = val >> 8;
+	arr[pos] = val;
 }

@@ -38,12 +38,12 @@ t_oper	get_operation(char code)
 {
 
 	static t_oper	operations[] = {
-			{"live", &moke_up_function, 10, FALSE},
-			{"ld", ld, 5, TRUE},
-			{"st", st, 5, TRUE},
-			{"add", &moke_up_function, 10, TRUE},
-			{"sub", &moke_up_function, 10, TRUE},
-			{"and", &moke_up_function, 6, TRUE},
+			{"ft_live", ft_live, 10, FALSE},
+			{"ft_ld", ft_ld, 5, TRUE},
+			{"ft_st", ft_st, 5, TRUE},
+			{"ft_add", ft_add, 10, TRUE},
+			{"sub", ft_sub, 10, TRUE},
+			{"and", ft_and, 6, TRUE},
 			{"or", &moke_up_function, 6, TRUE},
 			{"xor", &moke_up_function, 6, TRUE},
 			{"zjmp", &moke_up_function, 20, FALSE},

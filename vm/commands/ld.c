@@ -22,34 +22,29 @@ static int	get_arg_size(t_arg_type type)
 	return get_default_arg_size(type);
 }
 
-void ld(t_car *car, t_cbox *cbox)
+static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS])
 {
-	t_arg	args[CW_MAX_ARGS];
-	t_arg	reg;
-	int		val;
-	t_carbox	carbox;
+	int		reg;
+	int		value;
+
+	value = get_int_from_arg(car, cbox, args[0]);
+	reg = args[1].value;
+	car->regs[REG(reg)] = value;
+	if (value == 0)
+		car->carry = 1;
+	else
+		car->carry = 0;
+}
+
+void ft_ld(t_car *car, t_cbox *cbox)
+{
+	t_carbox carbox;
 
 	carbox.cbox = cbox;
 	carbox.car = car;
-	if (!validate_command_byte(car, cbox, LD_COMMAND_CODE))
-	{
-		car->pos = POS(car->pos + 1);
-		return ;
-	}
-	if (prepare_arguments(carbox, args, get_arg_size, validate_permitted_types))
-	{
-		if (args[0].type == IND)
-			val = get_int_from_bytes(cbox->arena.arena, car->pos + IND_OFFSET(args[0].value), REG_SIZE);
-		else
-			val = args[0].value;
-		reg = args[1];
-		car->regs[REG(reg.value)] = val;
-		if (reg.value == 0)
-			car->carry = 1;
-		else
-			car->carry = 0;
-	}
-	move_car(car, args);
+	carbox.op_command_code = LD_COMMAND_CODE;
+	exec_command(&carbox, op_unique_commands, get_arg_size,
+				 validate_permitted_types);
 }
 
 
@@ -58,10 +53,10 @@ void ld(t_car *car, t_cbox *cbox)
 ///*
 // * TEST MAIN
 // */
-//
+
 //static void ld_init_dir(t_cbox *cbox)
 //{
-//	char *arr = cbox->arena.arena;
+//	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
 //
 //	//command_code
@@ -85,7 +80,7 @@ void ld(t_car *car, t_cbox *cbox)
 //
 //static void ld_init_indir(t_cbox *cbox)
 //{
-//	char *arr = cbox->arena.arena;
+//	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
 //
 //	i = 15;
@@ -129,7 +124,7 @@ void ld(t_car *car, t_cbox *cbox)
 //
 //	ld_init_indir(&cbox);
 //	dump_arena(cbox.arena.arena);
-//
+//	ft_printf("\n\n\n\n\n");
 //	t_car testcar;
 //
 //	testcar.pos = 15;
