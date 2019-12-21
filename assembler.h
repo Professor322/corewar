@@ -37,14 +37,14 @@ typedef struct	s_arg		// структура одного аргумента
 {
 	enum e_arg_type	type;
 	t_label 		*label;
-	char			*bin;	// значение
+	int			    bin;	// значение
 	int 			size;	// размер в байтах
 }				t_arg;
 
 typedef struct	s_foo		// структура, которую возвращают функции
 {
 	int 	command_size;	//размер команды а байтах
-	t_label	*labels;		// массив меток, заканчивается нуллом
+	t_label	**labels;		//вектор меток, заканчивается нуллом
 }				t_foo;
 
 typedef struct	s_command
