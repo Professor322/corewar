@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 3.14.2)
+cmake_minimum_required(VERSION 3.10.2)
 project(CoreWar C)
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gdwarf-3")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
 
 set(CMAKE_C_STANDARD 99)
 #set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-lncurses")
@@ -12,7 +15,7 @@ aux_source_directory(vm src_vm)
 #aux_source_directory(src/visu src_visu)
 
 
-add_executable(corewar ${src_vm} op.h vm/utils.c vm/champions.c vm/cars.c vm/fight.c vm/operations.c) # ${src_visu} ${src})
+add_executable(corewar ${src_vm} op.h vm/utils.c vm/champions.c vm/cars.c vm/fight.c vm/operations.c vm/commands/ld.c vm/arg_utils.c vm/foreach_functions.c vm/testutils.c vm/commands/live.c vm/commands/st.c) # ${src_visu} ${src})
 target_link_libraries(corewar ${PROJECT_SOURCE_DIR}/libft/libft.a)
 
 target_include_directories(corewar PUBLIC vm/)

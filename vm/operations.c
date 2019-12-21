@@ -36,24 +36,25 @@ void	invalid_operation(t_car *car)
 
 t_oper	get_operation(char code)
 {
+
 	static t_oper	operations[] = {
-			{"live", &moke_up_function, 10},
-			{"ld", &moke_up_function, 5},
-			{"st", &moke_up_function, 5},
-			{"add", &moke_up_function, 10},
-			{"sub", &moke_up_function, 10},
-			{"and", &moke_up_function, 6},
-			{"or", &moke_up_function, 6},
-			{"xor", &moke_up_function, 6},
-			{"zjmp", &moke_up_function, 20},
-			{"ldi", &moke_up_function, 25},
-			{"sti", &moke_up_function, 25},
-			{"fork", &moke_up_function, 800},
-			{"lld", &moke_up_function, 10},
-			{"lldi", &moke_up_function, 50},
-			{"lfork", &moke_up_function, 1000},
-			{"aff", &moke_up_function, 2},
-			{"inval", &invalid_operation, 1}
+			{"live", &moke_up_function, 10, FALSE},
+			{"ld", ld, 5, TRUE},
+			{"st", st, 5, TRUE},
+			{"add", &moke_up_function, 10, TRUE},
+			{"sub", &moke_up_function, 10, TRUE},
+			{"and", &moke_up_function, 6, TRUE},
+			{"or", &moke_up_function, 6, TRUE},
+			{"xor", &moke_up_function, 6, TRUE},
+			{"zjmp", &moke_up_function, 20, FALSE},
+			{"ldi", &moke_up_function, 25, TRUE},
+			{"sti", &moke_up_function, 25, TRUE},
+			{"fork", &moke_up_function, 800, FALSE},
+			{"lld", &moke_up_function, 10, TRUE},
+			{"lldi", &moke_up_function, 50, TRUE},
+			{"lfork", &moke_up_function, 1000, FALSE},
+			{"aff", &moke_up_function, 2, TRUE},
+			{"inval", &invalid_operation, 1, FALSE}
 	};
 	ft_printf(" ---set operation--- ");
 	return (code > 0 && code <= NUMBER_OF_OPERATIONS ?

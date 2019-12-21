@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-int check(cycle)
+int check(int cycle)
 {
 	// TODO check end of the game
 	return (cycle > 20 ? 0 : 1);
@@ -54,7 +54,7 @@ int	do_the_fight(t_cbox *cbox)
 			set_operation(car, cbox);
 		else
 		{
-			car->oper.f(car);
+			car->oper.f(car, cbox);
 			ft_bzero(&car->oper, sizeof(t_oper));
 			push_que(cbox->timeline[(cbox->cycle_counter + 1) % SIZE_OF_TIMELINE], car, -car->id);
 		}
