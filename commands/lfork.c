@@ -10,4 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../assembler.h"
+#define 2 LFORK_T_DIR_SIZE
+
+void        lfork(t_command *command, t_foo *foo)
+{
+    t_arg *arg;
+
+    arg = get_arg(command->arg1, command->position, LFORK_T_DIR_SIZE, foo->labels_vec);
+    foo->command_size += arg->size; //  увеличиваем размер команды в байтах
+    // add in vector arg
+    ft_ptr_vec_pushback(foo->args_vec, arg);
+    command->position += arg->size;
+}
 
