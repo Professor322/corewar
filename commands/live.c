@@ -30,44 +30,31 @@
 **/
 void        live(t_command *command, t_foo *foo)
 {
-	// t_foo *foo;
     t_arg *arg;
-
-	// foo = (t_foo *)ft_memalloc(sizeof(t_foo)); // must be the void vector
-	//foo->args_vec = ft_ptr_vec_init();
-    //foo->labels_vec = ft_ptr_vec_init();
 
 	arg = get_arg(command->arg1, command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
 	foo->command_size += arg->size; //  увеличиваем размер команды в байтах
 	// add in vector arg
 	ft_ptr_vec_pushback(foo->args_vec, arg);
 	command->position += arg->size;
-//	arg = get_arg(command->arg2, command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
-//	command->position += arg->size;
-//    foo->command_size += arg->size;
-//    // add in vector arg
-//    ft_ptr_vec_pushback(foo->args_vec, arg);
-//    arg = get_arg(command->arg3, command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
-//	command->position += arg->size;
-//    foo->command_size += arg->size;
-//    // add in vector arg
-//    ft_ptr_vec_pushback(foo->args_vec, arg);
-//	// собрать массив из меток собран
-	//return (foo);
 }
 
 int main(int argc, char **argv)
 {
 	int i;
+	t_foo *foo;
+    t_command command;
 
+    foo = (t_foo *)ft_memalloc(sizeof(t_foo));
+    foo->args_vec = ft_ptr_vec_init();
+    foo->labels_vec = ft_ptr_vec_init();
 	i = 1;
-	//while (i < argc)
-	t_command command;
+
 	command.arg1 = argv[1];
 	command.arg2 = argv[2];
 	command.arg3 = argv[3];
 	command.position = 0;
-	t_foo *foo = live(&command);
+	live(&command, foo);
     printf("\ncommand_size: %d \n", foo->command_size);
     for(int i = 0; i < foo->args_vec->length; i++)
     {
@@ -80,7 +67,5 @@ int main(int argc, char **argv)
         printf("LABEL name : %s  size : %d\n", ((t_label *)(((t_arg *)(foo->labels_vec->data[i]))->label))->name,
          ((t_label *)(((t_arg *)(foo->labels_vec->data[i]))->label))->size);
     }
-	// get_arg(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
-	//printf("%s\n", int_to_bin(ft_atoi(argv[1]), ft_atoi(argv[2])));
 	return (0);
 }
