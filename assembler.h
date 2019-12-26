@@ -30,7 +30,7 @@ typedef struct	s_label 	// структура для сохранения одн
 {
 	char	*name;			// имя метки
 	int		position;		// позиция вызова метки
-	int		size;			// размер аргумента ИЗЛИШНЕ
+	int		size;			// размер аргумента
 }				t_label;
 
 typedef struct	s_arg		// структура одного аргумента
@@ -44,7 +44,8 @@ typedef struct	s_arg		// структура одного аргумента
 typedef struct	s_foo		// структура, которую возвращают функции
 {
 	int 	command_size;	//размер команды а байтах
-	t_label	**labels;		//вектор меток, заканчивается нуллом
+	t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
+	t_pvec   *args_vec; // вектор структур с аргументами
 }				t_foo;
 
 typedef struct	s_command
@@ -72,5 +73,9 @@ extern t_pair	*g_commands[16];
 
 void			parse(int fd);
 void			ft_exit(char *str);
-
+t_arg           *get_arg(char *arg, int pos, int dir_size, t_pvec *label_vec);
+void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
+void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
+int             amount_real_bytes(unsigned int num, int size);
+int             ft_is_numeric(char *str);
 #endif
