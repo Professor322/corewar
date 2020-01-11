@@ -27,15 +27,7 @@ enum e_arg_type
 };
 
 
-
-typedef struct	s_label 	// структура для сохранения одной метки
-{
-	char	*name;			// имя метки
-	int		position;		// позиция вызова метки
-	int		size;			// размер аргумента
-	t_b_command *command;						// также здесь будет переменная, которая хранит в себе значение,
-							// полученное после применения функции-команды
-}				t_label;
+typedef struct s_label t_label;
 
 typedef struct	s_arg		// структура одного аргумента
 {
@@ -80,6 +72,15 @@ typedef struct s_pair
 	void	*first;
 	void	*second;
 }				t_pair;
+
+typedef struct	s_label 	// структура для сохранения одной метки
+{
+    char	*name;			// имя метки
+    int		position;		// позиция вызова метки
+    int		size;			// размер аргумента
+    t_b_command *command;						// также здесь будет переменная, которая хранит в себе значение,
+    // полученное после применения функции-команды
+}				t_label;
 
 typedef	struct	s_node
 {

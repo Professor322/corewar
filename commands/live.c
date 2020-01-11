@@ -63,6 +63,8 @@ int main(int argc, char **argv)
 //        printf("\ntype :%d  size: %d\n", ((t_arg*)(foo->args_vec->data[i]))->type,  ((t_arg*)(foo->args_vec->data[i]))->size);
        // write(1, &((t_arg*)(foo->args_vec->data[i]))->bin, ((t_arg*)(foo->args_vec->data[i]))->size);
         write(1, &((t_b_command*)(foo->command_vec->data[i]))->command_code, 1);
+        if ((((t_b_command*)(foo->command_vec->data[i]))->arg_type_code))
+            printf("code arg\n");
         write(1, &((t_arg*)(((t_b_command*)(foo->command_vec->data[i]))->arg1))->bin,
                   ((t_arg*)(((t_b_command*)(foo->command_vec->data[i]))->arg1))->size);
 //        printf("\n");

@@ -32,8 +32,8 @@ int         amount_real_bytes(unsigned int num, int size)
         amount++;
         num >>= 8;
     }
-    printf("\nsize: %d\n amount : %d\n", size, amount);
-    printf("real_bytes: %d\n", size - amount);
+//    printf("\nsize: %d\n amount : %d\n", size, amount);
+//    printf("real_bytes: %d\n", size - amount);
     return (size - amount);
 }
 
@@ -46,7 +46,7 @@ void        reg_arg(t_arg *arg_parse, int dir_size, char *arg)
     arg_parse->type = T_REG;
     arg_parse->bin = r_val; // one byte
 //    write(1, &arg_parse->bin, arg_parse->size);
-    printf("\nsize %d\n type %u\n", arg_parse->size, arg_parse->type);
+//    printf("\nsize %d\n type %u\n", arg_parse->size, arg_parse->type);
 }
 
 void        dir_arg(t_arg *arg_parse, int dir_size, char *arg)
@@ -58,7 +58,7 @@ void        dir_arg(t_arg *arg_parse, int dir_size, char *arg)
     arg_parse->type = T_DIR;
     arg_parse->bin = dir_val << 8 * amount_real_bytes(dir_val, dir_size);
 //    write(1, &arg_parse->bin, arg_parse->size);
-    printf("\nsize %d\n type %u\n", arg_parse->size, arg_parse->type);
+//    printf("\nsize %d\n type %u\n", arg_parse->size, arg_parse->type);
 }
 
 void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
@@ -69,7 +69,7 @@ void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
     arg_parse->size = 2;
     arg_parse->bin = ind_val << 8 * amount_real_bytes(ind_val, arg_parse->size);
 //    write(1, &arg_parse->bin, arg_parse->size);
-    printf("size %d\n type %u\n", arg_parse->size, arg_parse->type);
+//    printf("size %d\n type %u\n", arg_parse->size, arg_parse->type);
     //indirect
 }
 
