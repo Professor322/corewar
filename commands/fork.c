@@ -13,7 +13,7 @@
 #include "../assembler.h"
 #define 2 FORK_T_DIR_SIZE
 
-void        fork(t_command *command, t_foo *foo)
+void        ft_fork(t_command *command, t_foo *foo)
 {
     t_arg *arg;
 
