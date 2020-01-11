@@ -18,6 +18,6 @@ FILE(GLOB char_vec ./libft/vec_funcs/char_vec/*.c)
 
 include_directories( ./libft/includes)
 
-add_executable(asm  main.c ./src/parse.c ${ptr_vec_func} ${int_vec_func} ${str_func} src/unit_tests.c ./src/get_args.c ./src/get_command_name.c ./src/get_label.c)
+add_executable(asm  main.c ./src/parse.c ${ptr_vec_func} ${int_vec_func} ${str_func} src/unit_tests.c ./src/get_args.c ./src/get_command_name.c ./src/get_label.c ./src/commands_hashtable.c src/insert_command.c copy_element.c src/insert_label.c)
 
 target_link_libraries(asm ~/corewar/libft/libft.a)

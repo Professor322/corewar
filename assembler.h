@@ -61,23 +61,33 @@ typedef struct s_pair
 	void	*second;
 }				t_pair;
 
+typedef	struct	s_node
+{
+	char *name;
+	void (*command)(t_command*, t_foo*);
+}				t_node;
+
+
 extern t_pair	*g_commands[16];
 
-
+int		ht_help_insert(t_ht *hashtable, void *node, unsigned long index);
+int		ht_enlarge(t_ht *ht);
+int		ht_insert_command(t_ht *hashtable, t_node *node);
+t_ht	*create_commands_ht(void);
 char	*get_label(char **line);
 int	 get_command_name(char **line);
 t_command	*get_args(char *line);
-void			parse(int fd);
-void			ft_exit(char *str);
-t_arg           *get_arg(char *arg, int pos, int dir_size, t_pvec *label_vec);
-void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
-void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
-int             amount_real_bytes(unsigned int num, int size);
-int             ft_is_numeric(char *str);
+void	parse(int fd);
+void	ft_exit(char *str);
+t_arg   *get_arg(char *arg, int pos, int dir_size, t_pvec *label_vec);
+void    dir_arg(t_arg *arg_parse, int dir_size, char *arg);
+void    reg_arg(t_arg *arg_parse, int dir_size, char *arg);
+int     amount_real_bytes(unsigned int num, int size);
+int     ft_is_numeric(char *str);
 void    add(t_command *command, t_foo *foo);
 void    aff(t_command *command, t_foo *foo);
 void    and(t_command *command, t_foo *foo);
-void    fork(t_command *command, t_foo *foo);
+void    ft_fork(t_command *command, t_foo *foo);
 void    help_command(t_command *command, t_foo *foo);
 void    ld(t_command *command, t_foo *foo);
 void    ldi(t_command *command, t_foo *foo);
