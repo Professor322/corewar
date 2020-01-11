@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../assembler.h"
+#include "../../assembler.h"
 
 static void		del_elem(t_list **head)
 {
@@ -71,7 +71,7 @@ static int		copy_table(t_ivec *loaded, t_list **dst,
 	return (length);
 }
 
-int				ht_enlarge(t_ht *ht)
+int				ht_command_enlarge(t_ht *ht)
 {
 	const float load_factor = (float)(ht->size + 1) / (float)ht->capacity;
 	t_list		**resized;

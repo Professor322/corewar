@@ -1,7 +1,7 @@
 //
 // Created by Virgil Legros on 11/01/2020.
 //
-#include "../assembler.h"
+#include "../../assembler.h"
 
 int		ht_insert_label(t_ht *hashtable, t_label *node)
 {
@@ -9,7 +9,7 @@ int		ht_insert_label(t_ht *hashtable, t_label *node)
 	t_list				*temp;
 	t_list				*new;
 
-	if (ht_enlarge(hashtable))
+	if (ht_label_enlarge(hashtable))
 	{
 		index = ft_hash((unsigned char*)node->name, hashtable->capacity);
 		temp = hashtable->table[index];

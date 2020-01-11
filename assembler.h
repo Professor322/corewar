@@ -31,6 +31,8 @@ typedef struct	s_label 	// структура для сохранения одн
 	char	*name;			// имя метки
 	int		position;		// позиция вызова метки
 	int		size;			// размер аргумента
+	t_b_command *command;						// также здесь будет переменная, которая хранит в себе значение,
+							// полученное после применения функции-команды
 }				t_label;
 
 typedef struct	s_arg		// структура одного аргумента
@@ -71,8 +73,10 @@ typedef	struct	s_node
 extern t_pair	*g_commands[16];
 
 int		ht_help_insert(t_ht *hashtable, void *node, unsigned long index);
-int		ht_enlarge(t_ht *ht);
+int		ht_command_enlarge(t_ht *ht);
+int		ht_label_enlarge(t_ht *ht);
 int		ht_insert_command(t_ht *hashtable, t_node *node);
+int		ht_insert_label(t_ht *hashtable, t_label *node);
 t_ht	*create_commands_ht(void);
 char	*get_label(char **line);
 int	 get_command_name(char **line);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../assembler.h"
+#include "../../assembler.h"
 
 int		ht_help_insert_node(t_ht *hashtable, void *node, unsigned long index)
 {
@@ -28,7 +28,7 @@ int		ht_insert_command(t_ht *hashtable, t_node *node)
 	t_list				*temp;
 	t_list				*new;
 
-	if (ht_enlarge(hashtable))
+	if (ht_command_enlarge(hashtable))
 	{
 		index = ft_hash((unsigned char*)node->name, hashtable->capacity);
 		temp = hashtable->table[index];
