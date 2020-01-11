@@ -26,11 +26,13 @@ enum e_arg_type
 	T_IND
 };
 
+
+
 typedef struct	s_label 	// структура для сохранения одной метки
 {
 	char	*name;			// имя метки
 	int		position;		// позиция вызова метки
-	int		size;			// размер аргумента
+	int		size;		// размер аргумента
 }				t_label;
 
 typedef struct	s_arg		// структура одного аргумента
@@ -41,11 +43,27 @@ typedef struct	s_arg		// структура одного аргумента
 	int 			size;	// размер в байтах
 }				t_arg;
 
+/**
+ * структура для хранения конечного результата команды,
+ * которую можно легко распечатать в байт код
+ * в струтуре t_foo в вектооре command_vec будет лежать
+ * одна структурка t_b_command
+ */
+typedef struct s_byte_command
+{
+    int     command_code;
+    int     arg_type_code;
+    int     command_size;
+    t_arg   *arg1;
+    t_arg   *arg2;
+    t_arg   *arg3;
+}               t_b_command;
+
 typedef struct	s_foo		// структура, которую возвращают функции
 {
 	int 	command_size;	//размер команды а байтах
 	t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
-	t_pvec   *args_vec; // вектор структур с аргументами
+	t_pvec   *command_vec; // вектор структур с аргументами
 }				t_foo;
 
 typedef struct	s_command
@@ -74,23 +92,24 @@ void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
 void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
 int             amount_real_bytes(unsigned int num, int size);
 int             ft_is_numeric(char *str);
-void    add(t_command *command, t_foo *foo);
-void    aff(t_command *command, t_foo *foo);
-void    and(t_command *command, t_foo *foo);
-void    fork(t_command *command, t_foo *foo);
-void    help_command(t_command *command, t_foo *foo);
-void    ld(t_command *command, t_foo *foo);
-void    ldi(t_command *command, t_foo *foo);
-void    lfork(t_command *command, t_foo *foo);
-void    live(t_command *command, t_foo *foo);
-void    live(t_command *command, t_foo *foo);
-void    lld(t_command *command, t_foo *foo);
-void    lldi(t_command *command, t_foo *foo);
-void    or(t_command *command, t_foo *foo);
-void    st(t_command *command, t_foo *foo);
-void    sti(t_command *command, t_foo *foo);
-void    sub(t_command *command, t_foo *foo);
-void    xor(t_command *command, t_foo *foo);
-void    zjmp(t_command *command, t_foo *foo);
+t_b_command     *add(t_command *command, t_foo *foo);
+t_b_command     *aff(t_command *command, t_foo *foo);
+t_b_command     *and(t_command *command, t_foo *foo);
+t_b_command     *ft_fork(t_command *command, t_foo *foo);
+t_b_command     *help_command(t_command *command, t_foo *foo);
+t_b_command     *ld(t_command *command, t_foo *foo);
+t_b_command     *ldi(t_command *command, t_foo *foo);
+t_b_command     *lfork(t_command *command, t_foo *foo);
+t_b_command     *live(t_command *command, t_foo *foo);
+t_b_command     *live(t_command *command, t_foo *foo);
+t_b_command     *lld(t_command *command, t_foo *foo);
+t_b_command     *lldi(t_command *command, t_foo *foo);
+t_b_command     *or(t_command *command, t_foo *foo);
+t_b_command     *st(t_command *command, t_foo *foo);
+t_b_command     *sti(t_command *command, t_foo *foo);
+t_b_command     *sub(t_command *command, t_foo *foo);
+t_b_command     *xor(t_command *command, t_foo *foo);
+t_b_command     *zjmp(t_command *command, t_foo *foo);
+
 
 #endif
