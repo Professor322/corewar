@@ -3,15 +3,18 @@
 //
 #include "../assembler.h"
 
-char	**get_args(char *line)
+t_command*	get_args(char *line)
 {
 	char **args = ft_strsplit(line, ',');
 	char **it = args;
+	t_command *command;
 
+	command = (t_command*)ft_memalloc(sizeof(t_command));
 	while (*it)
 	{
-		*it = ft_strtrim(*it);
+		ft_strtrim(*it);
 		it++;
 	}
-	return (args);
+	command->args = args;
+	return (command);
 }

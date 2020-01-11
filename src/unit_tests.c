@@ -1,7 +1,7 @@
 //
 // Created by professor on 28.11.19.
 //
-#include "../../assembler.h"
+#include "../assembler.h"
 #include "tests.h"
 #include "string.h"
 

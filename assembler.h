@@ -50,18 +50,10 @@ typedef struct	s_foo		// структура, которую возвращают
 
 typedef struct	s_command
 {
-	char	*bin;
-	int 	position;
-	char 	*arg1;
-	char 	*arg2;
-	char 	*arg3;
+	char	*bin;  ///?
+	int 	position; ///?
+	char 	**args;  ///сделал массив аргументов. осторожно!
 }				t_command;
-/*
-typedef struct	s_pair
-{
-	char	*key;
-	t_foo	*(*to_binary)(t_command command); // возвращает размер команды в байтах
-} t_pair;*/
 
 typedef struct s_pair
 {
@@ -71,6 +63,10 @@ typedef struct s_pair
 
 extern t_pair	*g_commands[16];
 
+
+char	*get_label(char **line);
+int	 get_command_name(char **line);
+t_command	*get_args(char *line);
 void			parse(int fd);
 void			ft_exit(char *str);
 t_arg           *get_arg(char *arg, int pos, int dir_size, t_pvec *label_vec);

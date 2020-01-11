@@ -26,17 +26,22 @@ void	delete_comment(char *line)
  */
 
 /**
- *
  * написать юнит тесты для проверки каждого аспекта парсинга +
  */
 
 void	parse(int fd)
 {
 	char *line;
+	char *var_line;
 
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
+		var_line = line;
+		delete_comment(line);
+		get_label(&var_line);
+		get_command_name(&var_line);
+		get_args(var_line);
 		ft_memdel((void**)&line);
 	}
 }
