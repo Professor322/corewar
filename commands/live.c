@@ -28,15 +28,19 @@
  * будет содержать информацию о типе, является ли это значение меткой и какой? , значение в бинарном виде, и размер??
  *
 **/
-void        live(t_command *command, t_foo *foo)
+t_b_command     *live(t_command *command, t_foo *foo)
 {
     t_arg *arg;
+    t_b_command *byte_command;
 
-	arg = get_arg(command->arg1, command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
-	foo->command_size += arg->size; //  увеличиваем размер команды в байтах
+    if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
+        return (NULL);
+    byte_command->command_code = 1;
+	byte_command->arg1 = get_arg(command->args[0], command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
+//    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
 	// add in vector arg
-	ft_ptr_vec_pushback(foo->args_vec, arg);
-	command->position += arg->size;
+	ft_ptr_vec_pushback(foo->command_vec, byte_command);
+	//command->position += arg->size;
 }
 
 int main(int argc, char **argv)
@@ -46,26 +50,27 @@ int main(int argc, char **argv)
     t_command command;
 
     foo = (t_foo *)ft_memalloc(sizeof(t_foo));
-    foo->args_vec = ft_ptr_vec_init();
+    foo->command_vec = ft_ptr_vec_init();
     foo->labels_vec = ft_ptr_vec_init();
 	i = 1;
+	command.args = (char **)ft_memalloc(sizeof(char *));
+	command.args[0] = argv[1];
 
-	command.arg1 = argv[1];
-	command.arg2 = argv[2];
-	command.arg3 = argv[3];
-	command.position = 0;
 	live(&command, foo);
-    printf("\ncommand_size: %d \n", foo->command_size);
-    for(int i = 0; i < foo->args_vec->length; i++)
+//    printf("\ncommand_size: %d \n", foo->command_size);
+    for(int i = 0; i < foo->command_vec->length; i++)
     {
-        printf("\ntype :%d  size: %d\n", ((t_arg*)(foo->args_vec->data[i]))->type,  ((t_arg*)(foo->args_vec->data[i]))->size);
-        write(1, &((t_arg*)(foo->args_vec->data[i]))->bin, ((t_arg*)(foo->args_vec->data[i]))->size);
-        printf("\n");
+//        printf("\ntype :%d  size: %d\n", ((t_arg*)(foo->args_vec->data[i]))->type,  ((t_arg*)(foo->args_vec->data[i]))->size);
+       // write(1, &((t_arg*)(foo->args_vec->data[i]))->bin, ((t_arg*)(foo->args_vec->data[i]))->size);
+        write(1, &((t_b_command*)(foo->command_vec->data[i]))->command_code, 1);
+        write(1, &((t_arg*)(((t_b_command*)(foo->command_vec->data[i]))->arg1))->bin,
+                  ((t_arg*)(((t_b_command*)(foo->command_vec->data[i]))->arg1))->size);
+//        printf("\n");
     }
-    for (i = 0; i < foo->labels_vec->length; i++)
-    {
-        printf("LABEL name : %s  size : %d\n", ((t_label *)(((t_arg *)(foo->labels_vec->data[i]))->label))->name,
-         ((t_label *)(((t_arg *)(foo->labels_vec->data[i]))->label))->size);
-    }
+//    for (i = 0; i < foo->labels_vec->length; i++)
+//    {
+//        printf("LABEL name : %s  size : %d\n", ((t_label *)(((t_arg *)(foo->labels_vec->data[i]))->label))->name,
+//         ((t_label *)(((t_arg *)(foo->labels_vec->data[i]))->label))->size);
+//    }
 	return (0);
 }
