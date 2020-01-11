@@ -74,4 +74,23 @@ void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
 void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
 int             amount_real_bytes(unsigned int num, int size);
 int             ft_is_numeric(char *str);
+void    add(t_command *command, t_foo *foo);
+void    aff(t_command *command, t_foo *foo);
+void    and(t_command *command, t_foo *foo);
+void    fork(t_command *command, t_foo *foo);
+void    help_command(t_command *command, t_foo *foo);
+void    ld(t_command *command, t_foo *foo);
+void    ldi(t_command *command, t_foo *foo);
+void    lfork(t_command *command, t_foo *foo);
+void    live(t_command *command, t_foo *foo);
+void    live(t_command *command, t_foo *foo);
+void    lld(t_command *command, t_foo *foo);
+void    lldi(t_command *command, t_foo *foo);
+void    or(t_command *command, t_foo *foo);
+void    st(t_command *command, t_foo *foo);
+void    sti(t_command *command, t_foo *foo);
+void    sub(t_command *command, t_foo *foo);
+void    xor(t_command *command, t_foo *foo);
+void    zjmp(t_command *command, t_foo *foo);
+
 #endif
