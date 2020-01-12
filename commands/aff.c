@@ -12,15 +12,18 @@
 
 
 #include "../assembler.h"
-#define 1 AFF_T_DIR_SIZE
+#define AFF_T_DIR_SIZE 1
 
-void        aff(t_command *command, t_foo *foo)
+t_b_command     *aff(t_command *command, t_foo *foo)
 {
-    t_arg *arg;
+    t_b_command *byte_command;
 
-    arg = get_arg(command->arg1, command->position, AFF_T_DIR_SIZE, foo->labels_vec);
-    foo->command_size += arg->size; //  увеличиваем размер команды в байтах
+    if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
+        return (NULL);
+    byte_command->command_code = 16;
+    byte_command->arg1 = get_arg(command->args[0], command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
+//    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
     // add in vector arg
-    ft_ptr_vec_pushback(foo->args_vec, arg);
+    ft_ptr_vec_pushback(foo->command_vec, byte_command);
     //command->position += arg->size;
 }

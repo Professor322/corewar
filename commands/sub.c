@@ -11,28 +11,25 @@
 /* ************************************************************************** */
 
 #include "../assembler.h"
-#define 4 SUB_T_DIR_SIZE
+#define SUB_T_DIR_SIZE 4
 
-void        sub(t_command *command, t_foo *foo)
+t_b_command     *(t_command *command, t_foo *foo)
 {
-    t_arg *arg;
+    t_b_command *byte_command;
 
-    arg = get_arg(command->arg1, command->position, SUB_T_DIR_SIZE, foo->labels_vec);
-    foo->command_size += arg->size; //  увеличиваем размер команды в байтах
-    // add in vector arg
-    ft_ptr_vec_pushback(foo->args_vec, arg);
-    command->position += arg->size;
+    if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
+        return (NULL);
+    byte_command->command_code = 5;
 
-    arg = get_arg(command->arg2, command->position, SUB_T_DIR_SIZE, foo->labels_vec);
-    command->position += arg->size;
-    foo->command_size += arg->size;
-    // add in vector arg
-    ft_ptr_vec_pushback(foo->args_vec, arg);
+    byte_command->arg1 = get_arg(command->args[0], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
 
-    arg = get_arg(command->arg3, command->position, SUB_T_DIR_SIZE, foo->labels_vec);
-    command->position += arg->size;
-    foo->command_size += arg->size;
+    byte_command->arg2 = get_arg(command->args[1], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
+
+    byte_command->arg3 = get_arg(command->args[2], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
+
     // add in vector arg
-    ft_ptr_vec_pushback(foo->args_vec, arg);
+    byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4) +
+                                  (byte_command->arg3->type << 2);
+    ft_ptr_vec_pushback(foo->command_vec, byte_command);
 }
 
