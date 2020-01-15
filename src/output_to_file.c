@@ -12,9 +12,12 @@
 
 #include "../assembler.h"
 
-void
+void        write_rubbish_in_file(int fd, t_foo *foo)
+{
 
-void        write_in_file_command(int fd, t_pvec *command_vec, char *filename)
+}
+
+void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
 {
     const int       len = command_vec->length;
     t_b_command     *c_vec;
