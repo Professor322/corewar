@@ -28,5 +28,6 @@ t_b_command     *lld(t_command *command, t_foo *foo)
     byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4);
     // add in vector arg
     ft_ptr_vec_pushback(foo->args_vec, arg);
+    return (byte_command);
 }
 

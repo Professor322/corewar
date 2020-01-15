@@ -31,5 +31,6 @@ t_b_command     *sti(t_command *command, t_foo *foo)
     byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4) +
                                   (byte_command->arg3->type << 2);
     ft_ptr_vec_pushback(foo->command_vec, byte_command);
+    return (byte_command);
 }
 

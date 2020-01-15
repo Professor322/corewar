@@ -26,5 +26,6 @@ t_b_command     *ldi(t_command *command, t_foo *foo)
             (byte_command->arg3->type << 2);
 
     ft_ptr_vec_pushback(foo->command_vec, byte_command);
+    return (byte_command);
 }
 

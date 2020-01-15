@@ -26,4 +26,5 @@ t_b_command     *aff(t_command *command, t_foo *foo)
     // add in vector arg
     ft_ptr_vec_pushback(foo->command_vec, byte_command);
     //command->position += arg->size;
+    return (byte_command);
 }
