@@ -53,6 +53,9 @@ typedef struct	s_champ
 	t_pvec	*temp_labels; ///временные лейблы, у которых еще не была определена операция
 	t_pvec	*file_labels; /// последовательность вызова лейблов в файле
 	t_ht	*labels; /// словарь готовых лейблов
+    int 	command_size;	//размер команд а байтах
+    t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
+    t_pvec   *command_vec; // вектор структур с аргументами
 
 }				t_champ;
 

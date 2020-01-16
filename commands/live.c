@@ -28,17 +28,17 @@
  * будет содержать информацию о типе, является ли это значение меткой и какой? , значение в бинарном виде, и размер??
  *
 **/
-t_b_command     *live(char **command, t_foo *foo)
+t_b_command     *live(char **command, t_champ *champ)
 {
     t_b_command *byte_command;
 
     if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
         return (NULL);
     byte_command->command_code = 1;
-	byte_command->arg1 = get_arg(command[0], command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
+	byte_command->arg1 = get_arg(command[0], LIVE_T_DIR_SIZE, champ->labels_vec);
 //    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
     foo->command_size += (byte_command->arg1->size + 1);
-	ft_ptr_vec_pushback(foo->command_vec, byte_command);
+	ft_ptr_vec_pushback(champ->command_vec, byte_command);
 	//command->position += arg->size;
 	return (byte_command);
 }
