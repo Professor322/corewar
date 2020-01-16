@@ -132,11 +132,12 @@ char 	*parse_arg(char **line);
 
 void			parse(int fd);
 void			ft_exit(char *str);
-t_arg           *get_arg(char *arg, int pos, int dir_size, t_pvec *label_vec);
+t_arg           *get_arg(char *arg, int dir_size, t_pvec *label_vec);
 void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
 void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
 int             amount_real_bytes(unsigned int num, int size);
 int             ft_is_numeric(char *str);
+
 t_b_command     *add(char **command, t_champ *champ);
 t_b_command     *aff(char **command, t_champ *champ);
 t_b_command     *and(char **command, t_champ *champ);
