@@ -37,7 +37,7 @@ t_b_command     *live(t_command *command, t_foo *foo)
     byte_command->command_code = 1;
 	byte_command->arg1 = get_arg(command->args[0], command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
 //    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
-	// add in vector arg
+    foo->command_size += (byte_command->arg1->size + 1);
 	ft_ptr_vec_pushback(foo->command_vec, byte_command);
 	//command->position += arg->size;
 	return (byte_command);

@@ -22,6 +22,7 @@ t_b_command     *lfork(t_command *command, t_foo *foo)
     byte_command->command_code = 15;
     byte_command->arg1 = get_arg(command->args[0], command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
 //    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
+    foo->command_size += (byte_command->arg1->size + 1);
     // add in vector arg
     ft_ptr_vec_pushback(foo->command_vec, byte_command);
     //command->position += arg->size;

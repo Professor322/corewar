@@ -23,5 +23,6 @@ t_b_command     *(t_command *command, t_foo *foo)
     arg = get_arg(command->args[0], command->position, ZJMP_T_DIR_SIZE, foo->labels_vec);
     // add in vector arg
     ft_ptr_vec_pushback(foo->command_vec, byte_command);
+    foo->command_size += (byte_command->arg1->size + 1);
     return (byte_command);
 }

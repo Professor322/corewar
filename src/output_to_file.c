@@ -53,8 +53,9 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
     while (++i < len)
     {
         c_vec = ((t_b_command *)command_vec->data[i]);
+        write(fd, &(c_vec->command_code), 1);
         if (c_vec->arg_type_code)
-            write(1, &(c_vec->arg_type_code), 1);
+            write(fd, &(c_vec->arg_type_code), 1);
         arg = ((t_arg*)c_vec->arg1);
         write(fd, &arg->bin, arg->size);
         arg = ((t_arg*)c_vec->arg2);

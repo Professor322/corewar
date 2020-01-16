@@ -22,6 +22,7 @@ t_b_command     *aff(t_command *command, t_foo *foo)
         return (NULL);
     byte_command->command_code = 16;
     byte_command->arg1 = get_arg(command->args[0], command->position, LIVE_T_DIR_SIZE, foo->labels_vec);
+    foo->command_size += (byte_command->arg1->size + 1);
 //    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
     // add in vector arg
     ft_ptr_vec_pushback(foo->command_vec, byte_command);

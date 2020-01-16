@@ -14,7 +14,7 @@
 # define __ASSEMBLER_H
 
 # include "./libft/includes/libft.h"
-
+# include "../op.h"
 # define BYTE 8
 # define COMMANDS_NUM 16
 
@@ -55,7 +55,7 @@ typedef struct s_byte_command
 
 typedef struct	s_foo		// структура, которую возвращают функции
 {
-	int 	command_size;	//размер команды а байтах
+	int 	command_size;	//размер команд а байтах
 	t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
 	t_pvec   *command_vec; // вектор структур с аргументами
 }				t_foo;

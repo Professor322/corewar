@@ -22,9 +22,9 @@ t_b_command     *ld(t_command *command, t_foo *foo)
     byte_command->command_code = 2;
 
     byte_command->arg1 = get_arg(command->args[0], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
-
+    foo->command_size += (byte_command->arg1->size + 1);
     byte_command->arg2 = get_arg(command->args[1], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
-
+    foo->command_size += (byte_command->arg2->size + 1);
     byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4);
     // add in vector arg
     ft_ptr_vec_pushback(foo->args_vec, arg);
