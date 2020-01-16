@@ -12,8 +12,33 @@
 
 #include "../assembler.h"
 
+void        write_string(size_t str_len, size_t limit, char *str)
+{
+    char            *temp_str;
+
+    temp_str = ft_strnew(limit - str_len);
+    write(fd, str, str_len);
+    write(fd, temp_str, limit - str_len);
+    ft_strdel(temp_str);
+}
+
 void        write_rubbish_in_file(int fd, t_foo *foo)
 {
+    const size_t    name_len = ft_strlen(name);
+    char            *temp_str;
+
+    // write magic num
+    write(fd, COREWAR_EXEC_MAGIC, 4);
+    // write name champion
+    write_string(ft_strlen(name), PROG_NAME_LENGTH, name);
+    // write 4 NULL
+    write_string(0, 4, NUll);
+    // write champion exec code size
+    write(fd, &foo->command_size, 4);
+    // write champion_comment
+    write_string(ft_strlen(comment), COMMENT_LENGTH, comment);
+    // write 4 NULL
+    write_string(0, 4, NUll);
 
 }
 
