@@ -1,25 +1,25 @@
 //
 // Created by Virgil Legros on 16/01/2020.
 //
-#include "asm.h"
+#include "../assembler.h"
 
 t_command g_commands[COMMANDS_NUM] = {
-		{"live", 4, 1},
-		{"ld",   2, 2},
-		{"st",   2, 2},
-		{"add",  3, 3},
-		{"sub",  3, 3},
-		{"and",  3,3},
-		{"or",   2, 3},
-		{"xor",  3, 3},
-		{"zjmp", 4, 1},
-		{"ldi",  3, 3},
-		{"sti",  3, 3},
-		{"fork", 4, 1},
-		{"lld", 3, 2},
-		{"lldi", 4, 3},
-		{"lfork", 5, 2},
-		{"aff", 3, 2},
+		{"live", 4, 1, live},
+		{"ld",   2, 2, ld},
+		{"st",   2, 2, st},
+		{"add",  3, 3, add},
+		{"sub",  3, 3, sub},
+		{"and",  3,3, and},
+		{"or",   2, 3, or},
+		{"xor",  3, 3, xor},
+		{"zjmp", 4, 1, zjmp},
+		{"ldi",  3, 3, ldi},
+		{"sti",  3, 3, sti},
+		{"fork", 4, 1, ft_fork},
+		{"lld", 3, 2, lld},
+		{"lldi", 4, 3, lldi},
+		{"lfork", 5, 2, lfork},
+		{"aff", 3, 2, aff}
 };
 
 t_champ *champ_init()
@@ -60,14 +60,14 @@ void 	get_line(t_champ *champ, char *line)
 	}
 }
 
-void 	ft_parse(int fd)
+void 	ft_parse(int fd, t_champ *champ)
 {
 	char *line;
 
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
-
+		get_line(champ, line);
 		ft_memdel((void**)&line);
 	}
 }

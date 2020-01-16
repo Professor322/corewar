@@ -2,7 +2,7 @@
 // Created by Virgil Legros on 16/01/2020.
 //
 
-#include "asm.h"
+#include "../assembler.h"
 
 char		*is_label(char *line)
 {

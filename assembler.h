@@ -14,9 +14,48 @@
 # define __ASSEMBLER_H
 
 # include "./libft/includes/libft.h"
-# include "../op.h"
 # define BYTE 8
 # define COMMANDS_NUM 16
+
+#define IND_SIZE				2
+#define REG_SIZE				4
+#define DIR_SIZE				REG_SIZE
+
+
+# define REG_CODE				1
+# define DIR_CODE				2
+# define IND_CODE				3
+
+
+#define MAX_ARGS_NUMBER			4
+#define MAX_PLAYERS				4
+#define MEM_SIZE				(4*1024)
+#define IDX_MOD					(MEM_SIZE / 8)
+#define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+
+#define COMMENT_CHAR			'#'
+#define ALC_COMMENT_CHAR		';'
+#define LABEL_CHAR				':'
+#define DIRECT_CHAR				'%'
+#define SEPARATOR_CHAR			','
+
+#define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
+
+#define NAME_CMD_STRING			".name"
+#define COMMENT_CMD_STRING		".comment"
+
+#define COMMANDS_NUM			16
+
+#define TRUE					1
+#define FALSE					0
+typedef struct	s_champ
+{
+	t_pvec	*temp_labels; ///временные лейблы, у которых еще не была определена операция
+	t_pvec	*file_labels; /// последовательность вызова лейблов в файле
+	t_ht	*labels; /// словарь готовых лейблов
+
+}				t_champ;
+
 
 enum e_arg_type
 {
@@ -60,18 +99,16 @@ typedef struct	s_foo		// структура, которую возвращают
 	t_pvec   *command_vec; // вектор структур с аргументами
 }				t_foo;
 
-typedef struct	s_command
+
+typedef	struct	s_command
 {
-	char	*bin;  ///?
-	int 	position; ///?
-	char 	**args;  ///сделал массив аргументов. осторожно!
+	char	*name;
+	int		name_len;
+	int 	num_of_args;
+	t_b_command (*func)(char**, t_champ*);
+	///args
 }				t_command;
 
-typedef struct s_pair
-{
-	void	*first;
-	void	*second;
-}				t_pair;
 
 typedef struct	s_label 	// структура для сохранения одной метки
 {
@@ -82,24 +119,16 @@ typedef struct	s_label 	// структура для сохранения одн
     // полученное после применения функции-команды
 }				t_label;
 
-typedef	struct	s_node
-{
-	char *name;
-	void (*command)(t_command*, t_foo*);
-}				t_node;
 
+extern	t_command g_commands[COMMANDS_NUM];
 
-extern t_pair	*g_commands[16];
+void	ft_parse(int fd, t_champ *champ);
+void 	skip_spaces(char **line);
+char 	*is_label(char *line);
+int 	is_command(char **line);
+void	parse_label(t_champ *champ, char **line, char *label_end);
+char 	*parse_arg(char **line);
 
-int		ht_help_insert(t_ht *hashtable, void *node, unsigned long index);
-int		ht_command_enlarge(t_ht *ht);
-int		ht_label_enlarge(t_ht *ht);
-int		ht_insert_command(t_ht *hashtable, t_node *node);
-int		ht_insert_label(t_ht *hashtable, t_label *node);
-t_ht	*create_commands_ht(void);
-char	*get_label(char **line);
-int	 get_command_name(char **line);
-t_command	*get_args(char *line);
 
 void			parse(int fd);
 void			ft_exit(char *str);
@@ -108,23 +137,23 @@ void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
 void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
 int             amount_real_bytes(unsigned int num, int size);
 int             ft_is_numeric(char *str);
-t_b_command     *add(t_command *command, t_foo *foo);
-t_b_command     *aff(t_command *command, t_foo *foo);
-t_b_command     *and(t_command *command, t_foo *foo);
-t_b_command     *ft_fork(t_command *command, t_foo *foo);
-t_b_command     *help_command(t_command *command, t_foo *foo);
-t_b_command     *ld(t_command *command, t_foo *foo);
-t_b_command     *ldi(t_command *command, t_foo *foo);
-t_b_command     *lfork(t_command *command, t_foo *foo);
-t_b_command     *live(t_command *command, t_foo *foo);
-t_b_command     *live(t_command *command, t_foo *foo);
-t_b_command     *lld(t_command *command, t_foo *foo);
-t_b_command     *lldi(t_command *command, t_foo *foo);
-t_b_command     *or(t_command *command, t_foo *foo);
-t_b_command     *st(t_command *command, t_foo *foo);
-t_b_command     *sti(t_command *command, t_foo *foo);
-t_b_command     *sub(t_command *command, t_foo *foo);
-t_b_command     *xor(t_command *command, t_foo *foo);
-t_b_command     *zjmp(t_command *command, t_foo *foo);
+t_b_command     *add(char **command, t_champ *champ);
+t_b_command     *aff(char **command, t_champ *champ);
+t_b_command     *and(char **command, t_champ *champ);
+t_b_command     *ft_fork(char **command, t_champ *champ);
+t_b_command     *help_command(char **command, t_champ *champ);
+t_b_command     *ld(char **command, t_champ *champ);
+t_b_command     *ldi(char **command, t_champ *champ);
+t_b_command     *lfork(char **command, t_champ *champ);
+t_b_command     *live(char **command, t_champ *champ);
+t_b_command     *live(char **command, t_champ *champ);
+t_b_command     *lld(char **command, t_champ *champ);
+t_b_command     *lldi(char **command, t_champ *champ);
+t_b_command     *or(char **command, t_champ *champ);
+t_b_command     *st(char **command, t_champ *champ);
+t_b_command     *sti(char **command, t_champ *champ);
+t_b_command     *sub(char **command, t_champ *champ);
+t_b_command     *xor(char **command, t_champ *champ);
+t_b_command     *zjmp(char **command, t_champ *champ);
 
 #endif

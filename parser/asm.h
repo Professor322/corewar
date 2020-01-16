@@ -6,6 +6,7 @@
 #define ASM_ASM_H
 
 #include "libft.h"
+#include "../assembler.h"
 
 #define IND_SIZE				2
 #define REG_SIZE				4
@@ -50,17 +51,19 @@ typedef	struct	s_command
 {
 	char	*name;
 	int		name_len;
-	int 	num_of_args
+	int 	num_of_args;
+	t_b_command (*func)(char**, t_champ*);
 	///args
 }				t_command;
 
 extern	t_command g_commands[COMMANDS_NUM];
 
-void	ft_parse(int fd);
+void	ft_parse(int fd, t_champ *champ);
 void 	skip_spaces(char **line);
 char 	*is_label(char *line);
 int 	is_command(char **line);
 void	parse_label(t_champ *champ, char **line, char *label_end);
 char 	*parse_arg(char **line);
+
 
 #endif //ASM_ASM_H
