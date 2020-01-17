@@ -18,6 +18,10 @@ FILE(GLOB char_vec ./libft/vec_funcs/char_vec/*.c)
 
 include_directories( ./libft/includes)
 
-add_executable(asm src/ft_parse.c src/parse_command.c src/parse_label.c ./src/insert_node.c ./src/enlarge_table.c ./src/find_node.c)
+add_executable(asm src/ft_parse.c src/parse_command.c src/parse_label.c ./src/insert_node.c ./src/enlarge_table.c ./src/find_node.c
+        ./commands/add.c ./commands/aff.c ./commands/and.c ./commands/fork.c ./commands/help_command.c ./commands/ld.c
+        ./commands/ldi.c ./commands/lfork.c ./commands/live.c ./commands/lld.c ./commands/lldi.c ./commands/or.c
+        ./commands/st.c ./commands/sti.c ./commands/sub.c ./commands/xor.c ./commands/zjmp.c
+        )
 
 target_link_libraries(asm ~/corewar/libft/libft.a)
