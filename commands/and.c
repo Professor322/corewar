@@ -13,7 +13,7 @@
 #include "../assembler.h"
 #define AND_T_DIR_SIZE 4
 
-t_b_command     *and(t_command *command, t_foo *foo)
+t_b_command     *and(char **command, t_champ *champ)
 {
     t_b_command *byte_command;
 
@@ -21,16 +21,16 @@ t_b_command     *and(t_command *command, t_foo *foo)
         return (NULL);
     byte_command->command_code = 6;
 
-    byte_command->arg1 = get_arg(command->args[0], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
-    foo->command_size += (byte_command->arg1->size + 1);
-    byte_command->arg2 = get_arg(command->args[1], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
-    foo->command_size += (byte_command->arg2->size);
-    byte_command->arg3 = get_arg(command->args[2], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
-    foo->command_size += (byte_command->arg3->size + 1);
+    byte_command->arg1 = get_arg(command[0], XOR_T_DIR_SIZE, champ->labels_vec);
+    champ->command_size += (byte_command->arg1->size + 1);
+    byte_command->arg2 = get_arg(command[1], XOR_T_DIR_SIZE, champ->labels_vec);
+    champ->command_size += (byte_command->arg2->size);
+    byte_command->arg3 = get_arg(command[2], XOR_T_DIR_SIZE, champ->labels_vec);
+    champ->command_size += (byte_command->arg3->size + 1);
     // add in vector arg
     byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4) +
                                   (byte_command->arg3->type << 2);
-    ft_ptr_vec_pushback(foo->command_vec, byte_command);
+    ft_ptr_vec_pushback(champ->command_vec, byte_command);
     return (byte_command);
 }
 
