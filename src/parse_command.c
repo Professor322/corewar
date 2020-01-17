@@ -69,5 +69,4 @@ void	compile_command(const int cmd, char **args, t_champ *champ, char *line)
 		ht_insert_node(champ->labels,
 				create_node(ft_ptr_vec_popback(champ->temp_labels), compiled_command));
 	}
-	///кладем в вектор аутпута
 }

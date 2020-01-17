@@ -22,17 +22,6 @@ t_command g_commands[COMMANDS_NUM] = {
 		{"aff", 3, 2, aff}
 };
 
-t_champ *champ_init()
-{
-	t_champ	*champ;
-
-	champ = (t_champ*)ft_memalloc(sizeof(t_champ));
-	champ->temp_labels = ft_ptr_vec_init();
-	champ->file_labels = ft_ptr_vec_init();
-	champ->labels = ft_ht_init();
-	return (champ);
-}
-
 void 	skip_spaces(char **line)
 {
 	char *ln;
@@ -55,9 +44,7 @@ void 	get_line(t_champ *champ, char *line)
 	if ((lbl = is_label(line)))
 		parse_label(champ, &line, lbl);
 	if ((cmd  = is_command(&line)))
-	{
-
-	}
+		compile_command(cmd, parse_command(line, cmd), champ, line);
 }
 
 void 	ft_parse(int fd, t_champ *champ)
