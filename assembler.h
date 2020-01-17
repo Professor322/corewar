@@ -45,6 +45,9 @@
 #define COMMENT_CMD_STRING		".comment"
 
 #define COMMANDS_NUM			16
+# define PROG_NAME_LENGTH		(128)
+# define COMMENT_LENGTH			(2048)
+# define COREWAR_EXEC_MAGIC		0xea83f3
 
 #define TRUE					1
 #define FALSE					0
@@ -55,7 +58,7 @@ typedef struct	s_champ
 	t_ht	*labels; /// словарь готовых лейблов
     int 	command_size;	//размер команд а байтах
     t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
-    t_pvec   *command_vec; // вектор структур с аргументами
+    t_pvec   *command_vec; // вектор структур с командами
 
 }				t_champ;
 
@@ -141,8 +144,9 @@ int 	is_command(char **line);
 void	parse_label(t_champ *champ, char **line, char *label_end);
 char	**parse_command(char *line, const int cmd);
 char 	*parse_arg(char **line);
+void	compile_command(const int cmd, char **args, t_champ *champ);
 
-
+void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename);
 void			parse(int fd);
 void			ft_exit(char *str);
 t_arg           *get_arg(char *arg, int dir_size, t_pvec *label_vec);
