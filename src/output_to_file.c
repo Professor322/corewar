@@ -65,7 +65,7 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
     }
 //write(fd, &test, 1);
 }
-
+/*
 int        main()
 {
     t_foo           *foo;
@@ -75,4 +75,4 @@ int        main()
     write_in_file_command(fd, foo->command_vec, "/Users/jziemann/corewar/src/mat.s");
     return (0);
 }
-
+*/

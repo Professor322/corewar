@@ -20,7 +20,7 @@ t_b_command     *zjmp(char **command, t_champ *champ)
     if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
         return (NULL);
     byte_command->command_code = 9;
-    arg = get_arg(command[0], ZJMP_T_DIR_SIZE, champ->labels_vec);
+    byte_command->arg1 = get_arg(command[0], ZJMP_T_DIR_SIZE, champ->labels_vec);
     // add in vector arg
     ft_ptr_vec_pushback(champ->command_vec, byte_command);
     champ->command_size += (byte_command->arg1->size + 1);
