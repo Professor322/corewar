@@ -20,9 +20,9 @@ int			ft_is_numeric(char *str)
     return (1);
 }
 
-int         amount_real_bytes(unsigned int num, int size)
+unsigned int       amount_real_bytes(unsigned int num, unsigned int size)
 {
-    int amount;
+    unsigned int amount;
 
     amount = 0;
     if (!num)

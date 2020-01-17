@@ -21,11 +21,11 @@ t_b_command     *sub(char **command, t_champ *champ)
         return (NULL);
     byte_command->command_code = 5;
 
-    byte_command->arg1 = get_arg(command[0], XOR_T_DIR_SIZE, champ->labels_vec);
+    byte_command->arg1 = get_arg(command[0], SUB_T_DIR_SIZE, champ->labels_vec);
     champ->command_size += (byte_command->arg1->size + 1);
-    byte_command->arg2 = get_arg(command[1], XOR_T_DIR_SIZE, champ->labels_vec);
+    byte_command->arg2 = get_arg(command[1], SUB_T_DIR_SIZE, champ->labels_vec);
     champ->command_size += (byte_command->arg2->size);
-    byte_command->arg3 = get_arg(command[2], XOR_T_DIR_SIZE, champ->labels_vec);
+    byte_command->arg3 = get_arg(command[2], SUB_T_DIR_SIZE, champ->labels_vec);
     champ->command_size += (byte_command->arg3->size + 1);
     // add in vector arg
     byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4) +

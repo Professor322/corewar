@@ -28,7 +28,7 @@ t_b_command     *xor(char **command, t_champ *champ)
     byte_command->arg3 = get_arg(command[2], XOR_T_DIR_SIZE, champ->labels_vec);
     champ->command_size += (byte_command->arg3->size + 1);
     // add in vector arg
-    byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4) +
+    byte_command->arg_type_code = (((unsigned int)(byte_command->arg1->type)) << 6) + (byte_command->arg2->type << 4) +
                                   (byte_command->arg3->type << 2);
     ft_ptr_vec_pushback(champ->command_vec, byte_command);
     return (byte_command);
