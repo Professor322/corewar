@@ -105,10 +105,9 @@ typedef	struct	s_command
 	char	*name;
 	int		name_len;
 	int 	num_of_args;
-	t_b_command (*func)(char**, t_champ*);
+	t_b_command* (*func)(char**, t_champ*);
 	///args
 }				t_command;
-
 
 typedef struct	s_label 	// структура для сохранения одной метки
 {
@@ -119,14 +118,25 @@ typedef struct	s_label 	// структура для сохранения одн
     // полученное после применения функции-команды
 }				t_label;
 
+typedef struct	s_node       ///элемент хэштаблицы
+{
+	char	*name;
+	t_b_command *command;
+}				t_node;
 
 extern	t_command g_commands[COMMANDS_NUM];
 
+///hashtable
+int		ht_insert_node(t_ht *hashtable, t_node *node);
+int				ht_enlarge(t_ht *ht);
+t_node		*ht_find_node(t_ht *ht, char *name);
+///parse
 void	ft_parse(int fd, t_champ *champ);
 void 	skip_spaces(char **line);
 char 	*is_label(char *line);
 int 	is_command(char **line);
 void	parse_label(t_champ *champ, char **line, char *label_end);
+char	**parse_command(char *line, const int cmd);
 char 	*parse_arg(char **line);
 
 

@@ -19,8 +19,8 @@
 # include "get_next_line.h"
 # include "ft_printf.h"
 
-# define START_CAP 1000
-# define HT_START_CAP 1000
+# define START_CAP 100
+# define HT_START_CAP 100
 # define USE_GC 	  0
 
 typedef	struct		s_list

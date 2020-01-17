@@ -18,6 +18,6 @@ FILE(GLOB char_vec ./libft/vec_funcs/char_vec/*.c)
 
 include_directories( ./libft/includes)
 
-add_executable(asm parser/ft_parse.c parser/asm.h parser/parse_command.c parser/parse_label.c)
+add_executable(asm src/ft_parse.c src/parse_command.c src/parse_label.c ./src/insert_node.c ./src/enlarge_table.c ./src/find_node.c)
 
 target_link_libraries(asm ~/corewar/libft/libft.a)
