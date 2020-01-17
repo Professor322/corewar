@@ -13,7 +13,7 @@
 #include "../assembler.h"
 #define ST_T_DIR_SIZE 4
 
-t_b_command     *st(t_command *command, t_foo *foo)
+t_b_command     *st(char **command, t_champ *champ)
 {
     t_b_command *byte_command;
 
@@ -21,12 +21,12 @@ t_b_command     *st(t_command *command, t_foo *foo)
         return (NULL);
     byte_command->command_code = 3;
 
-    byte_command->arg1 = get_arg(command->args[0], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
-    foo->command_size += (byte_command->arg1->size + 1);
-    byte_command->arg2 = get_arg(command->args[1], command->position, XOR_T_DIR_SIZE, foo->labels_vec);
-    foo->command_size += (byte_command->arg2->size + 1);
+    byte_command->arg1 = get_arg(command[0], XOR_T_DIR_SIZE, champ->labels_vec);
+    champ->command_size += (byte_command->arg1->size + 1);
+    byte_command->arg2 = get_arg(command[1], XOR_T_DIR_SIZE, champ->labels_vec);
+    champ->command_size += (byte_command->arg2->size + 1);
     byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4);
     // add in vector arg
-    ft_ptr_vec_pushback(foo->args_vec, arg);
+    ft_ptr_vec_pushback(champ->args_vec, arg);
 }
 
