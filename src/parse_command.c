@@ -27,7 +27,7 @@ char 	*parse_arg(char **line)
 	while (!ft_isspace(*arg_end) &&
 		*arg_end != SEPARATOR_CHAR &&
 		*arg_end != COMMENT_CHAR &&
-		*arg_end != ALC_COMMENT_CHAR)
+		*arg_end != ALT_COMMENT_CHAR)
 		arg_end++;
 	*line = ft_strchr(*line, SEPARATOR_CHAR) + 1;
 	*arg_end = '\0';

@@ -50,7 +50,7 @@ void 	get_line(t_champ *champ, char *line)
 	if (!line)
 		return ;
 	skip_spaces(&line);
-	if (!*line || *line == COMMENT_CHAR || *line == ALC_COMMENT_CHAR)
+	if (!*line || *line == COMMENT_CHAR || *line == ALT_COMMENT_CHAR)
 		return ;
 	if ((lbl = is_label(line)))
 		parse_label(champ, &line, lbl);
