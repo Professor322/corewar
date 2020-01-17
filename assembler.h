@@ -88,7 +88,7 @@ typedef struct	s_arg		// структура одного аргумента
 typedef struct s_byte_command
 {
     int     command_code;
-    int     arg_type_code;
+    unsigned int     arg_type_code;
     int     command_size;
     t_arg   *arg1;
     t_arg   *arg2;

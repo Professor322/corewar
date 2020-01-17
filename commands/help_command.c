@@ -51,7 +51,7 @@ void        reg_arg(t_arg *arg_parse, int dir_size, char *arg)
 
 void        dir_arg(t_arg *arg_parse, int dir_size, char *arg)
 {
-    int dir_val;
+    unsigned int dir_val;
 
     dir_val = ft_atoi(++arg);
     arg_parse->size = dir_size;
