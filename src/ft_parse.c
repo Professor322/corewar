@@ -47,7 +47,8 @@ void 	get_line(t_champ *champ, char *line)
 		compile_command(cmd, parse_command(line, cmd), champ);
 }
 
-void 	ft_parse(int fd, t_champ *champ)
+
+void	get_exec(int fd, t_champ *champ)
 {
 	char *line;
 
@@ -57,5 +58,10 @@ void 	ft_parse(int fd, t_champ *champ)
 		get_line(champ, line);
 		ft_memdel((void**)&line);
 	}
+}
+
+void 	ft_parse(int fd, t_champ *champ)
+{
+	get_exec(fd, champ);
 }
 
