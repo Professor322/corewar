@@ -20,9 +20,9 @@ int			ft_is_numeric(char *str)
     return (1);
 }
 
-unsigned int       amount_real_bytes(unsigned int num, unsigned int size)
+int       amount_real_bytes(int num, int size)
 {
-    unsigned int amount;
+    int amount;
 
     amount = 0;
     if (!num)
@@ -30,7 +30,7 @@ unsigned int       amount_real_bytes(unsigned int num, unsigned int size)
     while (num > 0)
     {
         amount++;
-        num >>= 8;
+        num >>= (unsigned int) 8;
     }
 //    printf("\nsize: %d\n amount : %d\n", size, amount);
 //    printf("real_bytes: %d\n", size - amount);
@@ -51,23 +51,54 @@ void        reg_arg(t_arg *arg_parse, int dir_size, char *arg)
 
 void        dir_arg(t_arg *arg_parse, int dir_size, char *arg)
 {
-    unsigned int dir_val;
+    unsigned int    dir_val;
+    int             temp;
 
-    dir_val = ft_atoi(++arg);
+    printf("%s ", arg);
+    temp = ft_atoi(++arg);
+    printf("%d\t", temp);
+    if (temp < 0)
+    {
+        dir_val = temp * -1;
+        dir_val = ~(dir_val) + 1;
+        arg_parse->bin = dir_val >> 24 | dir_val << 8;
+    }
+    else
+    {
+        dir_val = temp;
+        arg_parse->bin = dir_val<< (unsigned int)8  * amount_real_bytes(dir_val, dir_size);
+    }
+//    dir_val = temp < 0 ? ~((temp * -1)) : temp;
+    ft_printf("%x\t%x\t",(unsigned int)200, dir_val);
     arg_parse->size = dir_size;
     arg_parse->type = T_DIR;
-    arg_parse->bin = dir_val << 8 * amount_real_bytes(dir_val, dir_size);
+
+    printf("\namount %d\n", amount_real_bytes(dir_val, dir_size));
+    printf("\n! %x %x   %x   %x ! \n", dir_val,   dir_val >> 24, dir_val << 8,  dir_val >> 24| dir_val << 8);
+   //
 //    write(1, &arg_parse->bin, arg_parse->size);
 //    printf("\nsize %d\n type %u\n", arg_parse->size, arg_parse->type);
 }
 
 void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
 {
-    int ind_val;
-    ind_val = ft_atoi(arg);
+    unsigned int    ind_val;
+    int             temp;
+
+    temp = ft_atoi(arg);
+    if (temp < 0)
+    {
+        ind_val = ~((unsigned int)(temp * -1)) + 1;
+        arg_parse->bin = ind_val >> 24 | ind_val << 8;
+    }
+    else
+    {
+        ind_val = temp;
+        arg_parse->bin = ind_val << 8 * amount_real_bytes(ind_val, arg_parse->size);
+    }
     arg_parse->type = T_IND;
     arg_parse->size = 2;
-    arg_parse->bin = ind_val << 8 * amount_real_bytes(ind_val, arg_parse->size);
+
 //    write(1, &arg_parse->bin, arg_parse->size);
 //    printf("size %d\n type %u\n", arg_parse->size, arg_parse->type);
     //indirect
