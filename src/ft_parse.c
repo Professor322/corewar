@@ -5,7 +5,10 @@
 
 t_command g_commands[COMMANDS_NUM] = {
 		{"live", 4, 1, live},
+		{"lldi", 4, 3, lldi},
+		{"lld", 3, 2, lld},
 		{"ld",   2, 2, ld},
+		{"sti",  3, 3, sti},
 		{"st",   2, 2, st},
 		{"add",  3, 3, add},
 		{"sub",  3, 3, sub},
@@ -14,10 +17,7 @@ t_command g_commands[COMMANDS_NUM] = {
 		{"xor",  3, 3, xor},
 		{"zjmp", 4, 1, zjmp},
 		{"ldi",  3, 3, ldi},
-		{"sti",  3, 3, sti},
 		{"fork", 4, 1, ft_fork},
-		{"lld", 3, 2, lld},
-		{"lldi", 4, 3, lldi},
 		{"lfork", 5, 2, lfork},
 		{"aff", 3, 2, aff}
 };
@@ -43,8 +43,8 @@ void 	get_line(t_champ *champ, char *line)
 		return ;
 	if ((lbl = is_label(line)))
 		parse_label(champ, &line, lbl);
-	if ((cmd  = is_command(&line)))
-		compile_command(cmd, parse_command(line, cmd), champ, line);
+	if (line && (cmd  = is_command(&line)) >= 0)
+		compile_command(cmd, parse_command(line, cmd), champ);
 }
 
 void 	ft_parse(int fd, t_champ *champ)
@@ -58,3 +58,4 @@ void 	ft_parse(int fd, t_champ *champ)
 		ft_memdel((void**)&line);
 	}
 }
+

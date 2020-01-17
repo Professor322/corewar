@@ -132,6 +132,7 @@ t_arg		*get_arg(char *arg, int dir_size, t_pvec *label_vec)
         indir_arg(arg_parse, dir_size, arg); // unused dir_size
     else
     {
+
         printf("GOVNO");
         exit(0);
     }

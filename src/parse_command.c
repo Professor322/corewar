@@ -17,19 +17,23 @@ int 	is_command(char **line)
 
 char 	*parse_arg(char **line)
 {
-	char *arg_start;
-	char *arg_end;
+	char	*arg_start;
+	char	*arg_end;
+	char	*sep;
 
 	arg_start = *line;
-	while (ft_isspace(*arg_start))
+	while (*arg_start && ft_isspace(*arg_start))
 		arg_start++;
 	arg_end = arg_start;
-	while (!ft_isspace(*arg_end) &&
+	while (*arg_end && !ft_isspace(*arg_end) &&
 		*arg_end != SEPARATOR_CHAR &&
 		*arg_end != COMMENT_CHAR &&
 		*arg_end != ALT_COMMENT_CHAR)
 		arg_end++;
-	*line = ft_strchr(*line, SEPARATOR_CHAR) + 1;
+	if ((sep = ft_strchr(*line, SEPARATOR_CHAR)))
+		*line = sep + 1;
+	else
+		*line = NULL;
 	*arg_end = '\0';
 	return (ft_strdup(arg_start));
 }
@@ -60,10 +64,10 @@ t_node	*create_node(char *label, t_b_command *command)
 	return (new_label);
 }
 
-void	compile_command(const int cmd, char **args, t_champ *champ, char *line)
+void	compile_command(const int cmd, char **args, t_champ *champ)
 {
 	t_b_command *compiled_command =
-			g_commands[cmd].func(parse_command(line, cmd), champ);
+			g_commands[cmd].func(args, champ);
 	while (champ->temp_labels->length)
 	{
 		ht_insert_node(champ->labels,

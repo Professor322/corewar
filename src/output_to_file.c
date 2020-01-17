@@ -12,16 +12,16 @@
 
 #include "../assembler.h"
 
-void        write_string(size_t str_len, size_t limit, char *str)
+void        write_string(int fd, size_t str_len, size_t limit, char *str)
 {
     char            *temp_str;
 
     temp_str = ft_strnew(limit - str_len);
     write(fd, str, str_len);
     write(fd, temp_str, limit - str_len);
-    ft_strdel(temp_str);
+    ft_strdel(&temp_str);
 }
-
+/*
 void        write_rubbish_in_file(int fd, t_champ *champ)
 {
     const size_t    name_len = ft_strlen(name);
@@ -41,7 +41,7 @@ void        write_rubbish_in_file(int fd, t_champ *champ)
     write_string(0, 4, NUll);
 
 }
-
+*/
 void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
 {
     const int       len = command_vec->length;
@@ -59,9 +59,11 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
         arg = ((t_arg*)c_vec->arg1);
         write(fd, &arg->bin, arg->size);
         arg = ((t_arg*)c_vec->arg2);
-        write(fd, &arg->bin, arg->size);
+        if (arg)
+        	write(fd, &arg->bin, arg->size);
         arg = ((t_arg*)c_vec->arg3);
-        write(fd, &arg->bin, arg->size);
+        if (arg)
+        	write(fd, &arg->bin, arg->size);
     }
 //write(fd, &test, 1);
 }
