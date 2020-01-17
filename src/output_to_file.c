@@ -22,7 +22,7 @@ void        write_string(size_t str_len, size_t limit, char *str)
     ft_strdel(temp_str);
 }
 
-void        write_rubbish_in_file(int fd, t_foo *foo)
+void        write_rubbish_in_file(int fd, t_champ *champ)
 {
     const size_t    name_len = ft_strlen(name);
     char            *temp_str;
@@ -34,7 +34,7 @@ void        write_rubbish_in_file(int fd, t_foo *foo)
     // write 4 NULL
     write_string(0, 4, NUll);
     // write champion exec code size
-    write(fd, &foo->command_size, 4);
+    write(fd, &champ->command_size, 4);
     // write champion_comment
     write_string(ft_strlen(comment), COMMENT_LENGTH, comment);
     // write 4 NULL
