@@ -37,8 +37,7 @@ void 		ft_st(t_car *car, t_cbox *cbox)
 	carbox.cbox = cbox;
 	carbox.car = car;
 	carbox.op_command_code = ST_COMMAND_CODE;
-	exec_command(&carbox, op_unique_commands, get_default_arg_size,
-				 validate_permitted_types);
+	exec_command(&carbox, op_unique_commands, validate_permitted_types);
 }
 
 

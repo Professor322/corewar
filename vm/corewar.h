@@ -160,10 +160,10 @@ int				clean_all(t_cbox *cbox, char code_exit);
 void 			dump_arena(unsigned char *arena);
 
 
-int				prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS], int (*get_arg_size)(t_arg_type), int (*validate_permitted_types)(t_arg*));
+int				prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS], int (*validate_permitted_types)(t_arg*));
 
 int				get_default_arg_size(t_arg_type type);
-void			cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args, int (*get_arg_size)(t_arg_type));
+void			cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args);
 int				get_arg_values(t_car *car, t_cbox *cbox, t_arg *args);
 int 			get_int_from_arg(t_car *car, t_cbox *cbox, t_arg arg);
 
@@ -173,6 +173,7 @@ int				get_int_from_bytes(unsigned char *arr, unsigned int pos, int size);
 void			write_int_to_bytes(unsigned char *arr, unsigned int pos, unsigned int val);
 void	write_to_reg(t_car *car, int reg, int value);
 int 	read_from_reg(t_car *car, int reg);
+int		get_arg_size(t_car *car, t_arg_type type);
 
 
 
@@ -182,7 +183,6 @@ int				validate_user(t_cbox *cbox, int value);
 
 void		exec_command(t_carbox *carbox,
 						 void (*op_unique_commands)(t_car*, t_cbox*, t_arg[CW_MAX_ARGS]),
-						 int (*get_arg_size)(t_arg_type),
 						 int (*validate_permitted_types)(t_arg*));
 
 

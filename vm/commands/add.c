@@ -24,6 +24,5 @@ void		ft_add(t_car *car, t_cbox *cbox)
 	carbox.cbox = cbox;
 	carbox.car = car;
 	carbox.op_command_code = ADD_COMMAND_CODE;
-	exec_command(&carbox, op_unique_commands, get_default_arg_size,
-				 sub_add_validate_permitted_types);
+	exec_command(&carbox, op_unique_commands, sub_add_validate_permitted_types);
 }

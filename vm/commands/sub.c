@@ -24,8 +24,7 @@ void		ft_sub(t_car *car, t_cbox *cbox)
 	carbox.cbox = cbox;
 	carbox.car = car;
 	carbox.op_command_code = SUB_COMMAND_CODE;
-	exec_command(&carbox, op_unique_commands, get_default_arg_size,
-				 sub_add_validate_permitted_types);
+	exec_command(&carbox, op_unique_commands, sub_add_validate_permitted_types);
 }
 
 ////// TESTS
@@ -36,7 +35,8 @@ void		ft_sub(t_car *car, t_cbox *cbox)
 //{
 //	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
-////offset
+//
+//	//offset
 ////	i = 15;
 //
 //	//command_code
@@ -55,7 +55,7 @@ void		ft_sub(t_car *car, t_cbox *cbox)
 //	arr[i++] = 5;
 //
 //}
-
+//
 //
 //int		main(int argc, char **argv)
 //{

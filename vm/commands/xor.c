@@ -29,6 +29,5 @@ void		ft_xor(t_car *car, t_cbox *cbox)
 	carbox.cbox = cbox;
 	carbox.car = car;
 	carbox.op_command_code = XOR_COMMAND_CODE;
-	exec_command(&carbox, op_unique_commands, get_default_arg_size,
-				 logical_validate_permitted_types);
+	exec_command(&carbox, op_unique_commands, logical_validate_permitted_types);
 }

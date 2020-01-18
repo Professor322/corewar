@@ -35,17 +35,34 @@ int		get_default_arg_size(t_arg_type type)
 	return 0;
 }
 
-int		prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS], int (*get_arg_size)(t_arg_type), int (*validate_permitted_types)(t_arg*))
+int		prepare_arguments(t_carbox *carbox,
+		t_arg args[CW_MAX_ARGS],
+		int (*validate_permitted_types)(t_arg*))
 {
-	cw_get_arg_types(carbox->car, carbox->cbox, args, get_arg_size);
-	if (!validate_permitted_types(args))
-		return 0;
+	if (carbox->car->oper.has_type_byte)
+	{
+		cw_get_arg_types(carbox->car, carbox->cbox, args);
+		if (!validate_permitted_types(args))
+			return 0;
+	}
+	else
+	{
+		validate_permitted_types(args); // set default types
+	}
 	if (!get_arg_values(carbox->car, carbox->cbox, args))
 		return 0;
 	return 1;
 }
 
-void	cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args, int (*get_arg_size)(t_arg_type))
+int		get_arg_size(t_car *car, t_arg_type type)
+{
+	if (type == DIR)
+		return car->oper.t_dir_size;
+	else
+		return get_default_arg_size(type);
+}
+
+void	cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args)
 {
 	unsigned int i;
 	unsigned char byte;
@@ -54,7 +71,7 @@ void	cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args, int (*get_arg_size)
 	i = 0;
 	while (i < CW_MAX_ARGS) {
 		args[i].type = byte >> ((CW_MAX_ARGS - i - 1) * 2) & 0b11;
-		args[i].size = get_arg_size(args[i].type);
+		args[i].size = get_arg_size(car, args[i].type);
 		i++;
 	}
 }
@@ -113,8 +130,8 @@ int 	read_from_reg(t_car *car, int reg)
 int		get_arg_values(t_car *car, t_cbox *cbox, t_arg *args)
 {
 	unsigned char	*arr;
-	int				arg_i;
-	int 			arr_i;
+	unsigned int	arg_i;
+	unsigned int 	arr_i;
 
 	arg_i = 0;
 	arr_i = car->oper.has_type_byte + OP_BYTE_OFFSET;
@@ -152,7 +169,6 @@ int		validate_user(t_cbox *cbox, int value)
 
 void	exec_command(t_carbox *carbox,
 		void (*op_unique_commands)(t_car*, t_cbox*, t_arg[CW_MAX_ARGS]),
-		int (*get_arg_size)(t_arg_type),
 		int (*validate_permitted_types)(t_arg*))
 {
 	t_arg		args[CW_MAX_ARGS];
@@ -162,7 +178,7 @@ void	exec_command(t_carbox *carbox,
 		carbox->car->pos = POS(carbox->car->pos + 1);
 		return ;
 	}
-	if (prepare_arguments(carbox, args, get_arg_size, validate_permitted_types))
+	if (prepare_arguments(carbox, args, validate_permitted_types))
 		op_unique_commands(carbox->car, carbox->cbox, args);
 	move_car(carbox->car, args);
 }
