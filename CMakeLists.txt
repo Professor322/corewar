@@ -22,6 +22,6 @@ add_executable(asm src/ft_parse.c src/parse_command.c src/parse_label.c ./src/in
         ./commands/add.c ./commands/aff.c ./commands/and.c ./commands/fork.c ./commands/help_command.c ./commands/ld.c
         ./commands/ldi.c ./commands/lfork.c ./commands/live.c ./commands/lld.c ./commands/lldi.c ./commands/or.c
         ./commands/st.c ./commands/sti.c ./commands/sub.c ./commands/xor.c ./commands/zjmp.c main.c ./src/output_to_file.c
-        src/parse_name_and_comment.c)
+        src/parse_name_and_comment.c ./libft/useful_funcs/get_next_line.c)
 
 target_link_libraries(asm ~/corewar/libft/libft.a)
