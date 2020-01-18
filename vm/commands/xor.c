@@ -22,13 +22,13 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->carry = 0;
 }
 
-void		ft_and(t_car *car, t_cbox *cbox)
+void		ft_xor(t_car *car, t_cbox *cbox)
 {
 	t_carbox carbox;
 
 	carbox.cbox = cbox;
 	carbox.car = car;
-	carbox.op_command_code = AND_COMMAND_CODE;
+	carbox.op_command_code = XOR_COMMAND_CODE;
 	exec_command(&carbox, op_unique_commands, get_default_arg_size,
 				 logical_validate_permitted_types);
 }

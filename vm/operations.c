@@ -38,23 +38,23 @@ t_oper	get_operation(char code)
 {
 
 	static t_oper	operations[] = {
-			{"ft_live", ft_live, 10, FALSE},
-			{"ft_ld", ft_ld, 5, TRUE},
-			{"ft_st", ft_st, 5, TRUE},
-			{"ft_add", ft_add, 10, TRUE},
-			{"sub", ft_sub, 10, TRUE},
-			{"and", ft_and, 6, TRUE},
-			{"or", &moke_up_function, 6, TRUE},
-			{"xor", &moke_up_function, 6, TRUE},
-			{"zjmp", &moke_up_function, 20, FALSE},
-			{"ldi", &moke_up_function, 25, TRUE},
-			{"sti", &moke_up_function, 25, TRUE},
-			{"fork", &moke_up_function, 800, FALSE},
-			{"lld", &moke_up_function, 10, TRUE},
-			{"lldi", &moke_up_function, 50, TRUE},
-			{"lfork", &moke_up_function, 1000, FALSE},
-			{"aff", &moke_up_function, 2, TRUE},
-			{"inval", &invalid_operation, 1, FALSE}
+			{"ft_live", ft_live, 10, FALSE, 4},
+			{"ft_ld", ft_ld, 5, TRUE, 4},
+			{"ft_st", ft_st, 5, TRUE, 4},
+			{"ft_add", ft_add, 10, TRUE, 4},
+			{"sub", ft_sub, 10, TRUE, 4},
+			{"and", ft_and, 6, TRUE, 4},
+			{"or", ft_or, 6, TRUE, 4},
+			{"xor", ft_xor, 6, TRUE, 4},
+			{"zjmp", ft_zjmp, 20, FALSE, 2},
+			{"ldi", &moke_up_function, 25, TRUE, 2},
+			{"sti", &moke_up_function, 25, TRUE, 2},
+			{"fork", &moke_up_function, 800, FALSE, 2},
+			{"lld", &moke_up_function, 10, TRUE, 4},
+			{"lldi", &moke_up_function, 50, TRUE, 2},
+			{"lfork", &moke_up_function, 1000, FALSE, 2},
+			{"aff", &moke_up_function, 2, TRUE, 4},
+			{"inval", &invalid_operation, 1, FALSE, 4}
 	};
 	ft_printf(" ---set operation--- ");
 	return (code > 0 && code <= NUMBER_OF_OPERATIONS ?

@@ -6,41 +6,47 @@
 
 static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS])
 {
-	int reg1;
-	int reg2;
-	int reg3;
+	int val1;
+	int val2;
+	int value;
+	int reg;
 
-	reg1 = args[0].value;
-	reg2 = args[1].value;
-	reg3 = args[2].value;
-	car->regs[REG(reg3)] = car->regs[REG(reg1)] - car->regs[REG(reg2)];
-	cbox = cbox;
+	val1 = get_int_from_arg(car, cbox, args[0]);
+	val2 = get_int_from_arg(car, cbox, args[1]);
+	value = val1 & val2;
+	reg = args[2].value;
+	car->regs[REG(reg)] = value;
+	if (value == 0)
+		car->carry = 1;
+	else
+		car->carry = 0;
 }
 
-void		ft_sub(t_car *car, t_cbox *cbox)
+void		ft_zjmp(t_car *car, t_cbox *cbox)
 {
 	t_carbox carbox;
 
 	carbox.cbox = cbox;
 	carbox.car = car;
-	carbox.op_command_code = SUB_COMMAND_CODE;
+	carbox.op_command_code = ZJMP_COMMAND_CODE;
 	exec_command(&carbox, op_unique_commands, get_default_arg_size,
-				 sub_add_validate_permitted_types);
+				 logical_validate_permitted_types);
 }
 
-////// TESTS
+/// TESTS
 
-///reg test
+/// reg test
 
 //static void test_init(t_cbox *cbox)
 //{
 //	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
-////offset
-////	i = 15;
+//
+//	//offset
+//	i = 15;
 //
 //	//command_code
-//	arr[i++] = SUB_COMMAND_CODE;
+//	arr[i++] = AND_COMMAND_CODE;
 //
 //	//arg_types
 //	arr[i++] = 0b01010100;
@@ -56,6 +62,65 @@ void		ft_sub(t_car *car, t_cbox *cbox)
 //
 //}
 
+/// dir test
+
+//static void test_init(t_cbox *cbox)
+//{
+//	unsigned char *arr = cbox->arena.arena;
+//	int i = 0;
+//
+//	//offset
+//	i = 15;
+//
+//	//command_code
+//	arr[i++] = AND_COMMAND_CODE;
+//
+//	//arg_types
+//	arr[i++] = 0b10100100;
+//
+//	//t_dir
+//	arr[i++] = 0;
+//	arr[i++] = 0;
+//	arr[i++] = 0;
+//	arr[i++] = 22;
+//
+//	//t_dir
+//	arr[i++] = 0;
+//	arr[i++] = 0;
+//	arr[i++] = 0;
+//	arr[i++] = 15;
+//
+//	//t_reg
+//	arr[i++] = 5;
+//
+//}
+
+/// ind test
+
+//static void test_init(t_cbox *cbox)
+//{
+//	unsigned char *arr = cbox->arena.arena;
+//	int i = 0;
+//
+//	i = 15;
+//	//command_code
+//	arr[i++] = AND_COMMAND_CODE;
+//
+//	//arg_types
+//	arr[i++] = 0b11010100; //t-dir + t-reg
+//
+//	//t_indir
+//	arr[i++] = -3 >> 8;
+//	arr[i++] = -3;
+//
+//	//t_reg
+//	arr[i++] = 6;
+//
+//	//t_reg
+//	arr[i++] = 4;
+//
+//	arr[21] = 88;
+//}
 //
 //int		main(int argc, char **argv)
 //{
@@ -84,15 +149,14 @@ void		ft_sub(t_car *car, t_cbox *cbox)
 //	ft_printf("\n\n\n\n\n");
 //	t_car testcar;
 //
-//	testcar.pos = 0;
+//	testcar.pos = 15;
 //	testcar.carry = 0;
 //	for (int j = 0; j < REG_NUMBER; ++j)
 //		testcar.regs[j] = 0;
-//	testcar.regs[2] = 15;
 //	testcar.regs[3] = 22;
-//	testcar.regs[4] = 100;
+//	testcar.regs[5] = -1;
 //	testcar.id = 0;
-//	testcar.oper = get_operation(SUB_COMMAND_CODE);
+//	testcar.oper = get_operation(AND_COMMAND_CODE);
 //
 //	testcar.oper.f(&testcar, &cbox);
 //

@@ -5,3 +5,7 @@ cmake-build-debug
 a.out
 #tests
 *.o
+champs
+vm_champs.tar
+asm
+corewar

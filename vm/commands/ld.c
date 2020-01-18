@@ -49,7 +49,9 @@ void ft_ld(t_car *car, t_cbox *cbox)
 // * TEST MAIN
 // */
 
-//static void ld_init_dir(t_cbox *cbox)
+/// dir test
+
+//static void test_init(t_cbox *cbox)
 //{
 //	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
@@ -72,8 +74,10 @@ void ft_ld(t_car *car, t_cbox *cbox)
 //	arr[i++] = 4;
 //
 //}
-//
-//static void ld_init_indir(t_cbox *cbox)
+
+/// ind test
+
+//static void test_init(t_cbox *cbox)
 //{
 //	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
@@ -83,7 +87,7 @@ void ft_ld(t_car *car, t_cbox *cbox)
 //	arr[i++] = 2;
 //
 //	//arg_types
-//	arr[i++] = 0b11010000; //t-dir + t-reg
+//	arr[i++] = 0b11010000;
 //
 //	//t_indir
 //	arr[i++] = 517 >> 8;
@@ -117,7 +121,7 @@ void ft_ld(t_car *car, t_cbox *cbox)
 //	init_arena(n, &cbox);
 ////	dump_arena(cbox.arena.arena);
 //
-//	ld_init_indir(&cbox);
+//	test_init(&cbox);
 //	dump_arena(cbox.arena.arena);
 //	ft_printf("\n\n\n\n\n");
 //	t_car testcar;

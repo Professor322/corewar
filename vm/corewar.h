@@ -23,9 +23,9 @@
 
 # define NUMBER_OF_OPERATIONS 16
 # define CW_MAX_ARGS 4
-# define POS(x) (x % MEM_SIZE)
-# define REG(x) (x - 1)
-# define IND_OFFSET(x)  (x % IDX_MOD)
+# define POS(x) ((x) % MEM_SIZE)
+# define REG(x) ((x) - 1)
+# define IND_OFFSET(x)  ((x) % IDX_MOD)
 
 #define T_REG_BYTE_SIZE						1
 #define T_DIR_BYTE_SIZE						4
@@ -99,6 +99,7 @@ typedef struct	s_oper
 	void		(*f)(struct s_car*, struct s_cbox*);
 	int 		delay;
 	t_boolean 	has_type_byte;
+	int 		t_dir_size;
 }				t_oper;
 
 typedef struct	s_car
@@ -207,7 +208,8 @@ void			ft_lfork(t_car *car, t_cbox *cbox);
 void			ft_aff(t_car *car, t_cbox *cbox);
 
 
-int	logical_validate_permitted_types(t_arg *args);
+int				logical_validate_permitted_types(t_arg *args);
+int				sub_add_validate_permitted_types(t_arg *args);
 
 
 #endif

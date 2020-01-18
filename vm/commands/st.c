@@ -36,7 +36,7 @@ void 		ft_st(t_car *car, t_cbox *cbox)
 
 	carbox.cbox = cbox;
 	carbox.car = car;
-	carbox.op_command_code = LD_COMMAND_CODE;
+	carbox.op_command_code = ST_COMMAND_CODE;
 	exec_command(&carbox, op_unique_commands, get_default_arg_size,
 				 validate_permitted_types);
 }
@@ -48,13 +48,15 @@ void 		ft_st(t_car *car, t_cbox *cbox)
 // */
 //
 
+///reg test
+
 //static void st_init_reg(t_cbox *cbox)
 //{
 //	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
 //
 //	//command_code
-//	arr[i++] = 3;
+//	arr[i++] = ST_COMMAND_CODE;
 //
 //	//arg_types
 //	arr[i++] = 0b01010000; //t-dir + t-reg
@@ -68,14 +70,16 @@ void 		ft_st(t_car *car, t_cbox *cbox)
 //
 //	arr[20] = 88;
 //}
-//
-//static void st_init_ind(t_cbox *cbox)
+
+/// ind test
+
+//static void test_init(t_cbox *cbox)
 //{
 //	unsigned char *arr = cbox->arena.arena;
 //	int i = 0;
 //
 //	//command_code
-//	arr[i++] = 3;
+//	arr[i++] = ST_COMMAND_CODE;
 //
 //	//arg_types
 //	arr[i++] = 0b01110000; //t-dir + t-reg
@@ -88,7 +92,7 @@ void 		ft_st(t_car *car, t_cbox *cbox)
 //	arr[i] = (unsigned char)2410;
 //
 //}
-//
+
 //int		main(int argc, char **argv)
 //{
 //	size_t 		i;
@@ -111,7 +115,7 @@ void 		ft_st(t_car *car, t_cbox *cbox)
 //	init_arena(n, &cbox);
 ////	dump_arena(cbox.arena.arena);
 //
-//	st_init_ind(&cbox);
+//	test_init(&cbox);
 //	dump_arena(cbox.arena.arena);
 //
 //	t_car testcar;
@@ -121,7 +125,7 @@ void 		ft_st(t_car *car, t_cbox *cbox)
 //	for (int j = 0; j < REG_NUMBER; ++j)
 //		testcar.regs[j] = 0;
 //	testcar.id = 0;
-//	testcar.oper = get_operation(3);
+//	testcar.oper = get_operation(ST_COMMAND_CODE);
 //
 //	testcar.oper.f(&testcar, &cbox);
 //	dump_arena(cbox.arena.arena);

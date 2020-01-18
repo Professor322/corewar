@@ -3,7 +3,7 @@
 //
 
 #include "corewar.h"
-
+//TODO доделать
 static int	validate_permitted_types(t_arg *args)
 {
 	if (args[0].type == DIR
