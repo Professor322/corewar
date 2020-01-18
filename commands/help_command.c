@@ -12,29 +12,30 @@
 
 #include "../assembler.h"
 
+static short	reverse_short(short s)
+{
+    unsigned char c1, c2;
+
+    c1 = s & 0xff;
+    c2 = (s >> 8) & 0xff;
+    return ((c1 << 8) + c2);
+}
+
+static int		reverse_int(int s)
+{
+    unsigned short c1, c2;
+
+    c1 = reverse_short(s & 0xffff);
+    c2 = reverse_short( (s >> 16) & 0xffff);
+    return ((c1 << 16) + c2);
+}
+
 int			ft_is_numeric(char *str)
 {
     while(*str)
         if (!ft_isdigit(*str++))
             return (0);
     return (1);
-}
-
-int       amount_real_bytes(int num, int size)
-{
-    int amount;
-
-    amount = 0;
-    if (!num)
-        return (0);
-    while (num > 0)
-    {
-        amount++;
-        num >>= (unsigned int) 8;
-    }
-//    printf("\nsize: %d\n amount : %d\n", size, amount);
-//    printf("real_bytes: %d\n", size - amount);
-    return (size - amount);
 }
 
 void        reg_arg(t_arg *arg_parse, int dir_size, char *arg)
@@ -51,33 +52,15 @@ void        reg_arg(t_arg *arg_parse, int dir_size, char *arg)
 
 void        dir_arg(t_arg *arg_parse, int dir_size, char *arg)
 {
-    unsigned int    dir_val;
+    unsigned int   dir_val;
     int             temp;
 
-    printf("%s ", arg);
     temp = ft_atoi(++arg);
-    printf("%d\t", temp);
-    if (temp < 0)
-    {
-        dir_val = temp * -1;
-        dir_val = ~(dir_val) + 1;
-        arg_parse->bin = dir_val >> 24 | dir_val << 8;
-    }
-    else
-    {
-        dir_val = temp;
-        arg_parse->bin = dir_val<< (unsigned int)8  * amount_real_bytes(dir_val, dir_size);
-    }
-//    dir_val = temp < 0 ? ~((temp * -1)) : temp;
-    ft_printf("%x\t%x\t",(unsigned int)200, dir_val);
+    dir_val = temp < 0 ? ~(temp * -1) + 1 : temp;
+    arg_parse->bin = dir_size == 4 ? reverse_int((int)dir_val) : reverse_short((short)dir_val);
     arg_parse->size = dir_size;
     arg_parse->type = T_DIR;
 
-    printf("\namount %d\n", amount_real_bytes(dir_val, dir_size));
-    printf("\n! %x %x   %x   %x ! \n", dir_val,   dir_val >> 24, dir_val << 8,  dir_val >> 24| dir_val << 8);
-   //
-//    write(1, &arg_parse->bin, arg_parse->size);
-//    printf("\nsize %d\n type %u\n", arg_parse->size, arg_parse->type);
 }
 
 void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
@@ -86,22 +69,11 @@ void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
     int             temp;
 
     temp = ft_atoi(arg);
-    if (temp < 0)
-    {
-        ind_val = ~((unsigned int)(temp * -1)) + 1;
-        arg_parse->bin = ind_val >> 24 | ind_val << 8;
-    }
-    else
-    {
-        ind_val = temp;
-        arg_parse->bin = ind_val << 8 * amount_real_bytes(ind_val, arg_parse->size);
-    }
+    ind_val = temp < 0 ? ~((temp * -1)) + 1 : temp;
     arg_parse->type = T_IND;
     arg_parse->size = 2;
+    arg_parse->bin = reverse_short((short)ind_val);
 
-//    write(1, &arg_parse->bin, arg_parse->size);
-//    printf("size %d\n type %u\n", arg_parse->size, arg_parse->type);
-    //indirect
 }
 
 void        label_arg(t_arg *arg_parse, int dir_size, char *arg)
