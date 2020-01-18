@@ -29,6 +29,7 @@ static char		*ft_chr_vec_pop(t_cvec *vec, char c)
 	char			*output;
 	char			*temp_tail;
 	register size_t	i;
+	register size_t len;
 
 	if (!vec->length)
 		return (NULL);
@@ -42,9 +43,10 @@ static char		*ft_chr_vec_pop(t_cvec *vec, char c)
 		output[i] = ft_chr_vec_popfront(vec);
 		return (output);
 	}
-	output = ft_strnew(vec->length);
+	len = vec->length;
+	output = ft_strnew(len);
 	i = -1;
-	while (++i < vec->length)
+	while (++i < len)
 		output[i] = ft_chr_vec_popfront(vec);
 	return (output);
 }
