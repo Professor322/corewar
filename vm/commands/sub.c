@@ -18,11 +18,6 @@ static int	validate_permitted_types(t_arg *args)
 	//todo return sub-add validation function
 }
 
-static int	get_arg_size(t_arg_type type)
-{
-	return get_default_arg_size(type);
-}
-
 static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS])
 {
 	int reg1;
@@ -42,6 +37,6 @@ void		ft_sub(t_car *car, t_cbox *cbox)
 	carbox.cbox = cbox;
 	carbox.car = car;
 	carbox.op_command_code = SUB_COMMAND_CODE;
-	exec_command(&carbox, op_unique_commands, get_arg_size,
+	exec_command(&carbox, op_unique_commands, get_default_arg_size,
 				 validate_permitted_types);
 }

@@ -207,6 +207,7 @@ void			ft_lfork(t_car *car, t_cbox *cbox);
 void			ft_aff(t_car *car, t_cbox *cbox);
 
 
+int	logical_validate_permitted_types(t_arg *args);
 
 
 #endif
