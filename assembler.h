@@ -45,12 +45,12 @@
 #define NAME_CMD_LEN			5
 #define COMMENT_CMD_STRING		".comment"
 #define COMMENT_CMD_LEN			8
-#define QUOTE					'"'
+# define QUOTE					'"'
 
 #define COMMANDS_NUM			16
-# define PROG_NAME_LENGTH		(128)
-# define COMMENT_LENGTH			(2048)
-# define COREWAR_EXEC_MAGIC		0xea83f3
+#define PROG_NAME_LENGTH		(128)
+#define COMMENT_LENGTH			(2048)
+#define COREWAR_EXEC_MAGIC		0xea83f3
 
 #define TRUE					1
 #define FALSE					0

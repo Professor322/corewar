@@ -3,6 +3,7 @@
 //
 #include "../assembler.h"
 
+///не менять порядок
 t_command g_commands[COMMANDS_NUM] = {
 		{"live", 4, 1, live},
 		{"lldi", 4, 3, lldi},
@@ -24,11 +25,8 @@ t_command g_commands[COMMANDS_NUM] = {
 
 void 	skip_spaces(char **line)
 {
-	char *ln;
-
-	ln = *line;
-	while (ft_isspace(*ln))
-		ln++;
+	while (ft_isspace(**line))
+		(*line)++;
 }
 
 void 	get_line(t_champ *champ, char *line)
