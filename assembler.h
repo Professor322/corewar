@@ -135,7 +135,22 @@ typedef struct	s_node       ///элемент хэштаблицы
 	t_b_command *command;
 }				t_node;
 
+
+enum e_header_token
+{
+	NAME,
+	COMMENT
+};
+
+typedef	struct s_header
+{
+	char *token;
+	size_t token_len;
+	size_t len;
+}				t_header;
+
 extern	t_command g_commands[COMMANDS_NUM];
+extern 	t_header	g_header[2];
 
 ///hashtable
 int		ht_insert_node(t_ht *hashtable, t_node *node);
@@ -150,7 +165,7 @@ void	parse_label(t_champ *champ, char **line, char *label_end);
 char	**parse_command(char *line, const int cmd);
 char 	*parse_arg(char **line);
 void	compile_command(const int cmd, char **args, t_champ *champ);
-int		parse_name(int fd, t_champ *champ);
+void 	parse_header(t_champ *champ,  int fd);
 
 void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename);
 void			parse(int fd);

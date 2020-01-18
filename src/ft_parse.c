@@ -23,13 +23,18 @@ t_command g_commands[COMMANDS_NUM] = {
 		{"aff", 3, 2, aff}
 };
 
+t_header g_header[2] = {
+		{NAME_CMD_STRING, NAME_CMD_LEN, PROG_NAME_LENGTH},
+		{COMMENT_CMD_STRING, NAME_CMD_LEN, COMMENT_LENGTH}
+};
+
 void 	skip_spaces(char **line)
 {
-	while (ft_isspace(**line))
+	while (**line && ft_isspace(**line))
 		(*line)++;
 }
 
-void 	get_line(t_champ *champ, char *line)
+void 	get_exec_line(t_champ *champ, char *line)
 {
 	char	*lbl;
 	int		cmd;
@@ -53,7 +58,7 @@ void	get_exec(int fd, t_champ *champ)
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
-		get_line(champ, line);
+		get_exec_line(champ, line);
 		ft_memdel((void**)&line);
 	}
 }
