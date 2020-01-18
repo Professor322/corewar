@@ -83,7 +83,7 @@ typedef struct	s_arg		// структура одного аргумента
 {
 	enum e_arg_type	type;
 	t_label 		*label;
-	int			    bin;	// значение
+	unsigned int	bin;	// значение
 	int 			size;	// размер в байтах
 }				t_arg;
 
@@ -96,7 +96,7 @@ typedef struct	s_arg		// структура одного аргумента
 typedef struct s_byte_command
 {
     int     command_code;
-    int     arg_type_code;
+    unsigned int     arg_type_code;
     int     command_size;
     t_arg   *arg1;
     t_arg   *arg2;
@@ -158,7 +158,7 @@ void			ft_exit(char *str);
 t_arg           *get_arg(char *arg, int dir_size, t_pvec *label_vec);
 void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
 void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
-unsigned int    amount_real_bytes(unsigned int num, unsigned int size);
+int    amount_real_bytes(int num, int size);
 int             ft_is_numeric(char *str);
 
 t_b_command     *add(char **command, t_champ *champ);

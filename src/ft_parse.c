@@ -18,7 +18,7 @@ t_command g_commands[COMMANDS_NUM] = {
 		{"zjmp", 4, 1, zjmp},
 		{"ldi",  3, 3, ldi},
 		{"fork", 4, 1, ft_fork},
-		{"lfork", 5, 2, lfork},
+		{"lfork", 5, 1, lfork},
 		{"aff", 3, 2, aff}
 };
 

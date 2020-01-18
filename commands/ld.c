@@ -25,7 +25,8 @@ t_b_command     *ld(char **command, t_champ *champ)
     champ->command_size += (byte_command->arg1->size + 1);
     byte_command->arg2 = get_arg(command[1], LD_T_DIR_SIZE, champ->labels_vec);
     champ->command_size += (byte_command->arg2->size + 1);
-    byte_command->arg_type_code = (byte_command->arg1->type << 6) + (byte_command->arg2->type << 4);
+    byte_command->arg_type_code = (byte_command->arg1->type << (unsigned int) 6) +
+                                  (byte_command->arg2->type << (unsigned int) 4);
     // add in vector arg
     ft_ptr_vec_pushback(champ->command_vec, byte_command);
 }
