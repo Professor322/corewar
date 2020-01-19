@@ -25,7 +25,7 @@ t_command g_commands[COMMANDS_NUM] = {
 
 t_header g_header[2] = {
 		{NAME_CMD_STRING, NAME_CMD_LEN, PROG_NAME_LENGTH},
-		{COMMENT_CMD_STRING, NAME_CMD_LEN, COMMENT_LENGTH}
+		{COMMENT_CMD_STRING, COMMENT_CMD_LEN, COMMENT_LENGTH}
 };
 
 void 	skip_spaces(char **line)

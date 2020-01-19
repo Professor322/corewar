@@ -7,22 +7,16 @@
 char	*parse_content(char *line, int fd, enum e_header_token token)
 {
 	t_cvec *content = ft_chr_vec_init(START_CAP);
-	int closing_quote_found;
 	char *output;
+	char *closing_quote;
 	const char back_slash = '\n';
 
-	closing_quote_found = FALSE;
-	while (!closing_quote_found)
+	closing_quote = NULL;
+	while (!closing_quote)
 	{
-		if (*line != QUOTE) {
-			if (*line)
-				ft_chr_vec_pushback(content, line++);
-			else
-			{
-				ft_chr_vec_pushback(content, (char*)&back_slash);
-				get_next_line(fd, &line);
-			}
-			int l = g_header[token].len;
+		if ((closing_quote = ft_strchr(line, QUOTE))) {
+			*closing_quote = END_LINE;
+			ft_chr_vec_pushback(content, line);
 			if (content->length > g_header[token].len)
 			{
 				///error
@@ -30,7 +24,11 @@ char	*parse_content(char *line, int fd, enum e_header_token token)
 			}
 		}
 		else
-			closing_quote_found = TRUE;
+		{
+			ft_chr_vec_pushback(content, line);
+			ft_chr_vec_pushback(content, (char*)&back_slash);
+			get_next_line(fd, &line);
+		}
 	}
 	output = ft_strnew(content->length);
 	ft_strcpy(output, content->data);
@@ -79,7 +77,7 @@ void	parse_header(t_champ *champ, int fd)
 {
 	char *line;
 
-	while (!champ->comment && !champ->name && get_next_line(fd, &line))
+	while ((!champ->comment || !champ->name) && get_next_line(fd, &line))
 	{
 		if (!get_header_line(champ, line, fd))
 			ft_memdel((void**)&line);
