@@ -21,6 +21,7 @@ t_b_command     *aff(char **command, t_champ *champ)
     if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
         return (NULL);
     byte_command->command_code = 16;
+    ft_int_vec_pushback(champ->cumulative_size, champ->command_size);
     byte_command->arg1 = get_arg(command[0], AFF_T_DIR_SIZE, champ->labels_vec);
     champ->command_size += (byte_command->arg1->size + 1);
 //    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах

@@ -62,6 +62,7 @@ typedef struct	s_champ
 	t_ht	*labels; /// словарь готовых лейблов
     int 	command_size;	//размер команд а байтах
     t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
+    t_ivec  *cumulative_size; // смежный вектор с command_vec, подсчитывается суммма кол-во до данной команды
     t_pvec   *command_vec; // вектор структур с командами
 	char	*name;
 	char 	*comment;
@@ -87,6 +88,7 @@ typedef struct	s_arg		// структура одного аргумента
 	int 			size;	// размер в байтах
 }				t_arg;
 
+
 /**
  * структура для хранения конечного результата команды,
  * которую можно легко распечатать в байт код
@@ -98,17 +100,12 @@ typedef struct s_byte_command
     int     command_code;
     unsigned int     arg_type_code;
     int     command_size;
+
+    char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона
     t_arg   *arg1;
     t_arg   *arg2;
     t_arg   *arg3;
 }               t_b_command;
-
-typedef struct	s_foo		// структура, которую возвращают функции
-{
-	int 	command_size;	//размер команд а байтах
-	t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
-	t_pvec   *command_vec; // вектор структур с аргументами
-}				t_foo;
 
 
 typedef	struct	s_command

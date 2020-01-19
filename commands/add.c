@@ -20,7 +20,8 @@ t_b_command     *add(char **command, t_champ *champ)
     if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
         return (NULL);
     byte_command->command_code = 4;
-
+// command_size add champ->cumulative_size
+    ft_int_vec_pushback(champ->cumulative_size, champ->command_size);
     byte_command->arg1 = get_arg(command[0], ADD_T_DIR_SIZE, champ->labels_vec);
     champ->command_size += (byte_command->arg1->size + 1);
     byte_command->arg2 = get_arg(command[1], ADD_T_DIR_SIZE, champ->labels_vec);

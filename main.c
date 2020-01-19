@@ -13,6 +13,7 @@ t_champ *champ_init()
 	champ->file_labels = ft_ptr_vec_init();
 	champ->labels = ft_ht_init();
 	champ->command_vec = ft_ptr_vec_init();
+	champ->cumulative_size = ft_int_vec_init();
 	champ->labels_vec = ft_ptr_vec_init();
 	champ->name = NULL;
 	champ->comment = NULL;
@@ -25,10 +26,10 @@ int 	main(int argc, char **argv)
 	t_champ *champ;
 
 	champ = champ_init();
-	parse_header(champ, fd);
-	printf("name: %s\ncomment: %s\n", champ->name, champ->comment);
-	/*ft_parse(fd, champ);
-	write_exec_code_in_file(open("test.cor", O_CREAT | O_WRONLY, 0644),
-			champ->command_vec, "test.cor");*/
+	ft_parse(fd, champ);
+	write_exec_code_in_file(open("test.cor",  O_WRONLY, 0644),
+			champ->command_vec, "test.cor");
+	for (int i = 0; i < (int)champ->cumulative_size->length; i++)
+	    printf("%d\t", champ->cumulative_size->data[i]);
 	return (0);
 }
