@@ -1,13 +1,9 @@
-.name "name"
-.comment "comment"
+.name       "Batman"
+.comment    "This city needs me"
 
-ld%0,r3
-zjmp %3
-live %42
-fuck:
-sti  r15,%0,r14
-hey:zjmp %-200
-live %42
-sti r15,%0,r14
-zjmp%-200
-
+loop:
+        sti r1, %:live, %1
+live:
+        live %0
+        ld %0, r2
+        zjmp %:loop

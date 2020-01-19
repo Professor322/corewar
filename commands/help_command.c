@@ -76,7 +76,7 @@ void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
 
 }
 
-void        label_arg(t_arg *arg_parse, int dir_size, char *arg)
+void        label_arg(t_arg *arg_parse, int dir_size, char *arg, char *is_after_ptr)
 {
     arg_parse->label = (t_label *)ft_memalloc(sizeof(t_label));
     //мы должны знать вместо какого аргумента он тут стоит
@@ -96,7 +96,7 @@ void        label_arg(t_arg *arg_parse, int dir_size, char *arg)
  * @param dir_size
  * @return pointer !!
  */
-t_arg		*get_arg(char *arg, int dir_size, t_pvec *label_vec)
+t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_command)
 {
     t_arg *arg_parse;
 
@@ -105,8 +105,9 @@ t_arg		*get_arg(char *arg, int dir_size, t_pvec *label_vec)
     {
         if (arg[1] == ':')
         {
-            label_arg(arg_parse, 1, arg + 2);
-            ft_ptr_vec_pushback(label_vec, arg_parse);
+            label_arg(arg_parse, 1, arg + 2, &(byte_command->is_after));
+            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
+            byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? 1 : 0;
         }
         else
         {
@@ -117,8 +118,9 @@ t_arg		*get_arg(char *arg, int dir_size, t_pvec *label_vec)
     {
         if (arg[1] == ':')
         {
-            label_arg(arg_parse, dir_size, arg + 2);
-            ft_ptr_vec_pushback(label_vec, arg_parse);
+            label_arg(arg_parse, dir_size, arg + 2, &(byte_command->is_after));
+            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
+            byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? 1 : 0;
         }
         else
         {
@@ -127,9 +129,10 @@ t_arg		*get_arg(char *arg, int dir_size, t_pvec *label_vec)
     }
     else if (arg[0] == ':')
     {
-        label_arg(arg_parse, 2, arg);
+        label_arg(arg_parse, 2, arg, &(byte_command->is_after));
 
-        ft_ptr_vec_pushback(label_vec, arg_parse);
+        ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
+        byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? 1 : 0;
     }
     else if (ft_is_numeric(arg))
         indir_arg(arg_parse, dir_size, arg); // unused dir_size

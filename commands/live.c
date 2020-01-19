@@ -36,7 +36,7 @@ t_b_command     *live(char **command, t_champ *champ)
         return (NULL);
     byte_command->command_code = 1;
     ft_int_vec_pushback(champ->cumulative_size, champ->command_size);
-	byte_command->arg1 = get_arg(command[0], LIVE_T_DIR_SIZE, champ->labels_vec);
+	byte_command->arg1 = get_arg(command[0], LIVE_T_DIR_SIZE, champ->labels_vec, &byte_command->is_after);
 //    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
     champ->command_size += (byte_command->arg1->size + 1);
 	ft_ptr_vec_pushback(champ->command_vec, byte_command);
