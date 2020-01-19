@@ -26,10 +26,12 @@ int 	main(int argc, char **argv)
 	t_champ *champ;
 
 	champ = champ_init();
+
 	ft_parse(fd, champ);
 	write_exec_code_in_file(open("test.cor",  O_WRONLY, 0644),
 			champ->command_vec, "test.cor");
 	for (int i = 0; i < (int)champ->cumulative_size->length; i++)
 	    printf("%d\t", champ->cumulative_size->data[i]);
+
 	return (0);
 }
