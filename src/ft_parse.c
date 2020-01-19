@@ -65,6 +65,7 @@ void	get_exec(int fd, t_champ *champ)
 
 void 	ft_parse(int fd, t_champ *champ)
 {
+	get_header(fd, champ);
 	get_exec(fd, champ);
 }
 

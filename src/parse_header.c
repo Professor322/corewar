@@ -73,7 +73,7 @@ int		get_header_line(t_champ *champ, char *line, int fd)
 	return (0);
 }
 
-void	parse_header(t_champ *champ, int fd)
+void	get_header(int fd, t_champ *champ)
 {
 	char *line;
 

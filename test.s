@@ -1,3 +1,6 @@
+.name "name"
+.comment "comment"
+
 ld%0,r3
 zjmp %3
 live %42
