@@ -75,14 +75,18 @@ void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
     arg_parse->bin = reverse_short((short)ind_val);
 
 }
-
-void        label_arg(t_arg *arg_parse, int dir_size, char *arg, char *is_after_ptr)
+/*
+ * возможно label_arg не должен лежать в аргументе, в нем он должен только помечаться
+ * а лежать в отдельном векторе ??????
+ */
+void        label_arg(t_arg *arg_parse, int dir_size, char *arg, int cumulate_size)
 {
     arg_parse->label = (t_label *)ft_memalloc(sizeof(t_label));
     //мы должны знать вместо какого аргумента он тут стоит
 //    printf("LABEL %s\n", ++arg);
     arg_parse->label->name = ft_strdup(arg);
     //arg_parse->label->position = pos;
+    arg_parse->label->cumulate_size = cumulate_size;
     arg_parse->type = T_LABEL;
     arg_parse->size = dir_size;
     arg_parse->label->size = dir_size; //label
@@ -105,9 +109,10 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_comma
     {
         if (arg[1] == ':')
         {
-            label_arg(arg_parse, 1, arg + 2, &(byte_command->is_after));
+            label_arg(arg_parse, 1, arg + 2, byte_command->cumulative_size);
+            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
             ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
-            byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? 1 : 0;
+            //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
         }
         else
         {
@@ -118,9 +123,10 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_comma
     {
         if (arg[1] == ':')
         {
-            label_arg(arg_parse, dir_size, arg + 2, &(byte_command->is_after));
+            label_arg(arg_parse, dir_size, arg + 2, byte_command->cumulative_size);
+            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
             ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
-            byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? 1 : 0;
+            //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
         }
         else
         {
@@ -129,10 +135,10 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_comma
     }
     else if (arg[0] == ':')
     {
-        label_arg(arg_parse, 2, arg, &(byte_command->is_after));
-
+        label_arg(arg_parse, 2, arg, byte_command->cumulative_size);
+        arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
         ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
-        byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? 1 : 0;
+        //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
     }
     else if (ft_is_numeric(arg))
         indir_arg(arg_parse, dir_size, arg); // unused dir_size

@@ -100,8 +100,9 @@ typedef struct s_byte_command
     int     command_code;
     unsigned int     arg_type_code;
     int     command_size;
+    int     cumulative_size; // подсчитывается суммма кол-во до данной команды
 
-    char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона
+    char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
     t_arg   *arg1;
     t_arg   *arg2;
     t_arg   *arg3;
@@ -122,8 +123,9 @@ typedef struct	s_label 	// структура для сохранения одн
     char	*name;			// имя метки
     int		position;		// позиция вызова метки
     int		size;// размер аргумента
-    ///cumulate_size
-    t_b_command *command;						// также здесь будет переменная, которая хранит в себе значение,
+    int     cumulate_size;
+    char    is_after;
+    t_b_command *command; //TODO зачем?						// также здесь будет переменная, которая хранит в себе значение,
     // полученное после применения функции-команды
 }				t_label;
 
