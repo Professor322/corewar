@@ -50,15 +50,12 @@ int        substitute_label(t_ht *champ_label, t_arg *arg)
     int         bin_label;
 
     bin_label =  hash_size + arg->label->cumulate_size * (arg->label->is_after == '1' ? 1 : -1);
+    bin_label = bin_label < 0 ? ~(bin_label * -1) + 1 : bin_label;
     if (arg->size == 4)
-    {
         return (reverse_int(bin_label));
-    }
 
     else if (arg->size == 2)
-    {
         return (reverse_short((short)bin_label));
-    }
 
     else
         return (bin_label);
