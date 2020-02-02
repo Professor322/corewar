@@ -8,6 +8,7 @@ t_command g_commands[COMMANDS_NUM] = {
 		{"live", 4, 1, live},
 		{"lldi", 4, 3, lldi},
 		{"lld", 3, 2, lld},
+		{"ldi",  3, 3, ldi},
 		{"ld",   2, 2, ld},
 		{"sti",  3, 3, sti},
 		{"st",   2, 2, st},
@@ -17,7 +18,6 @@ t_command g_commands[COMMANDS_NUM] = {
 		{"or",   2, 3, or},
 		{"xor",  3, 3, xor},
 		{"zjmp", 4, 1, zjmp},
-		{"ldi",  3, 3, ldi},
 		{"fork", 4, 1, ft_fork},
 		{"lfork", 5, 1, lfork},
 		{"aff", 3, 2, aff}
@@ -58,6 +58,7 @@ void	get_exec(int fd, t_champ *champ)
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
+		//printf("%s\n", line);
 		get_exec_line(champ, line);
 		ft_memdel((void**)&line);
 	}
