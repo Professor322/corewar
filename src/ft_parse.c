@@ -20,7 +20,7 @@ t_command g_commands[COMMANDS_NUM] = {
 		{"zjmp", 4, 1, zjmp},
 		{"fork", 4, 1, ft_fork},
 		{"lfork", 5, 1, lfork},
-		{"aff", 3, 2, aff}
+		{"aff", 3, 1, aff}
 };
 
 t_header g_header[2] = {
@@ -58,7 +58,7 @@ void	get_exec(int fd, t_champ *champ)
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
-		//printf("%s\n", line);
+		printf("%s\n", line);
 		get_exec_line(champ, line);
 		ft_memdel((void**)&line);
 	}
