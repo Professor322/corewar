@@ -42,7 +42,7 @@ int 	main(int argc, char **argv)
 
 	champ = champ_init();
 	ft_parse(fd, champ);
-	write_exec_code_in_file(open(name,  O_WRONLY | O_CREAT, 0644),
+	write_exec_code_in_file(open(name,  O_WRONLY | O_CREAT| O_TRUNC, 0644),
 			champ->command_vec, name, champ);
 
 	printf("\n");

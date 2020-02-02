@@ -44,13 +44,26 @@ void        write_rubbish_in_file(int fd, t_champ *champ)
 
 }
 
+void    printHashtable(t_ht* champ_label) {
+    int i = -1;
+    while (++i < champ_label->loaded->length) {
+        t_list *temp = champ_label->table[champ_label->loaded->data[i]];
+        while (temp) {
+            t_node* elem = temp->content;
+            printf("name: %s size: %d\n", elem->name, elem->command->cumulative_size);
+            temp = temp->next;
+        }
+    }
+}
 
 int        substitute_label(t_ht *champ_label, t_arg *arg)
 {
+    //write(1,"HHH", 3);
+    printHashtable(champ_label);
     const int   hash_size = ht_find_node(champ_label,arg->label->name)->command->cumulative_size;
     int         bin_label;
 
-    bin_label =  hash_size + arg->label->cumulate_size * (arg->label->is_after == '1' ? 1 : -1);
+    bin_label =  hash_size - arg->label->cumulate_size;//* (arg->label->is_after == '1' ? 1 : -1);
     bin_label = bin_label < 0 ? ~(bin_label * -1) + 1 : bin_label;
     if (arg->size == 4)
         return (reverse_int(bin_label));
