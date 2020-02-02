@@ -51,9 +51,15 @@ int        substitute_label(t_ht *champ_label, t_arg *arg)
 
     bin_label =  hash_size + arg->label->cumulate_size * (arg->label->is_after == '1' ? 1 : -1);
     if (arg->size == 4)
+    {
         return (reverse_int(bin_label));
+    }
+
     else if (arg->size == 2)
+    {
         return (reverse_short((short)bin_label));
+    }
+
     else
         return (bin_label);
 }
@@ -74,20 +80,20 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename,
         if (c_vec->arg_type_code)
             write(fd, &(c_vec->arg_type_code), 1);
         arg = ((t_arg*)c_vec->arg1);
-        if (arg->type == T_LABEL)
+        if (arg->is_label)
           arg->bin = substitute_label(champ->labels, arg);
         write(fd, &arg->bin, arg->size);
         arg = ((t_arg*)c_vec->arg2);
         if (arg)
         {
-            if (arg->type == T_LABEL)
+            if (arg->is_label)
                 arg->bin = substitute_label(champ->labels, arg);
             write(fd, &arg->bin, arg->size);
         }
         arg = ((t_arg*)c_vec->arg3);
         if (arg)
         {
-            if (arg->type == T_LABEL)
+            if (arg->is_label)
                 arg->bin = substitute_label(champ->labels, arg);
             write(fd, &arg->bin, arg->size);
         }
