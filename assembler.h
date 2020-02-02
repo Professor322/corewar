@@ -85,7 +85,8 @@ typedef struct	s_arg		// структура одного аргумента
 	enum e_arg_type	type;
 	t_label 		*label;
 	unsigned int	bin;	// значение
-	int 			size;	// размер в байтах
+	int 			size;
+	char            is_label;// размер в байтах
 }				t_arg;
 
 
@@ -167,13 +168,15 @@ char 	*parse_arg(char **line);
 void	compile_command(const int cmd, char **args, t_champ *champ);
 void 	get_header(int fd, t_champ *champ);
 
-void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename);
+void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename, t_champ *champ);
 void			parse(int fd);
 void			ft_exit(char *str);
 t_arg		    *get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_command);
 void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
 void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
 int             ft_is_numeric(char *str);
+int             reverse_int(int s);
+short           reverse_short(short s);
 
 t_b_command     *add(char **command, t_champ *champ);
 t_b_command     *aff(char **command, t_champ *champ);

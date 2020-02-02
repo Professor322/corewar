@@ -21,28 +21,44 @@ void        write_string(int fd, size_t str_len, size_t limit, char *str)
     write(fd, temp_str, limit - str_len);
     ft_strdel(&temp_str);
 }
-/*
+
 void        write_rubbish_in_file(int fd, t_champ *champ)
 {
-    const size_t    name_len = ft_strlen(name);
+    const size_t    name_len = ft_strlen(champ->name);
     char            *temp_str;
+    const int       magic = COREWAR_EXEC_MAGIC;
 
     // write magic num
-    write(fd, COREWAR_EXEC_MAGIC, 4);
+    write(fd, &magic, 4);
     // write name champion
-    write_string(ft_strlen(name), PROG_NAME_LENGTH, name);
+    write_string(fd, ft_strlen(champ->name), PROG_NAME_LENGTH, champ->name);
     // write 4 NULL
-    write_string(0, 4, NUll);
+    write_string(fd, 0, 4, 0);
     // write champion exec code size
     write(fd, &champ->command_size, 4);
     // write champion_comment
-    write_string(ft_strlen(comment), COMMENT_LENGTH, comment);
+    write_string(fd, ft_strlen(champ->comment), COMMENT_LENGTH, champ->comment);
     // write 4 NULL
-    write_string(0, 4, NUll);
+    write_string(fd, 0, 4, 0);
 
 }
-*/
-void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
+
+
+int        substitute_label(t_ht *champ_label, t_arg *arg)
+{
+    const int   hash_size = ht_find_node(champ_label,arg->label->name)->command->cumulative_size;
+    int         bin_label;
+
+    bin_label =  hash_size + arg->label->cumulate_size * (arg->label->is_after == '1' ? 1 : -1);
+    if (arg->size == 4)
+        return (reverse_int(bin_label));
+    else if (arg->size == 2)
+        return (reverse_short((short)bin_label));
+    else
+        return (bin_label);
+}
+
+void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename, t_champ *champ)
 {
     const int       len = command_vec->length;
     t_b_command     *c_vec;
@@ -50,6 +66,7 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
     int             i;
 
     i = -1;
+    write_rubbish_in_file(fd, champ);
     while (++i < len)
     {
         c_vec = ((t_b_command *)command_vec->data[i]);
@@ -57,13 +74,23 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename)
         if (c_vec->arg_type_code)
             write(fd, &(c_vec->arg_type_code), 1);
         arg = ((t_arg*)c_vec->arg1);
+        if (arg->type == T_LABEL)
+          arg->bin = substitute_label(champ->labels, arg);
         write(fd, &arg->bin, arg->size);
         arg = ((t_arg*)c_vec->arg2);
         if (arg)
-        	write(fd, &arg->bin, arg->size);
+        {
+            if (arg->type == T_LABEL)
+                arg->bin = substitute_label(champ->labels, arg);
+            write(fd, &arg->bin, arg->size);
+        }
         arg = ((t_arg*)c_vec->arg3);
         if (arg)
-        	write(fd, &arg->bin, arg->size);
+        {
+            if (arg->type == T_LABEL)
+                arg->bin = substitute_label(champ->labels, arg);
+            write(fd, &arg->bin, arg->size);
+        }
     }
 //write(fd, &test, 1);
 }
