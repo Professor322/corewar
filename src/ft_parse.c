@@ -58,7 +58,6 @@ void	get_exec(int fd, t_champ *champ)
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
-		printf("%s\n", line);
 		get_exec_line(champ, line);
 		ft_memdel((void**)&line);
 	}
