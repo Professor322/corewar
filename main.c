@@ -64,6 +64,7 @@ int 	main(int argc, char **argv)
 		if ((hash_label = ht_find_node(champ->labels, name)))
 			printf("%s\t%d\n", hash_label->name, hash_label->command->cumulative_size);
 	}
+
 	return (0);
 
 
