@@ -113,18 +113,6 @@ int 	get_int_from_arg(t_car *car, t_cbox *cbox, t_arg arg)
 		return car->regs[REG(arg.value)];
 	else
 		return 0;
-//	else if (arg.type == REG)
-//		return car->regs[REG(arg.value)];
-}
-
-void	write_to_reg(t_car *car, int reg, int value)
-{
-	car->regs[reg - 1] = value;
-}
-
-int 	read_from_reg(t_car *car, int reg)
-{
-	return car->regs[reg - 1];
 }
 
 int		get_arg_values(t_car *car, t_cbox *cbox, t_arg *args)
@@ -186,8 +174,8 @@ void	exec_command(t_carbox *carbox,
 
 void	write_int_to_bytes(unsigned char *arr, unsigned int pos, unsigned int val)
 {
-	arr[pos++] = val >> 24;
-	arr[pos++] = val >> 16;
-	arr[pos++] = val >> 8;
-	arr[pos] = val;
+	arr[POS(pos++)] = val >> 24;
+	arr[POS(pos++)] = val >> 16;
+	arr[POS(pos++)] = val >> 8;
+	arr[POS(pos)] = val;
 }

@@ -1,41 +1,43 @@
 //
-// Created by Dacey mormont Jon connington on 21/12/2019.
+// Created by Cricun on 21.01.2020.
 //
 
 #include "corewar.h"
 
 static int set_types(t_arg *args)
 {
-	args[0].type = DIR;
-	args[0].size = get_operation(ZJMP_COMMAND_CODE).t_dir_size;
-	args[1].type = NONE;
-	args[2].type = NONE;
-	args[3].type = NONE;
-	return 1;
+    args[0].type = REG;
+    args[0].size = get_default_arg_size(REG);
+    args[1].type = NONE;
+    args[2].type = NONE;
+    args[3].type = NONE;
+    return 1;
 }
 
 static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS])
 {
-	int val1;
+    int val1;
 
-	val1 = get_int_from_arg(car, cbox, args[0]);
-	if (car->carry == 1)
-		car->pos = car->pos + IND_OFFSET(val1);
+    val1 = get_int_from_arg(car, cbox, args[0]);
+    ft_printf("%c", val1);
 }
 
-void		ft_zjmp(t_car *car, t_cbox *cbox)
+void		ft_aff(t_car *car, t_cbox *cbox)
 {
-	t_carbox carbox;
+    t_carbox carbox;
 
-	carbox.cbox = cbox;
-	carbox.car = car;
-	carbox.op_command_code = ZJMP_COMMAND_CODE;
-	exec_command(&carbox, op_unique_commands, set_types);
+    carbox.cbox = cbox;
+    carbox.car = car;
+    carbox.op_command_code = AFF_COMMAND_CODE;
+    exec_command(&carbox, op_unique_commands, set_types);
 }
 
-/// TESTS
 
-/// dir test
+
+////// TESTS
+///*
+// * TEST MAIN
+// */
 
 //static void test_init(t_cbox *cbox)
 //{
@@ -46,20 +48,16 @@ void		ft_zjmp(t_car *car, t_cbox *cbox)
 //	i = 15;
 //
 //	//command_code
-//	arr[i++] = ZJMP_COMMAND_CODE;
+//	arr[i++] = AFF_COMMAND_CODE;
 //
 //	//arg_types
-////	arr[i++] = 0b10100100;
+//	arr[i++] = 0b01000000;
 //
-//	//t_dir
-//	arr[i++] = 0;
-//	arr[i++] = 22;
+//	//t_reg
+//	arr[i++] = 5;
 //
-//	//t_dir
-////	arr[i++] = 0;
-////	arr[i++] = 0;
-////	arr[i++] = 0;
-////	arr[i++] = 15;
+//	//t_reg
+////	arr[i++] = 4;
 //
 //	//t_reg
 ////	arr[i++] = 5;
@@ -72,7 +70,7 @@ void		ft_zjmp(t_car *car, t_cbox *cbox)
 //	int 		n;  // number of players
 //	t_cbox		cbox;  // corewar-box: champions, arena, timeline
 //
-//	ft_printf("\n{RED}ADD TEST\n\n");
+//	ft_printf("\n{RED}AFF TEST\n\n");
 //
 //	ft_bzero(&cbox, sizeof(t_cbox));
 //	i = 0;
@@ -88,19 +86,22 @@ void		ft_zjmp(t_car *car, t_cbox *cbox)
 //	init_arena(n, &cbox);
 ////	dump_arena(cbox.arena.arena);
 //
-//	test_init(&cbox);
+//    test_init(&cbox);
 //	dump_arena(cbox.arena.arena);
 //	ft_printf("\n\n\n\n\n");
 //	t_car testcar;
 //
 //	testcar.pos = 15;
-//	testcar.carry = 1;
+//	testcar.carry = 0;
 //	for (int j = 0; j < REG_NUMBER; ++j)
 //		testcar.regs[j] = 0;
-//	testcar.regs[3] = 22;
-//	testcar.regs[5] = -1;
 //	testcar.id = 0;
-//	testcar.oper = get_operation(ZJMP_COMMAND_CODE);
+//	testcar.regs[4] = 'k';
+//    ft_printf("\n\n\n\n\n");
+//    ft_printf("\n\n\n\n\n");
+//    ft_printf("\n\n\n\n\n");
+//
+//    testcar.oper = get_operation(AFF_COMMAND_CODE);
 //
 //	testcar.oper.f(&testcar, &cbox);
 //
