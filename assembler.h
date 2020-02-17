@@ -167,9 +167,8 @@ char	**parse_command(char *line, const int cmd);
 char 	*parse_arg(char **line);
 void	compile_command(const int cmd, char **args, t_champ *champ);
 void 	get_header(int fd, t_champ *champ);
-
-void        write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename, t_champ *champ);
-void			parse(int fd);
+///writing
+void      		write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename, t_champ *champ);
 void			ft_exit(char *str);
 t_arg		    *get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_command);
 void            dir_arg(t_arg *arg_parse, int dir_size, char *arg);
@@ -177,7 +176,7 @@ void            reg_arg(t_arg *arg_parse, int dir_size, char *arg);
 int             ft_is_numeric(char *str);
 int             reverse_int(int s);
 short           reverse_short(short s);
-
+///commands
 t_b_command     *add(char **command, t_champ *champ);
 t_b_command     *aff(char **command, t_champ *champ);
 t_b_command     *and(char **command, t_champ *champ);
@@ -196,5 +195,6 @@ t_b_command     *sti(char **command, t_champ *champ);
 t_b_command     *sub(char **command, t_champ *champ);
 t_b_command     *xor(char **command, t_champ *champ);
 t_b_command     *zjmp(char **command, t_champ *champ);
-
+///memery freeing
+void	finish_him(t_champ **champ);
 #endif

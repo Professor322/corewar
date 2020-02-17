@@ -33,6 +33,7 @@ char *cor_file_name(char *argv) {
 	return 	name;
 }
 
+
 int 	main(int argc, char **argv)
 {
 	int fd = open(argv[1], O_RDONLY);
@@ -44,8 +45,9 @@ int 	main(int argc, char **argv)
 	ft_parse(fd, champ);
 	write_exec_code_in_file(open(name,  O_WRONLY | O_CREAT, 0644),
 			champ->command_vec, name, champ);
-
-	printf("\n");
+	ft_memdel((void**)&name);
+	finish_him(&champ);
+	/*printf("\n");
 	for (int i = 0; i < (int)champ->command_vec->length; i++)
     {
         printf("\n%c\t", ((t_b_command*)(champ->command_vec->data[i]))->is_after);
@@ -64,7 +66,7 @@ int 	main(int argc, char **argv)
 		if ((hash_label = ht_find_node(champ->labels, name)))
 			printf("%s\t%d\n", hash_label->name, hash_label->command->cumulative_size);
 	}
-
+*/
 	return (0);
 
 
