@@ -26,7 +26,7 @@ void        write_rubbish_in_file(int fd, t_champ *champ)
 {
     const size_t    name_len = ft_strlen(champ->name);
     char            *temp_str;
-    const int       magic = COREWAR_EXEC_MAGIC;
+    const int       magic = reverse_int(COREWAR_EXEC_MAGIC);
 
     // write magic num
     write(fd, &magic, 4);
@@ -35,6 +35,7 @@ void        write_rubbish_in_file(int fd, t_champ *champ)
     // write 4 NULL
     write_string(fd, 0, 4, 0);
     // write champion exec code size
+    champ->command_size = reverse_int(champ->command_size);
     write(fd, &champ->command_size, 4);
     // write champion_comment
     write_string(fd, ft_strlen(champ->comment), COMMENT_LENGTH, champ->comment);
@@ -43,22 +44,32 @@ void        write_rubbish_in_file(int fd, t_champ *champ)
 
 }
 
+void    printHashtable(t_ht* champ_label) {
+    int i = -1;
+    while (++i < champ_label->loaded->length) {
+        t_list *temp = champ_label->table[champ_label->loaded->data[i]];
+        while (temp) {
+            t_node* elem = temp->content;
+            printf("name: %s size: %d\n", elem->name, elem->command->cumulative_size);
+            temp = temp->next;
+        }
+    }
+}
 
 int        substitute_label(t_ht *champ_label, t_arg *arg)
 {
+    //write(1,"HHH", 3);
+    printHashtable(champ_label);
     const int   hash_size = ht_find_node(champ_label,arg->label->name)->command->cumulative_size;
     int         bin_label;
 
-    bin_label =  hash_size + arg->label->cumulate_size * (arg->label->is_after == '1' ? 1 : -1);
+    bin_label =  hash_size - arg->label->cumulate_size;//* (arg->label->is_after == '1' ? 1 : -1);
+    bin_label = bin_label < 0 ? ~(bin_label * -1) + 1 : bin_label;
     if (arg->size == 4)
-    {
         return (reverse_int(bin_label));
-    }
 
     else if (arg->size == 2)
-    {
         return (reverse_short((short)bin_label));
-    }
 
     else
         return (bin_label);

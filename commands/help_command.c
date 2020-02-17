@@ -32,6 +32,8 @@ int		reverse_int(int s)
 
 int			ft_is_numeric(char *str)
 {
+    if (*str == '-')
+        str++;
     while(*str)
         if (!ft_isdigit(*str++))
             return (0);
@@ -133,7 +135,7 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_comma
     }
     else if (arg[0] == ':')
     {
-        label_arg(arg_parse, 2, arg, byte_command);
+        label_arg(arg_parse, 2, arg + 1, byte_command);
         arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
         ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
         arg_parse->type = T_IND;

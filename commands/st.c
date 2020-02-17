@@ -30,5 +30,6 @@ t_b_command     *st(char **command, t_champ *champ)
                                   (byte_command->arg2->type << (unsigned int)4);
     // add in vector arg
     ft_ptr_vec_pushback(champ->command_vec, byte_command);
+    return (byte_command);
 }
 
