@@ -114,23 +114,9 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ)
         //free exit()
         return (NULL);
     if (*arg && *arg == 'r')
-    {
         reg_arg(arg_parse, arg, champ);
-//        if (arg[1] == ':')
-//            label_init(arg_parse, 1, arg + 2, champ);
-//        else
-//            reg_arg(arg_parse, arg); // unused dir_size
-//        arg_parse->type = T_REG;
-    }
     else if (*arg && *arg == '%')
-    {
         dir_arg(arg_parse, dir_size, arg, champ);
-//        if (arg[1] == ':')
-//            label_init(arg_parse, dir_size, arg + 2, champ);
-//        else
-//            dir_arg(arg_parse, dir_size, arg);
-//        arg_parse->type = T_DIR;
-    }
     else if (*arg && *arg == ':')
     {
         label_init(arg_parse, 2, arg + 1, champ);
