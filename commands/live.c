@@ -24,12 +24,7 @@ t_b_command     *live(char **command, t_champ *champ)
     byte_command = ((t_b_command*)(champ->command_vec->data[champ->command_vec->length - 1]));
     byte_command->command_code = 1;
     byte_command->cumulative_size = champ->command_size;
-	byte_command->arg1 = get_arg(command[0], LIVE_T_DIR_SIZE, champ, byte_command);
+	byte_command->arg1 = get_arg(command[0], LIVE_T_DIR_SIZE, champ);
     champ->command_size += (byte_command->arg1->size + 1);
-    printf("%d %d %x", ((t_b_command*)(champ->command_vec->data[champ->command_vec->length - 1]))->command_code,
-           ((t_b_command*)(champ->command_vec->data[champ->command_vec->length - 1]))->command_size,
-           ((t_b_command*)(champ->command_vec->data[champ->command_vec->length - 1]))->arg1->bin);
-    printf("\ncommand size: %d\n", champ->command_size) ;
-    //ft_ptr_vec_pushback(champ->command_vec, byte_command);
 	return (byte_command);
 }

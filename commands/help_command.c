@@ -40,32 +40,7 @@ int			ft_is_numeric(char *str)
     return (1);
 }
 
-void        reg_arg(t_arg *arg_parse, int dir_size, char *arg)
-{
-    int r_val;
-
-    r_val = ft_atoi(++arg);
-    arg_parse->size = 1;
-    arg_parse->type = T_REG;
-    arg_parse->bin = r_val; // one byte
-//    write(1, &arg_parse->bin, arg_parse->size);
-//    printf("\nsize %d\n type %u\n", arg_parse->size, arg_parse->type);
-}
-
-void        dir_arg(t_arg *arg_parse, int dir_size, char *arg)
-{
-    unsigned int   dir_val;
-    int             temp;
-
-    temp = ft_atoi(++arg);
-    dir_val = temp < 0 ? ~(temp * -1) + 1 : temp;
-    arg_parse->bin = dir_size == 4 ? reverse_int((int)dir_val) : reverse_short((short)dir_val);
-    arg_parse->size = dir_size;
-    arg_parse->type = T_DIR;
-
-}
-
-void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
+void        indir_arg(t_arg *arg_parse, char *arg)
 {
     unsigned int    ind_val;
     int             temp;
@@ -80,97 +55,88 @@ void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
 
 void        *label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
 {
-    t_b_command *byte_command;
-    const size_t index = champ->command_vec->length - 1;
+    t_b_command     *byte_command;
+    const size_t    index = champ->command_vec->length - 1;
 
     byte_command = (t_b_command*)(champ->command_vec->data[index]);
     if (!(arg->label = (t_label *)ft_memalloc(sizeof(t_label))))
         //exit, free, TODO
         return (NULL);
     arg->label->name = ft_strdup(l_name);
- //   arg->label->position = (int)((t_pvec*)byte_command)->length - 1;// позиция  в  какой по счету структуре хранится эта метка и в каком аргументе
     arg->label->cumulate_size = byte_command->cumulative_size;
     arg->is_label = 1;
     arg->size = size;
-    arg->label->size = size; //label
+    arg->label->size = size;
     arg->label->is_after = !ht_find_node(champ->labels, l_name) ? '1' : '0';
     ft_ptr_vec_pushback(champ->labels_vec, arg);
 }
-/*
- * возможно label_arg не должен лежать в аргументе, в нем он должен только помечаться
- * а лежать в отдельном векторе ??????
- */
-void        label_arg(t_arg *arg_parse, int dir_size, char *arg, t_b_command *byte_command)
-{
-    arg_parse->label = (t_label *)ft_memalloc(sizeof(t_label));
-    //мы должны знать вместо какого аргумента он тут стоит
-//    printf("LABEL %s\n", ++arg);
-    arg_parse->label->name = ft_strdup(arg);
-    arg_parse->label->position = (int)((t_pvec*)byte_command)->length - 1;// позиция  в  какой по счету структуре хранится эта метка и в каком аргументе
-    arg_parse->label->cumulate_size = byte_command->cumulative_size;
-    arg_parse->is_label = 1;
-    arg_parse->size = dir_size;
-    arg_parse->label->size = dir_size; //label
 
+void        dir_arg(t_arg *arg_parse, int dir_size, char *arg, t_champ *champ)
+{
+    unsigned int   dir_val;
+    int             temp;
+
+    if (arg[1] && arg[1] == ':')
+        label_init(arg_parse, dir_size, arg + 2, champ);
+    else
+    {
+        temp = ft_atoi(++arg);
+        dir_val = temp < 0 ? ~(temp * -1) + 1 : temp;
+        arg_parse->bin = dir_size == 4 ? reverse_int((int)dir_val) :
+                                         reverse_short((short)dir_val);
+        arg_parse->size = dir_size;
+
+    }
+    arg_parse->type = T_DIR;
 }
-/**
- * определяем к какому типу относится аргументы
- * является ли он меткой
- * кодируем в бинарный вид
- * @param agr аргумент команды
- * @param pos
- * @param dir_size
- * @return pointer !!
- */
-t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_command)
+
+void        reg_arg(t_arg *arg_parse, char *arg, t_champ *champ)
+{
+    int r_val;
+
+    if (arg[1] && arg[1] == ':')
+        label_init(arg_parse, 1, arg + 2, champ);
+    else
+    {
+        r_val = ft_atoi(++arg);
+        arg_parse->size = 1;
+        arg_parse->type = T_REG;
+        arg_parse->bin = r_val;
+    }
+    arg_parse->type = T_REG;
+}
+
+t_arg		*get_arg(char *arg, int dir_size, t_champ *champ)
 {
     t_arg *arg_parse;
 
-    arg_parse = (t_arg *)ft_memalloc(sizeof(t_arg));
-    if (arg[0] == 'r')
+    if (!(arg_parse = (t_arg *)ft_memalloc(sizeof(t_arg))))
+        //free exit()
+        return (NULL);
+    if (*arg && *arg == 'r')
     {
-        if (arg[1] == ':')
-        {
-            label_init(arg_parse, 1, arg + 2, champ);
-//            label_arg(arg_parse, 1, arg + 2, byte_command);
-//            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-//            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
-            //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-        }
-        else
-            reg_arg(arg_parse, dir_size, arg); // unused dir_size
-        arg_parse->type = T_REG;
+        reg_arg(arg_parse, arg, champ);
+//        if (arg[1] == ':')
+//            label_init(arg_parse, 1, arg + 2, champ);
+//        else
+//            reg_arg(arg_parse, arg); // unused dir_size
+//        arg_parse->type = T_REG;
     }
-    else if (arg[0] == '%')
+    else if (*arg && *arg == '%')
     {
-        if (arg[1] == ':')
-        {
-            label_init(arg_parse, dir_size, arg + 2, champ);
-//            label_arg(arg_parse, dir_size, arg + 2, byte_command);
-//            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-//            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
-            //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-        }
-        else
-            dir_arg(arg_parse, dir_size, arg);
-        arg_parse->type = T_DIR;
+        dir_arg(arg_parse, dir_size, arg, champ);
+//        if (arg[1] == ':')
+//            label_init(arg_parse, dir_size, arg + 2, champ);
+//        else
+//            dir_arg(arg_parse, dir_size, arg);
+//        arg_parse->type = T_DIR;
     }
-    else if (arg[0] == ':')
+    else if (*arg && *arg == ':')
     {
         label_init(arg_parse, 2, arg + 1, champ);
-//        label_arg(arg_parse, 2, arg + 1, byte_command);
-//        arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-//        ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
         arg_parse->type = T_IND;
-        //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
     }
     else if (ft_is_numeric(arg))
-        indir_arg(arg_parse, dir_size, arg); // unused dir_size
-    else
-    {
-
-        printf("GOVNO");
-        exit(0);
-    }
+        indir_arg(arg_parse, arg);
     return (arg_parse);
 }

@@ -22,14 +22,9 @@ t_b_command     *lfork(char **command, t_champ *champ)
     ft_ptr_vec_pushback(champ->command_vec, byte_command);
     byte_command = ((t_b_command*)(champ->command_vec->data[champ->command_vec->length - 1]));
     byte_command->command_code = 15;
-    //ft_int_vec_pushback(champ->cumulative_size, champ->command_size);
     byte_command->cumulative_size = champ->command_size;
-    byte_command->arg1 = get_arg(command[0], LFORK_T_DIR_SIZE,  champ, byte_command);
-//    byte_command->command_size += arg->size; //  увеличиваем размер команды в байтах
+    byte_command->arg1 = get_arg(command[0], LFORK_T_DIR_SIZE,  champ);
     champ->command_size += (byte_command->arg1->size + 1);
-    // add in vector arg
-   /// ft_ptr_vec_pushback(champ->command_vec, byte_command);
-    //command->position += arg->size;
     return (byte_command);
 }
 
