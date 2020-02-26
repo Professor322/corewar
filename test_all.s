@@ -4,8 +4,8 @@
 	fork	%10
 	ld	%4,r3
 st r2, 5
-lldi %5
-ld 5, r4
+lldi %5, r4, r4
+ld 5, r1
    and %10, r1, r2
 	live	%1
     xor r2, r3, r5

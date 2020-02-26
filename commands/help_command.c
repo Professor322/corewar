@@ -77,6 +77,25 @@ void        indir_arg(t_arg *arg_parse, int dir_size, char *arg)
     arg_parse->bin = reverse_short((short)ind_val);
 
 }
+
+void        *label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
+{
+    t_b_command *byte_command;
+    const size_t index = champ->command_vec->length - 1;
+
+    byte_command = (t_b_command*)(champ->command_vec->data[index]);
+    if (!(arg->label = (t_label *)ft_memalloc(sizeof(t_label))))
+        //exit, free, TODO
+        return (NULL);
+    arg->label->name = ft_strdup(l_name);
+ //   arg->label->position = (int)((t_pvec*)byte_command)->length - 1;// позиция  в  какой по счету структуре хранится эта метка и в каком аргументе
+    arg->label->cumulate_size = byte_command->cumulative_size;
+    arg->is_label = 1;
+    arg->size = size;
+    arg->label->size = size; //label
+    arg->label->is_after = !ht_find_node(champ->labels, l_name) ? '1' : '0';
+    ft_ptr_vec_pushback(champ->labels_vec, arg);
+}
 /*
  * возможно label_arg не должен лежать в аргументе, в нем он должен только помечаться
  * а лежать в отдельном векторе ??????
@@ -92,6 +111,7 @@ void        label_arg(t_arg *arg_parse, int dir_size, char *arg, t_b_command *by
     arg_parse->is_label = 1;
     arg_parse->size = dir_size;
     arg_parse->label->size = dir_size; //label
+
 }
 /**
  * определяем к какому типу относится аргументы
@@ -111,9 +131,10 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_comma
     {
         if (arg[1] == ':')
         {
-            label_arg(arg_parse, 1, arg + 2, byte_command);
-            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
+            label_init(arg_parse, 1, arg + 2, champ);
+//            label_arg(arg_parse, 1, arg + 2, byte_command);
+//            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
+//            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
             //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
         }
         else
@@ -124,9 +145,10 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_comma
     {
         if (arg[1] == ':')
         {
-            label_arg(arg_parse, dir_size, arg + 2, byte_command);
-            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
+            label_init(arg_parse, dir_size, arg + 2, champ);
+//            label_arg(arg_parse, dir_size, arg + 2, byte_command);
+//            arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
+//            ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
             //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
         }
         else
@@ -135,9 +157,10 @@ t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_b_command *byte_comma
     }
     else if (arg[0] == ':')
     {
-        label_arg(arg_parse, 2, arg + 1, byte_command);
-        arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
-        ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
+        label_init(arg_parse, 2, arg + 1, champ);
+//        label_arg(arg_parse, 2, arg + 1, byte_command);
+//        arg_parse->label->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
+//        ft_ptr_vec_pushback(champ->labels_vec, arg_parse);
         arg_parse->type = T_IND;
         //byte_command->is_after = !ht_find_node(champ->labels, arg_parse->label->name) ? '1' : '0';
     }
