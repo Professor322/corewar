@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../assembler.h"
-
+//TODO error_managment type argument for command
 short	reverse_short(short s)
 {
     unsigned char c1, c2;

@@ -123,10 +123,11 @@ typedef struct s_byte_command
     int     command_size;
     int     cumulative_size; // подсчитывается суммма кол-во до данной команды
 
-    char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
+    char    is_after;/// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
     t_arg   *arg1;
     t_arg   *arg2;
     t_arg   *arg3;
+    t_arg   *args[4];
 }               t_b_command;
 
 
