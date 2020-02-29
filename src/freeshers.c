@@ -34,19 +34,21 @@ static void		ht_delete(t_ht **hashtable)
 	ft_memdel((void**)hashtable);
 }
 
+void	free_memory(t_champ **champ) {
+	t_champ *to_del;
+
+	to_del = *champ;
+	ft_memdel((void **) &to_del->name);
+	ft_memdel((void **) &to_del->comment);
+	ft_ptr_vec_del(&to_del->temp_labels, ft_memdel);
+	ht_delete(&to_del->labels);
+	ft_memdel((void **) champ);
+
+}
 
 void	finish_him(t_champ **champ)
 {
-	t_champ *to_del;
-
 	if (*champ)
-	{
-		to_del = *champ;
-		ft_memdel((void **) &to_del->name);
-		ft_memdel((void **) &to_del->comment);
-		ft_ptr_vec_del(&to_del->temp_labels, ft_memdel);
-		ht_delete(&to_del->labels);
-		ft_memdel((void **) champ);
-	}
+		free_memory(champ);
 	exit(1);
 }

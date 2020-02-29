@@ -127,6 +127,7 @@ typedef struct s_byte_command
     t_arg   *arg1;
     t_arg   *arg2;
     t_arg   *arg3;
+	t_arg   *args[4];
 }               t_b_command;
 
 

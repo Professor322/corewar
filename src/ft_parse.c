@@ -45,9 +45,9 @@ void 	get_exec_line(t_champ **champ, char *line)
 	if (!*line || *line == COMMENT_CHAR || *line == ALT_COMMENT_CHAR)
 		return ;
 	if ((lbl = is_label(line)))
-		parse_label(champ, &line, lbl);
+		parse_label(*champ, &line, lbl);
 	if (line && (cmd  = is_command(&line)) >= 0)
-		compile_command(cmd, parse_command(line, cmd, champ), champ);
+		compile_command(cmd, parse_command(line, cmd, champ), *champ);
 }
 
 
