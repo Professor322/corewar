@@ -34,7 +34,7 @@ void 	skip_spaces(char **line)
 		(*line)++;
 }
 
-void 	get_exec_line(t_champ *champ, char *line)
+void 	get_exec_line(t_champ **champ, char *line)
 {
 	char	*lbl;
 	int		cmd;
@@ -47,11 +47,11 @@ void 	get_exec_line(t_champ *champ, char *line)
 	if ((lbl = is_label(line)))
 		parse_label(champ, &line, lbl);
 	if (line && (cmd  = is_command(&line)) >= 0)
-		compile_command(cmd, parse_command(line, cmd), champ);
+		compile_command(cmd, parse_command(line, cmd, champ), champ);
 }
 
 
-void	get_exec(int fd, t_champ *champ)
+void	get_exec(int fd, t_champ **champ)
 {
 	char *line;
 
@@ -63,9 +63,9 @@ void	get_exec(int fd, t_champ *champ)
 	}
 }
 
-void 	ft_parse(int fd, t_champ *champ)
+void 	ft_parse(int fd, t_champ **champ)
 {
-	get_header(fd, champ);
+	get_header(fd, *champ);
 	get_exec(fd, champ);
 }
 

@@ -38,7 +38,7 @@ char 	*parse_arg(char **line)
 	return (ft_strdup(arg_start));
 }
 
-char	**parse_command(char *line, const int cmd)
+char	**parse_command(char *line, const int cmd, t_champ **champ)
 {
 	int i;
 	char **args;

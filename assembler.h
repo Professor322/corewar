@@ -123,11 +123,10 @@ typedef struct s_byte_command
     int     command_size;
     int     cumulative_size; // подсчитывается суммма кол-во до данной команды
 
-    char    is_after;/// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
+    char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
     t_arg   *arg1;
     t_arg   *arg2;
     t_arg   *arg3;
-    t_arg   *args[4];
 }               t_b_command;
 
 
@@ -172,12 +171,12 @@ int		ht_insert_node(t_ht *hashtable, t_node *node);
 int				ht_enlarge(t_ht *ht);
 t_node		*ht_find_node(t_ht *ht, char *name);
 ///parse
-void	ft_parse(int fd, t_champ *champ);
+void	ft_parse(int fd, t_champ **champ);
 void 	skip_spaces(char **line);
 char 	*is_label(char *line);
 int 	is_command(char **line);
 void	parse_label(t_champ *champ, char **line, char *label_end);
-char	**parse_command(char *line, const int cmd);
+char	**parse_command(char *line, const int cmd, t_champ **champ);
 char 	*parse_arg(char **line);
 void	compile_command(const int cmd, char **args, t_champ *champ);
 void 	get_header(int fd, t_champ *champ);
@@ -215,4 +214,5 @@ void	error_manager(enum e_error_type error_type, t_champ **champ);
 void	help(void);
 ///memory freeing
 void	finish_him(t_champ **champ);
+void 	free_memory(t_champ **champ);
 #endif
