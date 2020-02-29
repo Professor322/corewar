@@ -46,6 +46,7 @@ char	**parse_command(char *line, const int cmd)
 	line = line + g_commands[cmd].name_len;
 	args = (char**)ft_memalloc(sizeof(char*) * g_commands[cmd].num_of_args);
 	i = -1;
+	printf("%s\n", line);
 	while(++i < g_commands[cmd].num_of_args)
 		args[i] = parse_arg(&line);
 	return (args);

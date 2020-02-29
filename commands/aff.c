@@ -20,13 +20,12 @@ t_b_command     *aff(char **command, t_champ *champ)
 
     if (!(byte_command = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
         return (NULL);
-    byte_command->command_code = 0x10;
-    //ft_int_vec_pushback(champ->cumulative_size, champ->command_size);
-    byte_command->cumulative_size = champ->command_size;
-    byte_command->arg1 = get_arg(command[0], AFF_T_DIR_SIZE, champ, byte_command);
-    champ->command_size += (byte_command->arg1->size + 2);
     ft_ptr_vec_pushback(champ->command_vec, byte_command);
+    byte_command = ((t_b_command*)(champ->command_vec->data[champ->command_vec->length - 1]));
+    byte_command->command_code = 0x10;
+    byte_command->cumulative_size = champ->command_size;
+    byte_command->arg1 = get_arg(command[0], AFF_T_DIR_SIZE, champ);
+    champ->command_size += (byte_command->arg1->size + 2);
     byte_command->arg_type_code = (byte_command->arg1->type << (unsigned int) 6);
-    //command->position += arg->size;
     return (byte_command);
 }
