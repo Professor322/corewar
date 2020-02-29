@@ -59,7 +59,7 @@ void	get_exec(int fd, t_champ *champ)
 	while (get_next_line(fd, &line))
 	{
 		get_exec_line(champ, line);
-	//	ft_memdel((void**)&line);
+		ft_memdel((void**)&line);
 	}
 }
 

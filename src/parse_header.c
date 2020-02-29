@@ -19,7 +19,7 @@ char	*parse_content(char *line, int fd, enum e_header_token token)
 			ft_chr_vec_pushback(content, line);
 			if (content->length > g_header[token].len)
 			{
-				///error
+				///wrong size of champ comment or champ name
 				break ;
 			}
 		}
@@ -49,7 +49,7 @@ void	parse_token(t_champ *champ, char *line, int fd, enum e_header_token token)
 	}
 	else
 	{
-		///error
+		///no champ comment or champ name
 	}
 }
 
@@ -64,11 +64,13 @@ int		get_header_line(t_champ *champ, char *line, int fd)
 	{
 		parse_token(champ, line, fd, NAME);
 		return (1);
-	}
-	if (!ft_strncmp(line, g_header[COMMENT].token, g_header[COMMENT].token_len))
+	} else if (!ft_strncmp(line, g_header[COMMENT].token, g_header[COMMENT].token_len))
 	{
 		parse_token(champ, line, fd, COMMENT);
 		return (1);
+	} else
+	{
+		///unknown token
 	}
 	return (0);
 }

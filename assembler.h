@@ -52,9 +52,38 @@
 #define COMMENT_LENGTH			(2048)
 #define COREWAR_EXEC_MAGIC		0xea83f3
 
-#define TRUE					1
-#define FALSE					0
 #define END_LINE				'\0'
+#define COR						4
+
+enum e_arg_type
+{
+	T_LABEL,
+	T_REG,
+	T_DIR,
+	T_IND
+};
+
+enum e_error_type
+{
+	UNKNOWN_TOKEN = 4,
+	NO_CHAMP_NAME_OR_COMMENT,
+	WRONG_LENGTH_OF_NAME_OR_COMMENT,
+	INCORRECT_SYNTAX,
+	NON_EXISTING_COMMAND,
+	NON_EXISTING_LABEL,
+	WRONG_NUMBER_OF_ARGS,
+	LABELS_WITHOUT_COMMAND,
+	NO_BACKSLASH,
+	NO_FILE,
+	MALLOC_ERROR,
+};
+
+enum e_header_token
+{
+	NAME,
+	COMMENT
+};
+
 typedef struct	s_champ
 {
 	t_pvec	*temp_labels; ///временные лейблы, у которых еще не была определена операция
@@ -67,15 +96,6 @@ typedef struct	s_champ
 	char	*name;
 	char 	*comment;
 }				t_champ;
-
-
-enum e_arg_type
-{
-	T_LABEL,
-	T_REG,
-	T_DIR,
-	T_IND
-};
 
 
 typedef struct s_label t_label;
@@ -136,13 +156,6 @@ typedef struct	s_node       ///элемент хэштаблицы
 	t_b_command *command;
 }				t_node;
 
-
-enum e_header_token
-{
-	NAME,
-	COMMENT
-};
-
 typedef	struct s_header
 {
 	char *token;
@@ -195,6 +208,10 @@ t_b_command     *sti(char **command, t_champ *champ);
 t_b_command     *sub(char **command, t_champ *champ);
 t_b_command     *xor(char **command, t_champ *champ);
 t_b_command     *zjmp(char **command, t_champ *champ);
-///memery freeing
+
+///error management
+void	error_manager(enum e_error_type error_type, t_champ **champ);
+void	help(void);
+///memory freeing
 void	finish_him(t_champ **champ);
 #endif

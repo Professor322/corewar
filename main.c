@@ -13,15 +13,13 @@ t_champ *champ_init()
 	champ->file_labels = ft_ptr_vec_init();
 	champ->labels = ft_ht_init();
 	champ->command_vec = ft_ptr_vec_init();
-	//champ->cumulative_size = ft_int_vec_init();
 	champ->labels_vec = ft_ptr_vec_init();
 	champ->name = NULL;
 	champ->comment = NULL;
 	return (champ);
 }
-#define COR 4
 
-char *cor_file_name(char *argv) {
+char *output_file_name(char *argv) {
 	char *file_name_end = ft_strchr(argv, '.');
 	char *name = ft_strnew(file_name_end - argv + COR);
 	*file_name_end = '\0';
@@ -36,37 +34,26 @@ char *cor_file_name(char *argv) {
 
 int 	main(int argc, char **argv)
 {
-	int fd = open(argv[1], O_RDONLY);
-	char *name = cor_file_name(argv[1]);
+	int fd_input;
+	int fd_output;
+	char *name;
 	t_champ *champ;
 
-
-	champ = champ_init();
-	ft_parse(fd, champ);
-	write_exec_code_in_file(open(name,  O_WRONLY | O_CREAT| O_TRUNC, 0644),
-			champ->command_vec, name, champ);
-	ft_memdel((void**)&name);
-	finish_him(&champ);
-	/*printf("\n");
-	for (int i = 0; i < (int)champ->command_vec->length; i++)
-    {
-        printf("\n%c\t", ((t_b_command*)(champ->command_vec->data[i]))->is_after);
-
-        printf("%d\n", ((t_b_command*)(champ->command_vec->data[i]))->cumulative_size);
-
-    }
-
-	printf("__________________\n");
-	t_node *hash_label;
-
-	for (int i = 0; i < (int)champ->labels_vec->length; i++ ) {
-		char *name = ((t_arg *) ((t_label *) (champ->labels_vec->data[i])))->label->name;
-		printf("%s\t%c\t", name, ((t_arg *) ((t_label *) (champ->labels_vec->data[i])))->label->is_after);
-		printf("%d\t", ((t_arg *) ((t_label *) (champ->labels_vec->data[i])))->label->cumulate_size);
-		if ((hash_label = ht_find_node(champ->labels, name)))
-			printf("%s\t%d\n", hash_label->name, hash_label->command->cumulative_size);
-	}
-*/
+	if (argc == 2)
+	{
+		if ((fd_input = open(argv[1], O_WRONLY)) == -1)
+			error_manager(NO_FILE, &champ);
+		if (!(champ = champ_init()) || !(name = output_file_name(argv[1])))
+			error_manager(MALLOC_ERROR, &champ);
+		ft_parse(fd_input, champ);
+		fd_output = open(name,  O_WRONLY | O_CREAT| O_TRUNC, 0644);
+		write_exec_code_in_file(fd_output, champ->command_vec, name, champ);
+		ft_memdel((void**)&name);
+		finish_him(&champ);
+		close(fd_input);
+		close(fd_output);
+	} else
+		help();
 	return (0);
 
 
