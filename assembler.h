@@ -41,6 +41,8 @@
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
+#define TOKEN_STARTER			'.'
+#define NEW_LINE				'\n'
 #define NAME_CMD_STRING			".name"
 #define NAME_CMD_LEN			5
 #define COMMENT_CMD_STRING		".comment"
@@ -66,8 +68,10 @@ enum e_arg_type
 enum e_error_type
 {
 	UNKNOWN_TOKEN = 4,
-	NO_CHAMP_NAME_OR_COMMENT,
-	WRONG_LENGTH_OF_NAME_OR_COMMENT,
+	NO_CHAMP_NAME,
+	NO_CHAMP_COMMENT,
+	WRONG_LENGTH_OF_NAME,
+	WRONG_LENGTH_OF_COMMENT,
 	INCORRECT_SYNTAX,
 	NON_EXISTING_COMMAND,
 	NON_EXISTING_LABEL,
@@ -76,6 +80,7 @@ enum e_error_type
 	NO_BACKSLASH,
 	NO_FILE,
 	MALLOC_ERROR,
+	UNEXPECTED_END_OF_FILE
 };
 
 enum e_header_token
@@ -95,6 +100,9 @@ typedef struct	s_champ
     t_pvec   *command_vec; // вектор структур с командами
 	char	*name;
 	char 	*comment;
+	char	*line;
+	size_t 	*counter;
+	int 	fd;
 }				t_champ;
 
 
@@ -171,6 +179,10 @@ extern 	t_header	g_header[2];
 int		ht_insert_node(t_ht *hashtable, t_node *node);
 int				ht_enlarge(t_ht *ht);
 t_node		*ht_find_node(t_ht *ht, char *name);
+///new parse
+int 	read_line(t_champ **champ_ptr);
+void 	parse_header(t_champ **champ_ptr);
+void 	parse(t_champ **champ_ptr);
 ///parse
 void	ft_parse(int fd, t_champ **champ);
 void 	skip_spaces(char **line);
