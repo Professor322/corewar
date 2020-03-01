@@ -23,9 +23,11 @@ void	error_manager(enum e_error_type error_type, t_champ **champ)
 		error_message("Malloc error");
 	else if (error_type == UNKNOWN_TOKEN)
 		error_message("Unknown token to parse");
-	else if (error_type == NO_CHAMP_NAME_OR_COMMENT)
-		error_message("No champ's name or champ's comment");
-	else if (error_type == WRONG_LENGTH_OF_NAME_OR_COMMENT)
+	else if (error_type == NO_CHAMP_NAME)
+		error_message("No champ's name");
+	else if (error_type == NO_CHAMP_COMMENT)
+		error_message("No champ's comment");
+	else if (error_type == WRONG_LENGTH_OF_NAME)
 		error_message("Wrong length of champ's name or champs' comment");
 	else if (error_type == INCORRECT_SYNTAX)
 	{
@@ -51,5 +53,7 @@ void	error_manager(enum e_error_type error_type, t_champ **champ)
 	{
 
 	}
+	else if (error_type == UNEXPECTED_END_OF_FILE)
+		error_message("Unexpected end of file");
 	finish_him(champ);
 }

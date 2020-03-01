@@ -39,7 +39,12 @@ int 	main(int argc, char **argv)
 	char *name;
 	t_champ *champ;
 
-	if (argc == 2)
+	champ = champ_init();
+	champ->fd = open(argv[1], O_RDONLY);
+	parse(&champ);
+	printf("%s %s", champ->name, champ->comment);
+	//free_memory(&champ);
+	/*if (argc == 2)
 	{
 		if ((fd_input = open(argv[1], O_RDONLY)) == -1)
 			error_manager(NO_FILE, &champ);
@@ -53,7 +58,7 @@ int 	main(int argc, char **argv)
 		close(fd_input);
 		close(fd_output);
 	} else
-		help();
+		help();*/
 	return (0);
 
 
