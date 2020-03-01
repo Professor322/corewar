@@ -55,6 +55,41 @@
 #define END_LINE				'\0'
 #define COR						4
 
+#define ADD_COMMAND_CODE 0x04
+#define AFF_COMMAND_CODE 0x10
+#define AND_COMMAND_CODE 0x06
+#define FORK_COMMAND_CODE 0x0c
+#define LD_COMMAND_CODE 0x02
+#define LDI_COMMAND_CODE 0x0a
+#define LFORK_COMMAND_CODE 0x0f
+#define LIVE_COMMAND_CODE 0x01
+#define LLD_COMMAND_CODE 0x0d
+#define LLDI_COMMAND_CODE 0x0e
+#define OR_COMMAND_CODE 0x07
+#define ST_COMMAND_CODE 0x03
+#define STI_COMMAND_CODE 0x0b
+#define SUB_COMMAND_CODE 0x05
+#define XOR_COMMAND_CODE 0x08
+#define ZJMP_COMMAND_CODE 0x09
+
+#define LIVE_T_DIR_SIZE 4
+#define  ADD_T_DIR_SIZE 1
+#define AFF_T_DIR_SIZE 1
+#define AND_T_DIR_SIZE 4
+#define FORK_T_DIR_SIZE 2
+#define LD_T_DIR_SIZE 4
+#define LDI_T_DIR_SIZE 2
+#define LFORK_T_DIR_SIZE 2
+#define LLD_T_DIR_SIZE 4
+#define LLDI_T_DIR_SIZE 2
+#define OR_T_DIR_SIZE 4
+#define ST_T_DIR_SIZE 4
+#define STI_T_DIR_SIZE 2
+#define SUB_T_DIR_SIZE 4
+#define XOR_T_DIR_SIZE 4
+#define ZJMP_T_DIR_SIZE 2
+
+
 enum e_arg_type
 {
 	T_LABEL,
@@ -127,7 +162,7 @@ typedef struct s_byte_command
     t_arg   *arg1;
     t_arg   *arg2;
     t_arg   *arg3;
-	t_arg   *args[4];
+	t_arg   args[4];
 }               t_b_command;
 
 
@@ -190,6 +225,7 @@ void            reg_arg(t_arg *arg_parse, char *arg, t_champ *champ);
 int             ft_is_numeric(char *str);
 int             reverse_int(int s);
 short           reverse_short(short s);
+t_b_command     *compile(int cmd_code, t_champ *champ, int d_size, char **cmd);
 ///commands
 t_b_command     *add(char **command, t_champ *champ);
 t_b_command     *aff(char **command, t_champ *champ);
