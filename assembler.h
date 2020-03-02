@@ -234,6 +234,8 @@ void			ft_exit(char *str);
 t_arg		    *get_arg(char *arg, int dir_size, t_champ *champ);
 void            dir_arg(t_arg *arg_parse, int size, char *arg, t_champ *champ);
 void            reg_arg(t_arg *arg_parse, char *arg, t_champ *champ);
+void            *label_init(t_arg *arg, int size, char *l_name, t_champ *champ);
+void            indir_arg(t_arg *arg_parse, char *arg);
 int             ft_is_numeric(char *str);
 int             reverse_int(int s);
 short           reverse_short(short s);

@@ -1,0 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands_1.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jziemann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 20:44:43 by jziemann          #+#    #+#             */
+/*   Updated: 2020/03/02 20:44:45 by jziemann         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../assembler.h"
+
+t_b_command     *add(char **command, t_champ *champ)
+{
+    t_b_command *byte_command;
+
+    byte_command = compile(ADD_COMMAND_CODE, champ, ADD_T_DIR_SIZE, command);
+    return (byte_command);
+}
+
+t_b_command     *aff(char **command, t_champ *champ)
+{
+    t_b_command *byte_command;
+
+    byte_command = compile(AFF_COMMAND_CODE, champ, AFF_T_DIR_SIZE, command);
+    byte_command->arg_type_code = (byte_command->arg1->type << (unsigned int) 6);
+    return (byte_command);
+}
+
+t_b_command     *and(char **command, t_champ *champ)
+{
+    t_b_command *byte_command;
+
+    byte_command = compile(AND_COMMAND_CODE, champ, AND_T_DIR_SIZE, command);
+    return (byte_command);
+}
+
+t_b_command     *ft_fork(char **command, t_champ *champ)
+{
+    t_b_command *byte_command;
+
+    byte_command = compile(FORK_COMMAND_CODE, champ, FORK_T_DIR_SIZE, command);
+    return (byte_command);
+}
+
+t_b_command     *ld(char **command, t_champ *champ)
+{
+    t_b_command *byte_command;
+
+    byte_command = compile(LD_COMMAND_CODE, champ, LD_T_DIR_SIZE, command);
+    return (byte_command);
+}
