@@ -40,11 +40,6 @@ int			ft_is_numeric(char *str)
     return (1);
 }
 
-void        *check_type_arg()
-{
-
-}
-
 t_arg		*get_arg(char *arg, int dir_size, t_champ *champ)
 {
     t_arg *arg_parse;
