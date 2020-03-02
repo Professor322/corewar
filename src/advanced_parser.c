@@ -12,14 +12,6 @@
  * @param champ
  */
 
-
-void	parse_exec(t_champ **champ_ptr)
-{
-	t_champ *champ;
-
-	champ = *champ_ptr;
-}
-
 void 	parse(t_champ **champ_ptr)
 {
 
