@@ -6,14 +6,14 @@
 
 int 	read_line(t_champ **champ_ptr)
 {
-	const int value = get_next_line((*champ_ptr)->fd, &(*champ_ptr)->line);
+	const int value = get_next_line((*champ_ptr)->fd, &((*champ_ptr)->line));
 	(*champ_ptr)->counter++;
 	return value;
 }
 
 void	add_full_line(t_champ **champ_ptr, t_cvec **content, char **line, const enum e_header_token token)
 {
-	const char *back_slash = "\n";
+	const char *back_slash = '\n';
 
 	ft_chr_vec_pushback(*content, *line);
 	ft_chr_vec_pushback(*content, (char*)&back_slash);
@@ -25,7 +25,7 @@ void	add_full_line(t_champ **champ_ptr, t_cvec **content, char **line, const enu
 		else if (token == NAME)
 			error_manager(WRONG_LENGTH_OF_NAME, champ_ptr);
 	}
-	//ft_memdel((void**)((*champ_ptr)->line));
+	ft_memdel((void**)&((*champ_ptr)->line));
 	read_line(champ_ptr);
 	*line = (*champ_ptr)->line;
 }
