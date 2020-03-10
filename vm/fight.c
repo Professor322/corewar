@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/10 21:34:44 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/10 23:24:51 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	check_car(t_car *car, t_arena *arena)
 
 unsigned char check(t_cbox *cbox, t_arena *arena)
 {
-	unsigned char do_check;
 	ssize_t		i;
 	t_car		*car;
 
@@ -40,11 +39,6 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 	else
 		arena->checks_count += 1;
 	arena->live_count = 0;
-//	if (arena->checks_count == MAX_CHECKS)
-//	{
-//		arena->cycles_to_die -= CYCLE_DELTA;
-//		arena->checks_count = 0;
-//	}
 	i = -1;
 	while (++i < cbox->cars.len)
 	{
@@ -54,6 +48,7 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 		
 	}
 	// TODO death of cars
+	return 1;
 }
 
 

@@ -21,7 +21,7 @@ int 	clean_all(t_cbox *cbox, char code_exit)
 	// cbox->timeline[i],
 	// cbox->champs[i].name/comm
 	// cbox->cars->data
-	return (code_exit);
+	exit (code_exit);
 }
 
 void	dump_arena(unsigned char *arena)

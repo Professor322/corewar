@@ -105,41 +105,41 @@ static void test_init(t_cbox *cbox)
     arr[i++] = 88;
 }
 
-int		main(int argc, char **argv)
-{
-	size_t 		i;
-	int 		n;  // number of players
-	t_cbox		cbox;  // corewar-box: champions, arena, timeline
-
-	ft_printf("\n{RED}LLD TEST\n\n");
-
-	ft_bzero(&cbox, sizeof(t_cbox));
-	i = 0;
-	n = 0;
-	while (++i < argc)
-		if (argv[i][0] != '-' && ++n)
-			get_champion(argv[i], &cbox.champs[i - 1], i, &cbox);
-
-	greet_champions(cbox.champs, MAX_PLAYERS);
-
-	init_timeline(&cbox);
-
-	init_arena(n, &cbox);
+//int		main(int argc, char **argv)
+//{
+//	size_t 		i;
+//	int 		n;  // number of players
+//	t_cbox		cbox;  // corewar-box: champions, arena, timeline
+//
+//	ft_printf("\n{RED}LLD TEST\n\n");
+//
+//	ft_bzero(&cbox, sizeof(t_cbox));
+//	i = 0;
+//	n = 0;
+//	while (++i < argc)
+//		if (argv[i][0] != '-' && ++n)
+//			get_champion(argv[i], &cbox.champs[i - 1], i, &cbox);
+//
+//	greet_champions(cbox.champs, MAX_PLAYERS);
+//
+//	init_timeline(&cbox);
+//
+//	init_arena(n, &cbox);
+////	dump_arena(cbox.arena.arena);
+//
+//	test_init(&cbox);
 //	dump_arena(cbox.arena.arena);
-
-	test_init(&cbox);
-	dump_arena(cbox.arena.arena);
-	ft_printf("\n\n\n\n\n");
-	t_car testcar;
-
-	testcar.pos = 15;
-	testcar.carry = 0;
-	for (int j = 0; j < REG_NUMBER; ++j)
-		testcar.regs[j] = 0;
-	testcar.id = 0;
-	testcar.oper = get_operation(LLD_COMMAND_CODE);
-
-	testcar.oper.f(&testcar, &cbox);
-
-	return (clean_all(&cbox, SUCCESS));
-}
+//	ft_printf("\n\n\n\n\n");
+//	t_car testcar;
+//
+//	testcar.pos = 15;
+//	testcar.carry = 0;
+//	for (int j = 0; j < REG_NUMBER; ++j)
+//		testcar.regs[j] = 0;
+//	testcar.id = 0;
+//	testcar.oper = get_operation(LLD_COMMAND_CODE);
+//
+//	testcar.oper.f(&testcar, &cbox);
+//
+//	return (clean_all(&cbox, SUCCESS));
+//}

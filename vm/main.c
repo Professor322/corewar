@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/10 21:34:44 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/10 21:37:05 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		main(int argc, char **argv)
 	n = 0;
 	while (++i < argc)
 		if (argv[i][0] != '-' && ++n)
-			get_champion(argv[i], &cbox.champs[i - 1], i, &cbox);
+			get_champion(argv[i], &cbox.champs[i - 1], i - 1, &cbox);
 
 	greet_champions(cbox.champs, MAX_PLAYERS);
 

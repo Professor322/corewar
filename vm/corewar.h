@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/29 22:07:40 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/10 22:45:44 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "pque.h"
 # include "vector.h"
 # include "op.h"
+# include <fcntl.h>
 
 # define SIZE_OF_QUE 100
 # define SIZE_OF_TIMELINE 1000
@@ -74,7 +75,7 @@ typedef struct	s_champ
 	char 			*name;
 	char 			*comm;
 	unsigned int 	code_size;
-	char 			*code;
+	unsigned char 			*code;
 }				t_champ;
 
 typedef struct	s_arena
@@ -106,12 +107,12 @@ typedef struct	s_car
 {
 	size_t			id;
 	unsigned char 	carry;
-	t_oper	 	oper;
+	t_oper	 		oper;
 	unsigned int	pos;
 	t_boolean 		is_alive;
 	int 			regs[REG_NUMBER];
-	size_t		last_live;
-	int		next_time;
+	size_t			last_live;
+	int				next_time;
 }				t_car;
 
 typedef struct	s_cbox
@@ -136,7 +137,8 @@ typedef struct	s_carbox
 typedef enum	e_code_exit
 {
 	SUCCESS,
-	MALLOC_ERROR
+	MALLOC_ERROR,
+	INPUT_ERROR,
 }				t_code_exit;
 
 typedef struct	s_valid_args
@@ -151,11 +153,12 @@ void	init_arena(int champs_count, t_cbox *cbox);
 
 
 /*
-** champions
+** champions, champions_parse
 */
 void			get_champion(char *file, t_champ *champ, int i, t_cbox *cbox);
 void			greet_champions(t_champ *champs, int size);
 void			greet_winner(t_arena* arena);
+void			init_champion(int fd, t_cbox *cbox, int i);
 
 t_car			*make_car(t_cbox *cbox, char player, unsigned int pos, int next_time);
 void			print_car(t_car *car); // just for debug
