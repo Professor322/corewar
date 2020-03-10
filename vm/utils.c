@@ -16,7 +16,11 @@
 
 int 	clean_all(t_cbox *cbox, char code_exit)
 {
-	// TODO clean: arena->arena, timeline[i], champs[i]->code
+	// TODO clean:
+	// cbox->arena->arena
+	// cbox->timeline[i],
+	// cbox->champs[i].name/comm
+	// cbox->cars->data
 	return (code_exit);
 }
 

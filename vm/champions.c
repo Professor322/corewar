@@ -63,3 +63,10 @@ void	greet_champions(t_champ *champs, int size)
 					  champs[i].id, champs[i].code_size,
 					  champs[i].name, champs[i].comm);
 }
+
+void	greet_winner(t_arena *arena)
+	t_champ	champ;
+
+	champ = arena->last_alive;
+	ft_printf("Player %d, \"%s\", has won !\n", champ->id, champ->name);
+

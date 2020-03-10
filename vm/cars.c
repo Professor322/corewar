@@ -12,17 +12,18 @@
 
 #include "corewar.h"
 
-t_car	*make_car(t_cbox *cbox, char player, unsigned int pos)
+t_car	*make_car(t_cbox *cbox, char player, unsigned int pos, int next_time)
 {
 	t_car	*new;
 
 	if (!(new = ft_memalloc(sizeof(t_car))))
 		exit(clean_all(cbox, MALLOC_ERROR));
-	cbox->carry_counter += 1;
+//	cbox->carry_counter += 1;
 	new->id = cbox->carry_counter;
 	new->regs[0] = player;
 	new->pos = pos;
-	// TODO init new car
+	new->next_time = next_time;
+	// TODO add new car to cbox->cars
 	return new;
 }
 
