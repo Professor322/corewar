@@ -33,6 +33,7 @@ void	dump_arena(unsigned char *arena)
 	{
 		if (!(i % 64))
 			ft_printf("\n%#.4x : ", i);
-		ft_printf("%c%c ", HEX[arena[i] / 16], HEX[arena[i] % 16]);
+//		ft_printf("%c%c ", HEX[arena[i] / 16], HEX[arena[i] % 16]);
+		ft_printf("%08b ", arena[i]);
 	}
 }

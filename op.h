@@ -52,7 +52,7 @@
 **
 */
 
-typedef char	t_arg_type;
+//typedef char	t_arg_type;
 
 #define T_REG					1
 #define T_DIR					2

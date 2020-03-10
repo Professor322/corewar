@@ -77,7 +77,7 @@ static void	sift_down(t_pque *q, unsigned int i, unsigned int len)
 }
 
 /*
-** add any Data with some Priority to PriorityQueue:
+** ft_add any Data with some Priority to PriorityQueue:
 ** append it to the end and then Sift_Up to its place
 */
 
