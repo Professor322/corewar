@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/25 14:19:04 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/10 21:34:44 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_arena(int champs_count, t_cbox *cbox)
 			ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
 			free(cbox->champs[i].code);
 			cbox->champs[i].code = NULL;
-			push_que(cbox->timeline[0], make_car(cbox, -(i + 1), cell, 0), -(cbox->cars->len + 1));
+			push_que(cbox->timeline[0], make_car(cbox, -(i + 1), cell, 0), -(cbox->cars.len + 1));
 			cbox->arena.last_alive = &cbox->champs[i - 1];
 			cell += MEM_SIZE / champs_count;
 		}
@@ -73,6 +73,6 @@ int		main(int argc, char **argv)
 
 	while (do_the_fight(&cbox))
 		cbox.cycle_counter++;
-	greet_winner(cbox.arena);
+	greet_winner(&(cbox.arena));
 	return (clean_all(&cbox, SUCCESS));
 }

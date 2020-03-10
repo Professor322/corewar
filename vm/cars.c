@@ -19,7 +19,7 @@ t_car	*make_car(t_cbox *cbox, char player, unsigned int pos, int next_time)
 	if (!(new = ft_memalloc(sizeof(t_car))))
 		exit(clean_all(cbox, MALLOC_ERROR));
 //	cbox->carry_counter += 1;
-	new->id = cbox->carry_counter;
+	new->id = cbox->cars.len;
 	new->regs[0] = player;
 	new->pos = pos;
 	new->next_time = next_time;
