@@ -12,14 +12,44 @@
 
 #include "corewar.h"
 
-unsigned char check(t_cbox *cbox)
+unsigned char check(t_cbox *cbox, t_arena *arena)
 {
 	unsigned char do_check;
+	ssize_t		i;
+	t_car		*car;
 
-	dont_check = cbox->arena.cycles_to_die && cbox->cycle_counter % cbox->arena.cycles_to_die;
-	if (dont_check)
-		return 1;
+	if arena->cycles_to_die <= 0:
+		return 0; // end of game
+ 	if cbox->cycle_counter % arena->cycles_to_die:
+		return 1; // not need to check
+	// do check:
+	if (arena->live_count >= NBR_LIVE or arena->checks_count == MAX_CHECKS - 1)
+	{
+		arena->cycles_to_die -= CYCLE_DELTA;
+		arena->checks_count = 0;
+	}
+	else
+		arena->checks_count += 1;
+	arena->live_count = 0;
+//	if (arena->checks_count == MAX_CHECKS)
+//	{
+//		arena->cycles_to_die -= CYCLE_DELTA;
+//		arena->checks_count = 0;
+//	}
+	while (++i < cbox->cars->len)
+	{
+		car = (t_car *)(cbox->cars->data)[i]
+		if car:
+			check_car(car, cbox->arena);
+		
+	}
 	// TODO death of cars
+}
+
+void	check_car(t_car *car, t_arena *arena)
+{
+	if car->last_live <= arena->cycle - arena->cycles_to_die:
+		ft_bzero(car, sizeof(t_car));
 }
 
 /*
@@ -56,6 +86,8 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	while (cbox->timeline[cycle]->len)
 	{
 		car = (t_car *) pop_que(cbox->timeline[cycle]).data;
+		if !car->id:  // dead car
+			continue;
 		print_car(car);
 		if (car->oper.f == NULL)
 			set_operation(car, cbox);

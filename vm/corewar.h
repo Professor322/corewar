@@ -53,9 +53,9 @@ typedef struct	s_arena
 	unsigned char 	*arena;
 	t_champ	*last_alive;
 	size_t 	cycle;
-	size_t 	cycles_to_die;
-	size_t 	live_count; // ???
-	size_t 	checks_count; // ???
+	int 	cycles_to_die;
+	size_t 	live_count;
+	size_t 	checks_count; 
 }				t_arena;
 
 typedef struct	s_oper
@@ -83,9 +83,10 @@ typedef struct	s_cbox
 	t_arena		arena;  // just arena
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
 	t_vector	*timeline[SIZE_OF_TIMELINE];  // array of bin-heaps with priority
-	size_t		carry_counter;
+//	size_t		car_counter;
 	size_t 		cycle_counter;
-	size_t		*cars;
+//	t_vector	free_cars; // ???
+	t_vector	cars; // vector of pointers to all cars
 }				t_cbox;
 
 typedef enum	e_code_exit

@@ -27,7 +27,7 @@ void	init_arena(int champs_count, t_cbox *cbox)
 	int i;
 	unsigned int	cell;
 
-	ft_bzero(&cbox->arena, sizeof(t_arena));
+//	ft_bzero(&cbox->arena, sizeof(t_arena));
 	if (!(cbox->arena.arena = ft_memalloc(MEM_SIZE)))
 		exit(clean_all(cbox, MALLOC_ERROR));
 	cbox->arena.cycles_to_die = CYCLE_TO_DIE;
@@ -37,7 +37,9 @@ void	init_arena(int champs_count, t_cbox *cbox)
 		if (cbox->champs[i].id != 0)
 		{
 			ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
-			push_que(cbox->timeline[0], make_car(cbox, -(i + 1), cell, 0), -cbox->carry_counter);
+			free(cbox->champs[i].code);
+			cbox->champs[i].code = NULL;
+			push_que(cbox->timeline[0], make_car(cbox, -(i + 1), cell, 0), -(cbox->cars->len + 1));
 			cbox->arena.last_alive = &cbox->champs[i - 1];
 			cell += MEM_SIZE / champs_count;
 		}
@@ -71,6 +73,6 @@ int		main(int argc, char **argv)
 
 	while (do_the_fight(&cbox))
 		cbox.cycle_counter++;
-
+	greet_winner(cbox.arena);
 	return (clean_all(&cbox, SUCCESS));
 }
