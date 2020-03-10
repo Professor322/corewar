@@ -54,8 +54,8 @@ typedef struct	s_arena
 	t_champ	*last_alive;
 	size_t 	cycle;
 	size_t 	cycles_to_die;
-	size_t 	live_count;
-	size_t 	checks_count;
+	size_t 	live_count; // ???
+	size_t 	checks_count; // ???
 }				t_arena;
 
 typedef struct	s_oper
@@ -71,9 +71,11 @@ typedef struct	s_car
 {
 	size_t			id;
 	unsigned char 	carry;
-	struct s_oper 	oper;
+	t_oper	 	oper;
 	unsigned int	pos;
 	char 			regs[REG_NUMBER];
+	size_t		last_live;
+	int		next_time;
 }				t_car;
 
 typedef struct	s_cbox
@@ -83,6 +85,7 @@ typedef struct	s_cbox
 	t_vector	*timeline[SIZE_OF_TIMELINE];  // array of bin-heaps with priority
 	size_t		carry_counter;
 	size_t 		cycle_counter;
+	size_t		*cars;
 }				t_cbox;
 
 typedef enum	e_code_exit
@@ -91,15 +94,19 @@ typedef enum	e_code_exit
 	MALLOC_ERROR
 }				t_code_exit;
 
+/*
+** champions
+*/
 void			get_champion(char *file, t_champ *champ, int i, t_cbox *cbox);
 void			greet_champions(t_champ *champs, int size);
+void			greet_winner(t_arena* arena);
 
-t_car			*make_car(t_cbox *cbox, char player, unsigned int pos);
+t_car			*make_car(t_cbox *cbox, char player, unsigned int pos, int next_time);
 void			print_car(t_car *car); // just for debug
 
 t_oper			get_operation(char code);
 
-int				do_the_fight(t_cbox *cbox);
+unsigned char		do_the_fight(t_cbox *cbox);
 
 int				clean_all(t_cbox *cbox, char code_exit);
 void 			dump_arena(unsigned char *arena);

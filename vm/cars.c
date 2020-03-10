@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-t_car	*make_car(t_cbox *cbox, char player, unsigned int pos)
+t_car	*make_car(t_cbox *cbox, char player, unsigned int pos, int next_time)
 {
 	t_car	*new;
 
@@ -22,7 +22,7 @@ t_car	*make_car(t_cbox *cbox, char player, unsigned int pos)
 	new->id = cbox->carry_counter;
 	new->regs[0] = player;
 	new->pos = pos;
-	// TODO init new car
+	new->next_time = next_time;
 	return new;
 }
 
