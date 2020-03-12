@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/10 22:45:44 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/12 22:58:09 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define SIZE_OF_QUE 100
 # define SIZE_OF_TIMELINE 1000
+# define SIZE_OF_CARS 1000
 
 # define NUMBER_OF_OPERATIONS 16
 # define CW_MAX_ARGS 4
@@ -112,7 +113,6 @@ typedef struct	s_car
 	t_boolean 		is_alive;
 	int 			regs[REG_NUMBER];
 	size_t			last_live;
-	int				next_time;
 }				t_car;
 
 typedef struct	s_cbox
@@ -121,10 +121,10 @@ typedef struct	s_cbox
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
 	int			champs_amount;
 	t_vector	*timeline[SIZE_OF_TIMELINE];  // array of bin-heaps with priority
-//	size_t		car_counter;
+	size_t		car_counter;
 	size_t 		cycle_counter;
-//	t_vector	free_cars; // ???
-	t_vector	cars; // vector of pointers to all cars
+	t_vector	*dead_cars; // vector of ponters to dead(free) cars
+	t_vector	*cars; // vector of pointers to all cars
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -160,8 +160,14 @@ void			greet_champions(t_champ *champs, int size);
 void			greet_winner(t_arena* arena);
 void			init_champion(int fd, t_cbox *cbox, int i);
 
-t_car			*make_car(t_cbox *cbox, char player, unsigned int pos, int next_time);
+/*
+** cars
+*/
+t_car			*fetch_free_car(t_cbox *cbox);
+void			make_car(t_cbox *cbox, char player, unsigned int pos);
+void			reschedule_car(t_cbox *cbox, t_car *car, int time_delta);
 void			print_car(t_car *car); // just for debug
+
 
 t_oper			get_operation(char code);
 

@@ -6,37 +6,29 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 21:28:46 by mbartole          #+#    #+#             */
-/*   Updated: 2019/11/28 19:11:34 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/12 21:24:43 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	decorator(t_car *car)
-{
-	ft_printf(" ---%s--- ", car->oper.name);
-	car->oper = (t_oper){"", NULL, 0};
-}
-
-void	moke_up_function(t_car *car)
-{
-	decorator(car);
-}
-
 /*
 ** If operation is invalid, move carry to the next byte
 ** and put it to the next unit at timeline
 */
-
-void	invalid_operation(t_car *car)
+void	invalid_operation(t_car *car, t_cbox *cbox)
 {
 	car->pos = (car->pos + 1) % MEM_SIZE;
-	decorator(car);
+	ft_printf(" ---%s--- ", car->oper.name);
 }
 
+/*
+** Try to set operation if there is no one in the carry.
+** If operation is valid, move carry to N-1 units by timeline,
+** otherwise move it just to the next unit
+*/
 t_oper	get_operation(char code)
 {
-
 	static t_oper	operations[] = {
 			{"live", ft_live, 10, FALSE, 4},
 			{"ld", ft_ld, 5, TRUE, 4},
@@ -54,7 +46,7 @@ t_oper	get_operation(char code)
 			{"lldi", ft_lldi, 50, TRUE, 2},
 			{"lfork", ft_lfork, 1000, FALSE, 2},
 			{"aff", ft_aff, 2, TRUE, 4},
-			{"inval", moke_up_function, 1, FALSE, 4}
+			{"inval", invalid_operation, 1, FALSE, 4}
 	};
 	ft_printf(" ---set operation--- ");
 	return (code > 0 && code <= NUMBER_OF_OPERATIONS ?

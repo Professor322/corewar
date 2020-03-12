@@ -6,13 +6,13 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/10 21:37:05 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/12 22:05:16 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	init_timeline(t_cbox *cbox)
+void	init_vectors(t_cbox *cbox)
 {
 	int i;
 
@@ -20,6 +20,10 @@ void	init_timeline(t_cbox *cbox)
 	while (++i < SIZE_OF_TIMELINE)
 		if (!(ft_vnew(&(cbox->timeline[i]), SIZE_OF_QUE)))
 			exit(clean_all(cbox, MALLOC_ERROR));
+	if (!(ft_vnew(&(cbox->cars), SIZE_OF_CARS)))
+		exit(clean_all(cbox, MALLOC_ERROR));
+	if (!(ft_vnew(&(cbox->dead_cars), SIZE_OF_CARS)))
+		exit(clean_all(cbox, MALLOC_ERROR));
 }
 
 void	init_arena(int champs_count, t_cbox *cbox)
@@ -27,7 +31,6 @@ void	init_arena(int champs_count, t_cbox *cbox)
 	int i;
 	unsigned int	cell;
 
-//	ft_bzero(&cbox->arena, sizeof(t_arena));
 	if (!(cbox->arena.arena = ft_memalloc(MEM_SIZE)))
 		exit(clean_all(cbox, MALLOC_ERROR));
 	cbox->arena.cycles_to_die = CYCLE_TO_DIE;
@@ -36,11 +39,15 @@ void	init_arena(int champs_count, t_cbox *cbox)
 	while (++i < MAX_PLAYERS)
 		if (cbox->champs[i].id != 0)
 		{
+			// copy code of champion to arena
 			ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
+			// call it last alive
+			cbox->arena.last_alive = &cbox->champs[i - 1];
+			// free code of champion - we dont need it more
 			free(cbox->champs[i].code);
 			cbox->champs[i].code = NULL;
-			push_que(cbox->timeline[0], make_car(cbox, -(i + 1), cell, 0), -(cbox->cars.len + 1));
-			cbox->arena.last_alive = &cbox->champs[i - 1];
+			// make new car for this champion
+			make_car(cbox, -(i + 1), cell);
 			cell += MEM_SIZE / champs_count;
 		}
 }
@@ -66,7 +73,7 @@ int		main(int argc, char **argv)
 
 	greet_champions(cbox.champs, MAX_PLAYERS);
 
-	init_timeline(&cbox);
+	init_vectors(&cbox);
 
 	init_arena(n, &cbox);
 	dump_arena(cbox.arena.arena);
