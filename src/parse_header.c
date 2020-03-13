@@ -3,7 +3,7 @@
 //
 
 #include "../assembler.h"
-
+/*
 int 	read_line(t_champ **champ_ptr)
 {
 	const int value = get_next_line((*champ_ptr)->fd, &((*champ_ptr)->line));
@@ -117,3 +117,4 @@ void 	parse_header(t_champ **champ_ptr)
 			error_manager(UNKNOWN_TOKEN, champ_ptr);
 	}
 }
+*/
