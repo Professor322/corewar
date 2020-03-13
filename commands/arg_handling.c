@@ -25,7 +25,7 @@ void        indir_arg(t_arg *arg_parse, char *arg)
 
 }
 
-void        *label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
+void        label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
 {
     t_b_command     *byte_command;
     const size_t    index = champ->command_vec->length - 1;
@@ -33,7 +33,7 @@ void        *label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
     byte_command = (t_b_command*)(champ->command_vec->data[index]);
     if (!(arg->label = (t_label *)ft_memalloc(sizeof(t_label))))
         //exit, free, TODO
-        return (NULL);
+        return ;
     arg->label->name = ft_strdup(l_name);
     arg->label->cumulate_size = byte_command->cumulative_size;
     arg->is_label = 1;
