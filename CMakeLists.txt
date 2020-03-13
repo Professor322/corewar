@@ -15,11 +15,12 @@ FILE(GLOB int_vec_func ./libft/vec_funcs/int_vec/*.c)
 FILE(GLOB ptr_vec_func ./libft/vec_funcs/ptr_vec/*.c)
 FILE(GLOB memes_func ./libft/mem_funcs/*.c)
 FILE(GLOB char_vec ./libft/vec_funcs/char_vec/*.c)
+FILE(GLOB coms ./commands/*.c)
 
 include_directories( ./libft/includes)
 
-add_executable(asm src/ft_parse.c src/parse_command.c src/parse_label.c ./src/insert_node.c ./src/enlarge_table.c ./src/find_node.c
-        ./commands/commands_*.c ./commands/help_command.c ./commands/arg_handling.c main.c ./src/output_to_file.c
+add_executable(asm src/ft_parse.c src/parse_command.c ./src/find_node.c ./src/get_header.c ./src/get_label.c ./src/enlarge_table.c ./src/find_node.c
+        ${coms} main.c ./src/output_to_file.c
         ./libft/useful_funcs/get_next_line.c src/parse_header.c src/freeshers.c src/error_manager.c)
 
-target_link_libraries(asm ~/corewar/libft/libft.a)
+target_link_libraries(asm ~/Desktop/corewar/libft/libft.a)

@@ -33,7 +33,7 @@ void 	skip_spaces(char **line)
 	while (**line && ft_isspace(**line))
 		(*line)++;
 }
-/*
+
 void 	get_exec_line(t_champ **champ, char *line)
 {
 	char	*lbl;
@@ -69,4 +69,3 @@ void 	ft_parse(int fd, t_champ **champ)
 	get_exec(fd, champ);
 }
 
-*/
