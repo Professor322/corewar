@@ -14,12 +14,12 @@
 
 t_b_command     *zjmp(char **command, t_champ *champ)
 {
-    t_b_command *byte_command;
+    t_b_command *b_command;
     t_arg       *args;
 
-    byte_command = compile(ZJMP_COMMAND_CODE, champ, ZJMP_T_DIR_SIZE, command);
+    b_command = compile(ZJMP_COMMAND_CODE, champ, ZJMP_T_DIR_SIZE, command);
     args = b_command->args;
     if (args[0].type != T_DIR)
-        //exit() TODO free memory
-    return (byte_command);
+        ;//exit() TODO free memory
+    return (b_command);
 }

@@ -21,6 +21,7 @@ t_b_command     *add(char **command, t_champ *champ)
     args = b_command->args;
     if (args[0].type != T_REG || args[1].type != T_REG || args[2].type != T_REG)
         //exit() TODO free memory
+        ;
     return (b_command);
 }
 
@@ -33,7 +34,7 @@ t_b_command     *aff(char **command, t_champ *champ)
     b_command->arg_type_code = (b_command->arg1->type << (unsigned int) 6);
     args = b_command->args;
     if (args[0].type != T_REG)
-        //exit() TODO free memory
+        ;//exit() TODO free memory
     return (b_command);
 }
 
@@ -45,7 +46,7 @@ t_b_command     *and(char **command, t_champ *champ)
     b_command = compile(AND_COMMAND_CODE, champ, AND_T_DIR_SIZE, command);
     args = b_command->args;
     if (args[2].type != T_REG)
-        //exit() TODO free memory
+        ;//exit() TODO free memory
     return (b_command);
 }
 
@@ -57,8 +58,8 @@ t_b_command     *ft_fork(char **command, t_champ *champ)
     b_command = compile(FORK_COMMAND_CODE, champ, FORK_T_DIR_SIZE, command);
     args = b_command->args;
     if (args[0].type != T_DIR)
-        //exit() TODO free memory
-    return (byte_command);
+        ;//exit() TODO free memory
+    return (b_command);
 }
 
 t_b_command     *ld(char **command, t_champ *champ)
@@ -69,6 +70,6 @@ t_b_command     *ld(char **command, t_champ *champ)
     b_command = compile(LD_COMMAND_CODE, champ, LD_T_DIR_SIZE, command);
     args = b_command->args;
     if (args[1].type != T_REG)
-        //exit() TODO free memory
+        ;//exit() TODO free memory
     return (b_command);
 }
