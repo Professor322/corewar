@@ -31,7 +31,7 @@ t_b_command     *aff(char **command, t_champ *champ)
     t_arg       *args;
 
     b_command = compile(AFF_COMMAND_CODE, champ, AFF_T_DIR_SIZE, command);
-    b_command->arg_type_code = (b_command->arg1->type << (unsigned int) 6);
+    b_command->arg_type_code = (b_command->args[0].type << (unsigned int) 6);
     args = b_command->args;
     if (args[0].type != T_REG)
         ;//exit() TODO free memory

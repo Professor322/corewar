@@ -57,6 +57,7 @@ t_b_command     *sub(char **command, t_champ *champ)
     t_arg       *args;
 
     b_command = compile(SUB_COMMAND_CODE, champ, SUB_T_DIR_SIZE, command);
+    args = b_command->args;
     if (args[0].type != T_REG || args[1].type != T_REG || args[2].type != T_REG)
         //exit() TODO free memory
         ;
