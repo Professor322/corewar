@@ -21,6 +21,7 @@ t_b_command		*ldi(char **command, t_champ *champ)
 	args = b_command->args;
 	if (args[1].type == T_IND || args[2].type != T_REG)
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
 
@@ -33,6 +34,7 @@ t_b_command		*lfork(char **command, t_champ *champ)
 	args = b_command->args;
 	if (args[0].type != T_DIR)
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
 
@@ -45,6 +47,7 @@ t_b_command		*live(char **command, t_champ *champ)
 	args = b_command->args;
 	if (args[0].type != T_DIR)
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
 
@@ -57,6 +60,7 @@ t_b_command		*lld(char **command, t_champ *champ)
 	args = b_command->args;
 	if (args[0].type == T_REG || args[1].type != T_REG)
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
 
@@ -69,5 +73,6 @@ t_b_command		*lldi(char **command, t_champ *champ)
 	args = b_command->args;
 	if (args[1].type == T_IND || args[2].type != T_REG)
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }

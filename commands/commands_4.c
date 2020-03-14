@@ -21,5 +21,6 @@ t_b_command		*zjmp(char **command, t_champ *champ)
 	args = b_command->args;
 	if (args[0].type != T_DIR)
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }

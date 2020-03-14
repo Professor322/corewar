@@ -28,7 +28,7 @@ int				reverse_int(int s)
 	unsigned short	c2;
 
 	c1 = reverse_short(s & 0xffff);
-	c2 = reverse_short((s >> 16) & 0xffff);
+	c2 = reverse_short( (s >> 16) & 0xffff);
 	return ((c1 << 16) + c2);
 }
 
