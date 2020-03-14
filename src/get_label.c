@@ -3,7 +3,7 @@
 //
 
 #include "../assembler.h"
-
+/*
 char		*is_label(char *line)
 {
 	const char *lb = ft_strchr(line, LABEL_CHAR);
@@ -11,7 +11,7 @@ char		*is_label(char *line)
 	while (line != lb && ft_strchr(LABEL_CHARS, *line))
 		line++;
 	return (line == lb ? (char*)lb : NULL);
-}
+}*/
 
 void	parse_label(t_champ *champ, char **line, char *label_end)
 {

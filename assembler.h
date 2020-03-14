@@ -138,7 +138,8 @@ typedef struct	s_champ
 	char 	*comment; // DEL
 	char	*line;
 	size_t 	*counter;
-	int 	fd;
+	int 	fd_input;
+	int 	fd_output;
 }				t_champ;
 
 

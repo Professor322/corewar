@@ -3,7 +3,7 @@
 //
 
 #include "../assembler.h"
-
+/*
 char	*parse_content(char *line, int fd, enum e_header_token token)
 {
 	t_cvec *content = ft_chr_vec_init(START_CAP);
@@ -86,3 +86,4 @@ void	get_header(int fd, t_champ *champ)
 	}
 }
 
+*/

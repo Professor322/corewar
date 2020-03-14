@@ -5,19 +5,20 @@
 #include "../assembler.h"
 
 
-/**
- * с точки начинаются токены, если встречается неизвестный токен, то компилятор должен выдавать ошибку
- * "unknown token string number"
- *
- * @param champ
- */
 
 void 	parse(t_champ **champ_ptr)
 {
+	t_champ *champ;
 
-	while (read_line(champ_ptr)) {
+	champ = *champ_ptr;
+	while (read_line(champ_ptr) && (!champ->name || !champ->comment))
+	{
 		parse_header(champ_ptr);
-		ft_memdel((void**)&(*champ_ptr)->line);
+		ft_memdel((void**)&champ->line);
 	}
-	//parse_exec
+	while (read_line(champ_ptr))
+	{
+		parse_exec(champ_ptr);
+		ft_memdel((void**)&(champ->line));
+	}
 }

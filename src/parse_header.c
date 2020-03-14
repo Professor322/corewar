@@ -6,11 +6,11 @@
 
 int 	read_line(t_champ **champ_ptr)
 {
-	const int value = get_next_line((*champ_ptr)->fd, &((*champ_ptr)->line));
+	const int value = get_next_line((*champ_ptr)->fd_input, &((*champ_ptr)->line));
 	(*champ_ptr)->counter++;
 	return value;
 }
-/*
+
 void	add_full_line(t_champ **champ_ptr, t_cvec **content, char **line, const enum e_header_token token)
 {
 	const char *back_slash = '\n';
@@ -115,6 +115,6 @@ void 	parse_header(t_champ **champ_ptr)
 			return ;
 		} else
 			error_manager(UNKNOWN_TOKEN, champ_ptr);
-	}
+	} else
+		error_manager(INCORRECT_SYNTAX, champ_ptr);
 }
-*/
