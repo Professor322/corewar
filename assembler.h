@@ -112,6 +112,7 @@ enum e_error_type
 	NON_EXISTING_COMMAND,
 	NON_EXISTING_LABEL,
 	WRONG_NUMBER_OF_ARGS,
+	WRONG_TYPE_OF_ARGS,
 	LABELS_WITHOUT_COMMAND,
 	NO_BACKSLASH,
 	NO_FILE,
@@ -131,11 +132,10 @@ typedef struct	s_champ
 	t_pvec	*file_labels; /// последовательность вызова лейблов в файле
 	t_ht	*labels; /// словарь готовых лейблов
     int 	command_size;	//размер команд а байтах
-    t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом
-    t_ivec  *cumulative_size; /// TODO добавить в t_b_commandc смежный вектор с command_vec, подсчитывается суммма кол-во до данной команды
+    t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом TODO DEL
     t_pvec   *command_vec; // вектор структур с командами
-	char	*name;
-	char 	*comment;
+	char	*name; // DEL
+	char 	*comment; // DEL
 	char	*line;
 	size_t 	*counter;
 	int 	fd;
@@ -164,13 +164,8 @@ typedef struct s_byte_command
 {
     int     command_code;
     unsigned int     arg_type_code;
-    int     command_size;
     int     cumulative_size; // подсчитывается суммма кол-во до данной команды
-
-    char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
-    t_arg   *arg1;
-    t_arg   *arg2;
-    t_arg   *arg3;
+  //  char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
 	t_arg   args[4];
 }               t_b_command;
 
@@ -187,12 +182,7 @@ typedef	struct	s_command
 typedef struct	s_label 	// структура для сохранения одной метки
 {
     char	*name;			// имя метки
-    int		position;		// позиция вызова метки
-    int		size;// размер аргумента
     int     cumulate_size;
-    char    is_after;
-    t_b_command *command; //TODO зачем?						// также здесь будет переменная, которая хранит в себе значение,
-    // полученное после применения функции-команды
 }				t_label;
 
 typedef struct	s_node       ///элемент хэштаблицы
@@ -231,9 +221,9 @@ char 	*parse_arg(char **line);
 void	compile_command(const int cmd, char **args, t_champ *champ);
 void 	get_header(int fd, t_champ *champ);
 ///writing
-void      		write_exec_code_in_file(int fd, t_pvec *command_vec, char *filename, t_champ *champ);
+void      		write_exec_code_in_file(int fd, t_pvec *command_vec, t_champ *champ);
 void			ft_exit(char *str);
-t_arg		    *get_arg(char *arg, int dir_size, t_champ *champ);
+t_arg		    *get_arg(char *arg, int dir_size, t_champ *champ, t_arg *arg_parse);
 void            dir_arg(t_arg *arg_parse, int size, char *arg, t_champ *champ);
 void            reg_arg(t_arg *arg_parse, char *arg, t_champ *champ);
 void            label_init(t_arg *arg, int size, char *l_name, t_champ *champ);
