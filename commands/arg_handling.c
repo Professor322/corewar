@@ -12,7 +12,7 @@
 
 #include "../assembler.h"
 
-void		indir_arg(t_arg *arg_parse, char *arg)
+void			indir_arg(t_arg *arg_parse, char *arg)
 {
 	unsigned int	ind_val;
 	int				temp;
@@ -24,7 +24,7 @@ void		indir_arg(t_arg *arg_parse, char *arg)
 	arg_parse->bin = reverse_short((short)ind_val);
 }
 
-void		label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
+void			label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
 {
 	t_b_command		*byte_command;
 	const size_t	index = champ->command_vec->length - 1;
@@ -39,25 +39,25 @@ void		label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
 	ft_ptr_vec_pushback(champ->labels_vec, arg);
 }
 
-void		dir_arg(t_arg *arg_parse, int dir_size, char *arg, t_champ *champ)
+void			dir_arg(t_arg *arg_parse, int d_size, char *arg, t_champ *champ)
 {
 	unsigned int	dir_val;
 	int				temp;
 
 	if (arg[1] && arg[1] == ':')
-		label_init(arg_parse, dir_size, arg + 2, champ);
+		label_init(arg_parse, d_size, arg + 2, champ);
 	else
 	{
 		temp = ft_atoi(++arg);
 		dir_val = temp < 0 ? ~(temp * -1) + 1 : temp;
-		arg_parse->bin = dir_size == 4 ? reverse_int((int)dir_val) :
+		arg_parse->bin = d_size == 4 ? reverse_int((int)dir_val) :
 			reverse_short((short)dir_val);
-		arg_parse->size = dir_size;
+		arg_parse->size = d_size;
 	}
 	arg_parse->type = T_DIR;
 }
 
-void		reg_arg(t_arg *arg_parse, char *arg, t_champ *champ)
+void			reg_arg(t_arg *arg_parse, char *arg, t_champ *champ)
 {
 	int	r_val;
 
@@ -78,14 +78,8 @@ t_b_command		*compile(int cmd_code, t_champ *champ, int d_size, char **cmd)
 	t_b_command		*b_cmd;
 	int				i;
 	unsigned int	byte_shift;
-	const size_t	index = champ->command_vec->length;
 
-	if (!(b_cmd = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
-		error_manager(MALLOC_ERROR, &champ);
-	ft_ptr_vec_pushback(champ->command_vec, b_cmd);
-	b_cmd = ((t_b_command*)(champ->command_vec->data[index]));
-	b_cmd->command_code = cmd_code;
-	b_cmd->cumulative_size = champ->command_size;
+	b_cmd = init_b_cmd(cmd_code, champ);
 	i = -1;
 	byte_shift = 6;
 	while (*cmd)
