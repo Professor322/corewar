@@ -32,14 +32,11 @@ void        label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
 
     byte_command = (t_b_command*)(champ->command_vec->data[index]);
     if (!(arg->label = (t_label *)ft_memalloc(sizeof(t_label))))
-        //exit, free, TODO
-        return ;
+        error_manager(MALLOC_ERROR, &champ);
     arg->label->name = ft_strdup(l_name);
     arg->label->cumulate_size = byte_command->cumulative_size;
     arg->is_label = 1;
     arg->size = size;
-//    arg->label->size = size;
-  //  arg->label->is_after = !ht_find_node(champ->labels, l_name) ? '1' : '0';
     ft_ptr_vec_pushback(champ->labels_vec, arg);
 }
 
@@ -57,7 +54,6 @@ void        dir_arg(t_arg *arg_parse, int dir_size, char *arg, t_champ *champ)
         arg_parse->bin = dir_size == 4 ? reverse_int((int)dir_val) :
                          reverse_short((short)dir_val);
         arg_parse->size = dir_size;
-
     }
     arg_parse->type = T_DIR;
 }
@@ -86,7 +82,7 @@ t_b_command     *compile(int cmd_code, t_champ *champ, int d_size, char **cmd)
     const size_t    index = champ->command_vec->length;
 
     if (!(b_cmd = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
-        return (NULL);
+        error_manager(MALLOC_ERROR, &champ);
     ft_ptr_vec_pushback(champ->command_vec, b_cmd);
     b_cmd = ((t_b_command*)(champ->command_vec->data[index]));
     b_cmd->command_code = cmd_code;

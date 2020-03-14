@@ -45,9 +45,13 @@ void	error_manager(enum e_error_type error_type, t_champ **champ)
 	{
 
 	}
+	else if (error_type == WRONG_TYPE_OF_ARGS)
+    {
+        error_message("Wrong type of command arguments");
+    }
 	else if (error_type == LABELS_WITHOUT_COMMAND)
 	{
-
+        error_message("Wrong label");
 	}
 	else if (error_type == NO_BACKSLASH)
 	{

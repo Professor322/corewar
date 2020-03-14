@@ -57,20 +57,24 @@ void    printHashtable(t_ht* champ_label) {
     }
 }
 
-int        substitute_label(t_ht *champ_label, t_arg *arg)
+int        substitute_label(t_ht *champ_label, t_arg *arg, t_champ *champ)
 {
-    printHashtable(champ_label);
-    const int   hash_size = ht_find_node(champ_label,arg->label->name)->command->cumulative_size;
+//    printHashtable(champ_label);
+    t_node      *hash;
     int         bin_label;
+    int         hash_size;
 
-    bin_label =  hash_size - arg->label->cumulate_size;//* (arg->label->is_after == '1' ? 1 : -1);
+    hash = ht_find_node(champ_label,arg->label->name);
+    if (!hash)
+        error_manager(LABELS_WITHOUT_COMMAND, &champ);
+    hash_size = hash->command->cumulative_size;
+    bin_label =  hash_size - arg->label->cumulate_size;
     bin_label = bin_label < 0 ? ~(bin_label * -1) + 1 : bin_label;
     if (arg->size == 4)
         return (reverse_int(bin_label));
 
     else if (arg->size == 2)
         return (reverse_short((short)bin_label));
-
     else
         return (bin_label);
 }
@@ -84,7 +88,6 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, t_champ *champ)
     int j;
 
     i = -1;
-
     write_rubbish_in_file(fd, champ);
     while (++i < len) {
         c_vec = ((t_b_command *) command_vec->data[i]);
@@ -97,7 +100,7 @@ void        write_exec_code_in_file(int fd, t_pvec *command_vec, t_champ *champ)
             if (arg->type == 0)
                 continue;
             if (arg->is_label)
-                arg->bin = substitute_label(champ->labels, arg);
+                arg->bin = substitute_label(champ->labels, arg, champ);
             write(fd, &arg->bin, arg->size);
 
         }

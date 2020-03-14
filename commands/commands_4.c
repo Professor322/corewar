@@ -20,6 +20,6 @@ t_b_command     *zjmp(char **command, t_champ *champ)
     b_command = compile(ZJMP_COMMAND_CODE, champ, ZJMP_T_DIR_SIZE, command);
     args = b_command->args;
     if (args[0].type != T_DIR)
-        finish_him(&champ);//exit() TODO free memory
+        error_manager(WRONG_TYPE_OF_ARGS, &champ);
     return (b_command);
 }
