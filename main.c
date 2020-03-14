@@ -10,12 +10,9 @@ t_champ *champ_init()
 
 	champ = (t_champ*)ft_memalloc(sizeof(t_champ));
 	champ->temp_labels = ft_ptr_vec_init();
-	champ->file_labels = ft_ptr_vec_init();
 	champ->labels = ft_ht_init();
 	champ->command_vec = ft_ptr_vec_init();
 	champ->labels_vec = ft_ptr_vec_init();
-	champ->name = NULL;
-	champ->comment = NULL;
 	return (champ);
 }
 

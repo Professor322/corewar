@@ -77,8 +77,8 @@ void	free_memory(t_champ **champ)
     ft_ptr_vec_del(&to_del->command_vec, free_t_b_command);
     //all delete
 	ht_delete(&to_del->labels);
+	ft_memdel((void**)&to_del->line);
 	ft_memdel((void **) champ);
-
 }
 
 void	finish_him(t_champ **champ)
