@@ -40,13 +40,13 @@ int			ft_is_numeric(char *str)
     return (1);
 }
 
-t_arg		*get_arg(char *arg, int dir_size, t_champ *champ)
+t_arg		*get_arg(char *arg, int dir_size, t_champ *champ, t_arg *arg_parse)
 {
-    t_arg *arg_parse;
+//    t_arg *arg_parse;
 
-    if (!(arg_parse = (t_arg *)ft_memalloc(sizeof(t_arg))))
-        //free exit()
-        return (NULL);
+//    if (!(arg_parse = (t_arg *)ft_memalloc(sizeof(t_arg))))
+//        //free exit()
+//        return (NULL);
     if (*arg && *arg == 'r')
         reg_arg(arg_parse, arg, champ);
     else if (*arg && *arg == '%')

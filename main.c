@@ -52,7 +52,7 @@ int 	main(int argc, char **argv)
 			error_manager(MALLOC_ERROR, &champ);
 		ft_parse(fd_input, &champ);
 		fd_output = open(name,  O_WRONLY | O_CREAT| O_TRUNC, 0644);
-		write_exec_code_in_file(fd_output, champ->command_vec, name, champ);
+		write_exec_code_in_file(fd_output, champ->command_vec, champ);
 		ft_memdel((void**)&name);
 		free_memory(&champ);
 		close(fd_input);

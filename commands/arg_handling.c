@@ -38,8 +38,8 @@ void        label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
     arg->label->cumulate_size = byte_command->cumulative_size;
     arg->is_label = 1;
     arg->size = size;
-    arg->label->size = size;
-    arg->label->is_after = !ht_find_node(champ->labels, l_name) ? '1' : '0';
+//    arg->label->size = size;
+  //  arg->label->is_after = !ht_find_node(champ->labels, l_name) ? '1' : '0';
     ft_ptr_vec_pushback(champ->labels_vec, arg);
 }
 
@@ -95,7 +95,8 @@ t_b_command     *compile(int cmd_code, t_champ *champ, int d_size, char **cmd)
     byte_shift = 6;
     while (*cmd)
     {
-        b_cmd->args[++i] = *(get_arg(*cmd, d_size, champ));
+        i++;
+        b_cmd->args[i] = *(get_arg(*cmd, d_size, champ, &b_cmd->args[i]));
         if ((*cmd && i != 0) || i > 0)
         {   if (i == 1)
                 b_cmd->arg_type_code += b_cmd->args[i - 1].type << byte_shift;
