@@ -154,10 +154,10 @@ void 	parse_exec(t_champ **champ_ptr)
 		cmd = is_command(&line);
 		if (cmd < 0)
 			error_manager(NON_EXISTING_COMMAND, champ_ptr);
-		char **args = advanced_parse_args(champ_ptr, line, cmd);
-		printf("Args for %d command: ", cmd);
+		compile_command(cmd, advanced_parse_args(champ_ptr, line, cmd), champ);
+		/*printf("Args for %d command: ", cmd);
 		for (int i = 0; i < g_commands[cmd].num_of_args; ++i)
 			printf("%s ", args[i]);
-		printf("\n");
+		printf("\n");*/
 	}
 }
