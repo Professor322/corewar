@@ -30,9 +30,7 @@ void	error_manager(enum e_error_type error_type, t_champ **champ)
 	else if (error_type == WRONG_LENGTH_OF_NAME)
 		error_message("Wrong length of champ's name or champs' comment");
 	else if (error_type == INCORRECT_SYNTAX)
-	{
-
-	}
+		error_message("Incorrect syntax");
 	else if (error_type == NON_EXISTING_COMMAND)
 	{
 
@@ -42,9 +40,7 @@ void	error_manager(enum e_error_type error_type, t_champ **champ)
 
 	}
 	else if (error_type == WRONG_NUMBER_OF_ARGS)
-	{
-
-	}
+		error_message("Wrong number of args");
 	else if (error_type == LABELS_WITHOUT_COMMAND)
 	{
 

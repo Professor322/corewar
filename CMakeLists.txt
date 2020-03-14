@@ -20,7 +20,7 @@ FILE(GLOB coms ./commands/*.c)
 include_directories( ./libft/includes)
 
 add_executable(asm src/ft_parse.c src/parse_command.c ./src/find_node.c ./src/get_header.c ./src/get_label.c ./src/enlarge_table.c ./src/find_node.c
-        ${coms} main.c ./src/output_to_file.c ./src/insert_node.c
-        ./libft/useful_funcs/get_next_line.c src/parse_header.c src/freeshers.c src/error_manager.c)
+        ${coms} main.c ./src/output_to_file.c ./src/insert_node.c ./src/advanced_parser.c ./libft/useful_funcs/ft_del_twodem_arr.c
+        ./libft/useful_funcs/get_next_line.c src/parse_header.c src/freeshers.c src/error_manager.c ./src/parse_exec.c)
 
-target_link_libraries(asm ~/Desktop/corewar/libft/libft.a)
+target_link_libraries(asm ~/corewar/libft/libft.a)

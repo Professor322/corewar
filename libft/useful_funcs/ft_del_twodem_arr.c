@@ -19,7 +19,7 @@ void	ft_del_twodem_arr(void ***p_arr)
 	if (!p_arr)
 		return ;
 	i = 0;
-	while (*((*p_arr) + i))
+	while (((*p_arr) + i) && *((*p_arr) + i))
 		free(*((*p_arr) + i++));
 	free(*p_arr);
 	*p_arr = NULL;

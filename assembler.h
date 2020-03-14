@@ -37,6 +37,7 @@
 #define ALT_COMMENT_CHAR		';'
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
+#define REGISTER_CHAR			'r'
 #define SEPARATOR_CHAR			','
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
@@ -218,6 +219,7 @@ t_node		*ht_find_node(t_ht *ht, char *name);
 int 	read_line(t_champ **champ_ptr);
 void 	parse_header(t_champ **champ_ptr);
 void 	parse(t_champ **champ_ptr);
+void 	parse_exec(t_champ **champ_ptr);
 ///parse
 void	ft_parse(int fd, t_champ **champ);
 void 	skip_spaces(char **line);

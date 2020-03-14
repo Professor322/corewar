@@ -30,6 +30,8 @@ t_header g_header[2] = {
 
 void 	skip_spaces(char **line)
 {
+	if (!*line)
+		return ;
 	while (**line && ft_isspace(**line))
 		(*line)++;
 }
