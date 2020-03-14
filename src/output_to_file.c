@@ -22,18 +22,25 @@ void		write_string(int fd, size_t str_len, size_t limit, char *str)
 	ft_strdel(&temp_str);
 }
 
+
 void		write_rubbish_in_file(int fd, t_champ *champ)
 {
-	const size_t	name_len = ft_strlen(champ->name);
-	char			*temp_str;
-	const int		magic = reverse_int(COREWAR_EXEC_MAGIC);
+	//const size_t    name_len = ft_strlen(champ->name);
+	//char            *temp_str;
+	const int       magic = reverse_int(COREWAR_EXEC_MAGIC);
 
+	// write magic num
 	write(fd, &magic, 4);
+	// write name champion
 	write_string(fd, ft_strlen(champ->name), PROG_NAME_LENGTH, champ->name);
+	// write 4 NULL
 	write_string(fd, 0, 4, 0);
+	// write champion exec code size
 	champ->command_size = reverse_int(champ->command_size);
 	write(fd, &champ->command_size, 4);
+	// write champion_comment
 	write_string(fd, ft_strlen(champ->comment), COMMENT_LENGTH, champ->comment);
+	// write 4 NULL
 	write_string(fd, 0, 4, 0);
 }
 

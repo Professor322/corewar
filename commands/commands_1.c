@@ -26,7 +26,7 @@ t_b_command		*add(char **command, t_champ *champ)
 
 t_b_command		*aff(char **command, t_champ *champ)
 {
-	t_b_comman	*b_command;
+	t_b_command	*b_command;
 	t_arg		*args;
 
 	b_command = compile(AFF_COMMAND_CODE, champ, AFF_T_DIR_SIZE, command);
