@@ -231,6 +231,7 @@ void            indir_arg(t_arg *arg_parse, char *arg);
 int             ft_is_numeric(char *str);
 int             reverse_int(int s);
 short           reverse_short(short s);
+t_b_command 	*init_b_cmd(int cmd_code, t_champ *champ);
 t_b_command     *compile(int cmd_code, t_champ *champ, int d_size, char **cmd);
 ///commands
 t_b_command     *add(char **command, t_champ *champ);
