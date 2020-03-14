@@ -20,7 +20,10 @@ t_b_command		*add(char **command, t_champ *champ)
 	b_command = compile(ADD_COMMAND_CODE, champ, ADD_T_DIR_SIZE, command);
 	args = b_command->args;
 	if (args[0].type != T_REG || args[1].type != T_REG || args[2].type != T_REG)
+	{
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+		ft_del_twodem_arr((void***)&command);
+	}
 	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
@@ -35,7 +38,10 @@ t_b_command		*aff(char **command, t_champ *champ)
 	args = b_command->args;
 	champ->command_size += 1;
 	if (args[0].type != T_REG)
+	{
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+		ft_del_twodem_arr((void***)&command);
+	}
 	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
@@ -48,7 +54,10 @@ t_b_command		*and(char **command, t_champ *champ)
 	b_command = compile(AND_COMMAND_CODE, champ, AND_T_DIR_SIZE, command);
 	args = b_command->args;
 	if (args[2].type != T_REG)
+	{
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+		ft_del_twodem_arr((void***)&command);
+	}
 	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
@@ -61,7 +70,10 @@ t_b_command		*ft_fork(char **command, t_champ *champ)
 	b_command = compile(FORK_COMMAND_CODE, champ, FORK_T_DIR_SIZE, command);
 	args = b_command->args;
 	if (args[0].type != T_DIR)
+	{
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+		ft_del_twodem_arr((void***)&command);
+	}
 	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
@@ -74,7 +86,10 @@ t_b_command		*ld(char **command, t_champ *champ)
 	b_command = compile(LD_COMMAND_CODE, champ, LD_T_DIR_SIZE, command);
 	args = b_command->args;
 	if (args[1].type != T_REG)
+	{
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+		ft_del_twodem_arr((void***)&command);
+	}
 	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
