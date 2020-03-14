@@ -129,7 +129,6 @@ enum e_header_token
 typedef struct	s_champ
 {
 	t_pvec	*temp_labels;
-	t_pvec	*file_labels;
 	t_ht	*labels;
     int		command_size;
     t_pvec	*labels_vec;
@@ -140,7 +139,6 @@ typedef struct	s_champ
 	int 	fd_input;
 	int 	fd_output;
 	size_t	counter;
-	int		fd;
 }				t_champ;
 
 typedef struct s_label t_label;
