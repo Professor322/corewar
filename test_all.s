@@ -1,22 +1,70 @@
-.name           "42"
-.comment        "Just a basic Winner Program"
+.name		"Celebration Funebre v0.99pl42"
+.comment	"Jour J"
 
-	fork	%10
-	ld	%4,r3
-st r2, 5
-lldi %5, r4, r4
-ld 5, r1
-   and %10, r1, r2
-	live	%1
-    xor r2, r3, r5
-	add	r4,r5,r4
-	add	r3,r4,r3
-	sub	r2,r4,r2
-	ld	%0,r11
-	zjmp	%0
-lld %8, r2
-lfork %5
-	zjmp	%0
-aff r4
-sti     r1,%0,%2
-or %5, %5, r7
+		ld   %0,r3
+label:		zjmp %:avantdebut
+		zjmp %0				# pour eviter ecrasement
+						# de l'instruction suivante
+code:		live %42			# 5
+		sti  r15,%0,r14			# 6
+		zjmp %-200			# 3
+		live %42			# 5
+		sti  r15,%0,r14			# 6
+		zjmp %-200			# 3
+		live %42			# 5
+		sti  r15,%0,r14			# 6
+		zjmp %-200			# 3
+		live %42			# 5
+		sti  r15,%0,r14			# 6
+		zjmp %-200			# 3
+		sti  r15,%0,r14			# 6
+		zjmp %-200			# 3
+		sti  r15,%0,r14			# 6
+		zjmp %-200
+
+avantdebut:	sti   r1,%code,%1  # 		#7
+		sti   r1,%:code,%15 # 		#7
+		sti   r1,%:code,%29 # 		#7
+		sti   r1,%:code,%43 # 		#7
+		sti   r1,%:code,%57 # 		#7
+		sti   r1,%:code,%71 # 		#7
+init:		ld   %393216,r4		 	#7
+		ld   %917504,r12		#7
+		ld   %1,r11			#7
+		ld   %6,r10			#7
+debut:		live %42			#5
+		sti  r4,%:label , %1		#7
+		add  r4,r12,r4			#5
+		sub  r10,r11,r10		#5
+		zjmp %:init			#3
+		fork %:debut
+		live %3
+level0:		fork %:level10
+level11:	live %4
+		fork %:level111
+
+level110:	live %42
+		ldi  %8, %:code, r15		#set des octets 9-12
+		ld   %-186, r14			#=$A-6-8
+		ld   %0,r2
+		zjmp  %:label
+
+level10:	live %42
+		fork %:level100
+level101:	live %42
+		ldi  %4, %:code, r15 		#set des octets 5-8
+		ld   %-190, r14			#=$A-6-4
+		ld   %0,r2
+		zjmp %:label
+
+level111:	live %42
+		ldi  %12, %:code, r15		#set des octets 13-16
+		ld   %-182, r14			# $A -6 -12
+		ld   %0,r2
+		zjmp %:label
+
+level100:	live %42
+		ldi  %0, %:code, r15		#set des octets 1-4
+		ld   %-194, r14			# $A -6 -0
+		ld   %0,r2			#
+		zjmp %:label			#
