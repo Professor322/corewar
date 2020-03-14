@@ -216,14 +216,14 @@ void 	get_header(int fd, t_champ *champ);
 void      		write_exec_code_in_file(int fd, t_pvec *command_vec, t_champ *champ);
 void			ft_exit(char *str);
 t_arg		    *get_arg(char *arg, int dir_size, t_champ *champ, t_arg *arg_parse);
-void            dir_arg(t_arg *arg_parse, int size, char *arg, t_champ *champ);
-void            reg_arg(t_arg *arg_parse, char *arg, t_champ *champ);
-void            label_init(t_arg *arg, int size, char *l_name, t_champ *champ);
+void            *dir_arg(t_arg *arg_parse, int size, char *arg, t_champ *champ);
+void            reg_arg(t_arg *arg_parse, char *arg);
+void           	*label_init(t_arg *arg, int size, char *l_name, t_champ *champ);
 void            indir_arg(t_arg *arg_parse, char *arg);
 int             ft_is_numeric(char *str);
 int             reverse_int(int s);
 short           reverse_short(short s);
-t_b_command 	*init_b_cmd(int cmd_code, t_champ *champ);
+t_b_command 	*init_b_cmd(int cmd_code, t_champ *champ, char **cmd);
 t_b_command     *compile(int cmd_code, t_champ *champ, int d_size, char **cmd);
 ///commands
 t_b_command     *add(char **command, t_champ *champ);
