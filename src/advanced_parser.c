@@ -16,6 +16,10 @@ void 	parse(t_champ **champ_ptr)
 		parse_header(champ_ptr);
 		ft_memdel((void**)&champ->line);
 	}
+	if (champ->line) {
+		parse_exec(champ_ptr);
+		ft_memdel((void**)&(champ->line));
+	}
 	while (read_line(champ_ptr))
 	{
 		parse_exec(champ_ptr);
