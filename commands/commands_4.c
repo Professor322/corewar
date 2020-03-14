@@ -20,7 +20,10 @@ t_b_command		*zjmp(char **command, t_champ *champ)
 	b_command = compile(ZJMP_COMMAND_CODE, champ, ZJMP_T_DIR_SIZE, command);
 	args = b_command->args;
 	if (args[0].type != T_DIR)
+	{
 		error_manager(WRONG_TYPE_OF_ARGS, &champ);
+		ft_del_twodem_arr((void***)&command);
+	}
 	ft_del_twodem_arr((void***)&command);
 	return (b_command);
 }
