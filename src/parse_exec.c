@@ -6,7 +6,6 @@
 
 int 	check_starter_token(const char starter)
 {
-
 	if (starter == DIRECT_CHAR)
 		return (1);
 	if (starter == REGISTER_CHAR)
@@ -26,7 +25,7 @@ char 	*create_arg(char **line, const char *arg_start, char *arg_end)
 	*arg_end = END_LINE;
 	arg = ft_strdup(arg_start);
 	*arg_end = chr;
-	*line = arg_end && *arg_end && *arg_end != COMMENT_CHAR ? arg_end : NULL;
+	*line = *arg_end && *arg_end != COMMENT_CHAR ? arg_end : NULL;
 	return arg;
 }
 

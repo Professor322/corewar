@@ -78,6 +78,9 @@ void	free_memory(t_champ **champ)
     //all delete
 	ht_delete(&to_del->labels);
 	ft_memdel((void**)&to_del->line);
+	while (read_line(champ)) {
+		ft_memdel((void**)&to_del->line);
+	}
 	ft_memdel((void **) champ);
 }
 
