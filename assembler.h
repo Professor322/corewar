@@ -128,74 +128,64 @@ enum e_header_token
 
 typedef struct	s_champ
 {
-	t_pvec	*temp_labels; ///временные лейблы, у которых еще не была определена операция
-	t_pvec	*file_labels; /// последовательность вызова лейблов в файле
-	t_ht	*labels; /// словарь готовых лейблов
-    int 	command_size;	//размер команд а байтах
-    t_pvec	*labels_vec;	//вектор меток, заканчивается нуллом TODO DEL
-    t_pvec   *command_vec; // вектор структур с командами
-	char	*name; // DEL
-	char 	*comment; // DEL
+	t_pvec	*temp_labels;
+	t_pvec	*file_labels;
+	t_ht	*labels;
+    int		command_size;
+    t_pvec	*labels_vec;
+    t_pvec	*command_vec;
+	char	*name;
+	char	*comment;
 	char	*line;
-	size_t 	*counter;
-	int 	fd;
+	size_t	*counter;
+	int		fd;
 }				t_champ;
-
 
 typedef struct s_label t_label;
 
-typedef struct	s_arg		// структура одного аргумента
+typedef struct	s_arg
 {
 	enum e_arg_type	type;
-	t_label 		*label;
-	unsigned int	bin;	// значение
-	int 			size;
-	char            is_label;// размер в байтах
+	t_label			*label;
+	unsigned int	bin;
+	int				size;
+	char			is_label;
 }				t_arg;
 
-
-/**
- * структура для хранения конечного результата команды,
- * которую можно легко распечатать в байт код
- * в струтуре t_foo в вектооре command_vec будет лежать
- * одна структурка t_b_command
- */
 typedef struct s_byte_command
 {
-    int     command_code;
-    unsigned int     arg_type_code;
-    int     cumulative_size; // подсчитывается суммма кол-во до данной команды
-  //  char    is_after;  /// флаг, отвчеающий за положение метки в коде чемпиона 1-лейбла еще нету в коде => с плюсом
-	t_arg   args[4];
+    int				command_code;
+    unsigned int	arg_type_code;
+    int				cumulative_size;
+	t_arg			args[4];
 }               t_b_command;
 
 
 typedef	struct	s_command
 {
-	char	*name;
-	int		name_len;
-	int 	num_of_args;
-	t_b_command* (*func)(char**, t_champ*);
-	///args
+	char 			*name;
+	int				name_len;
+	int				num_of_args;
+	t_b_command*	(*func)(char**, t_champ*);
 }				t_command;
 
-typedef struct	s_label 	// структура для сохранения одной метки
+typedef struct	s_label
 {
-    char	*name;			// имя метки
-    int     cumulate_size;
+    char 	*name;
+    int		cumulate_size;
 }				t_label;
 
-typedef struct	s_node       ///элемент хэштаблицы
+typedef struct	s_node
 {
-	char	*name;
-	t_b_command *command;
+	char		*name;
+	t_b_command	*command;
 }				t_node;
 
-typedef	struct s_header
+typedef	struct	s_header
 {
-	char *token;
-	size_t token_len;
-	size_t len;
+	char	*token;
+	size_t	token_len;
+	size_t	len;
 }				t_header;
 
 extern	t_command g_commands[COMMANDS_NUM];
@@ -238,7 +228,6 @@ t_b_command     *add(char **command, t_champ *champ);
 t_b_command     *aff(char **command, t_champ *champ);
 t_b_command     *and(char **command, t_champ *champ);
 t_b_command     *ft_fork(char **command, t_champ *champ);
-t_b_command     *help_command(char **command, t_champ *champ);
 t_b_command     *ld(char **command, t_champ *champ);
 t_b_command     *ldi(char **command, t_champ *champ);
 t_b_command     *lfork(char **command, t_champ *champ);
@@ -259,4 +248,5 @@ void	help(void);
 ///memory freeing
 void	finish_him(t_champ **champ);
 void 	free_memory(t_champ **champ);
+
 #endif
