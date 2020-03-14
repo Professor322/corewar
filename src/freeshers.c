@@ -12,6 +12,7 @@ static void		del_ht_elem(t_list **head)
 	while (temp)
 	{
 		*head = temp;
+		ft_memdel((void**)&(((t_node*)temp->content)->name));
 		ft_memdel(&temp->content);
 		temp = temp->next;
 		ft_memdel((void**)head);
@@ -47,7 +48,6 @@ void    free_t_b_command(void **to_del)
     {
         if (args[i].label)
         {
-            printf("%s\n", args[i].label->name);
             ft_strdel(&(args[i].label->name));
             ft_memdel((void**)args[i].label);
         }
@@ -64,29 +64,30 @@ void    free_label_vec(void **to_del)
     ft_memdel((void **)&arg->label);
 }
 
-void	free_memory(t_champ **champ)
+void	free_memory_and_close_fd(t_champ **champ)
 {
 	t_champ *to_del;
 
 	to_del = *champ;
 	ft_memdel((void **) &to_del->name);
 	ft_memdel((void **) &to_del->comment);
+	ft_memdel((void**)&to_del->line);
+	while(read_line(champ))
+		ft_memdel((void**)&to_del->line);
 	ft_ptr_vec_del(&to_del->temp_labels, ft_memdel);
     //`Vera delete
     ft_ptr_vec_del(&to_del->labels_vec, free_label_vec);
     ft_ptr_vec_del(&to_del->command_vec, free_t_b_command);
     //all delete
+    close(to_del->fd_input);
+    close(to_del->fd_output);
 	ht_delete(&to_del->labels);
-	ft_memdel((void**)&to_del->line);
-	while (read_line(champ)) {
-		ft_memdel((void**)&to_del->line);
-	}
 	ft_memdel((void **) champ);
 }
 
 void	finish_him(t_champ **champ)
 {
 	if (*champ)
-		free_memory(champ);
+		free_memory_and_close_fd(champ);
 	exit(1);
 }

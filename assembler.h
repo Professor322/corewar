@@ -247,6 +247,6 @@ void	error_manager(enum e_error_type error_type, t_champ **champ);
 void	help(void);
 ///memory freeing
 void	finish_him(t_champ **champ);
-void 	free_memory(t_champ **champ);
+void 	free_memory_and_close_fd(t_champ **champ);
 
 #endif

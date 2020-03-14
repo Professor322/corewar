@@ -44,10 +44,8 @@ int 	main(int argc, char **argv)
 		parse(&champ);
 		champ->fd_output = open(name,  O_WRONLY | O_CREAT| O_TRUNC, 0644);
 		write_exec_code_in_file(champ->fd_output, champ->command_vec, champ);
-		close(champ->fd_input);
-		close(champ->fd_output);
 		ft_memdel((void**)&name);
-		free_memory(&champ);
+		free_memory_and_close_fd(&champ);
 	} else
 		help();
 	return (0);
