@@ -24,28 +24,32 @@ void			indir_arg(t_arg *arg_parse, char *arg)
 	arg_parse->bin = reverse_short((short)ind_val);
 }
 
-void			label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
+void			*label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
 {
 	t_b_command		*byte_command;
 	const size_t	index = champ->command_vec->length - 1;
 
 	byte_command = (t_b_command*)(champ->command_vec->data[index]);
 	if (!(arg->label = (t_label *)ft_memalloc(sizeof(t_label))))
-		error_manager(MALLOC_ERROR, &champ);
+		return (NULL);
 	arg->label->name = ft_strdup(l_name);
 	arg->label->cumulate_size = byte_command->cumulative_size;
 	arg->is_label = 1;
 	arg->size = size;
 	ft_ptr_vec_pushback(champ->labels_vec, arg);
+	return (byte_command);
 }
 
-void			dir_arg(t_arg *arg_parse, int d_size, char *arg, t_champ *champ)
+void			*dir_arg(t_arg *arg_parse, int d_size, char *arg, t_champ *champ)
 {
 	unsigned int	dir_val;
 	int				temp;
 
 	if (arg[1] && arg[1] == ':')
-		label_init(arg_parse, d_size, arg + 2, champ);
+	{
+		if (!(label_init(arg_parse, d_size, arg + 2, champ)))
+			return (NULL);
+	}
 	else
 	{
 		temp = ft_atoi(++arg);
@@ -55,22 +59,17 @@ void			dir_arg(t_arg *arg_parse, int d_size, char *arg, t_champ *champ)
 		arg_parse->size = d_size;
 	}
 	arg_parse->type = T_DIR;
+	return(arg_parse);
 }
 
-void			reg_arg(t_arg *arg_parse, char *arg, t_champ *champ)
+void			reg_arg(t_arg *arg_parse, char *arg)
 {
 	int	r_val;
 
-	if (arg[1] && arg[1] == ':')
-		label_init(arg_parse, 1, arg + 2, champ);
-	else
-	{
-		r_val = ft_atoi(++arg);
-		arg_parse->size = 1;
-		arg_parse->type = T_REG;
-		arg_parse->bin = r_val;
-	}
+	r_val = ft_atoi(++arg);
+	arg_parse->size = 1;
 	arg_parse->type = T_REG;
+	arg_parse->bin = r_val;
 }
 
 t_b_command		*compile(int cmd_code, t_champ *champ, int d_size, char **cmd)
@@ -78,14 +77,20 @@ t_b_command		*compile(int cmd_code, t_champ *champ, int d_size, char **cmd)
 	t_b_command		*b_cmd;
 	int				i;
 	unsigned int	byte_shift;
+	t_arg			*arg;
 
-	b_cmd = init_b_cmd(cmd_code, champ);
+	b_cmd = init_b_cmd(cmd_code, champ, cmd);
 	i = -1;
 	byte_shift = 6;
 	while (*cmd)
 	{
 		i++;
-		b_cmd->args[i] = *(get_arg(*cmd, d_size, champ, &b_cmd->args[i]));
+		if (!(arg = get_arg(*cmd, d_size, champ, &b_cmd->args[i])))
+		{
+			ft_del_twodem_arr((void***)&cmd);
+			error_manager(WRONG_TYPE_OF_ARGS, &champ);
+		}
+		b_cmd->args[i] = *arg;
 		if ((*cmd && i != 0) || i > 0)
 		{
 			if (i == 1)

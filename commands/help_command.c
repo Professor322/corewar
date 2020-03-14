@@ -42,13 +42,16 @@ int				ft_is_numeric(char *str)
 	return (1);
 }
 
-t_b_command		*init_b_cmd(int cmd_code, t_champ *champ)
+t_b_command		*init_b_cmd(int cmd_code, t_champ *champ, char **cmd)
 {
 	t_b_command		*b_cmd;
 	const size_t	index = champ->command_vec->length;
 
 	if (!(b_cmd = (t_b_command *)ft_memalloc(sizeof(t_b_command))))
+	{
+		ft_del_twodem_arr((void***)&cmd);
 		error_manager(MALLOC_ERROR, &champ);
+	}
 	ft_ptr_vec_pushback(champ->command_vec, b_cmd);
 	b_cmd = ((t_b_command*)(champ->command_vec->data[index]));
 	b_cmd->command_code = cmd_code;
@@ -59,12 +62,16 @@ t_b_command		*init_b_cmd(int cmd_code, t_champ *champ)
 t_arg			*get_arg(char *arg, int d_size, t_champ *champ, t_arg *arg_pars)
 {
 	if (*arg && *arg == 'r')
-		reg_arg(arg_pars, arg, champ);
+		reg_arg(arg_pars, arg);
 	else if (*arg && *arg == '%')
-		dir_arg(arg_pars, d_size, arg, champ);
+	{
+		if (!(dir_arg(arg_pars, d_size, arg, champ)))
+			return (NULL);
+	}
 	else if (*arg && *arg == ':')
 	{
-		label_init(arg_pars, 2, arg + 1, champ);
+		if (!(label_init(arg_pars, 2, arg + 1, champ)))
+			return (NULL);
 		arg_pars->type = T_IND;
 	}
 	else if (ft_is_numeric(arg))
