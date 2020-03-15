@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:07:38 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/10 23:21:17 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/15 19:53:11 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,34 +41,49 @@ char				*get_str(int fd, size_t len, t_cbox *cbox)
 	return (buffer);
 }
 
-unsigned char		*get_code(int fd, size_t len, t_cbox *cbox)
+void get_code(int fd, size_t len, t_cbox *cbox, unsigned char *place)
 {
-	int				size;
-	unsigned char	*buffer;
+	size_t				size;
+//	unsigned char	*buffer;
 
-	if (!(buffer = (unsigned char*)malloc(sizeof(char) * len)))
-		exit(clean_all(cbox, MALLOC_ERROR));
-	size = read(fd, buffer, len);
-	if (size < (int)len || (read(fd, buffer, len) != 0))
+//	if (!(buffer = (unsigned char*)malloc(sizeof(char) * len)))
+//		exit(clean_all(cbox, MALLOC_ERROR));
+	size = read(fd, place, len);
+	if (size < len) //todo: || (read(fd, buffer, len) != 0))
 		exit(clean_all(cbox, INPUT_ERROR));  // exact size, end of file
-	return (buffer);
+//	return (buffer);
 }
 
-void	init_champion(int fd, t_cbox *cbox, int i)
+void	get_champion(int fd, t_cbox *cbox, t_champ *champ, int cell)
 {
 	int code_size;
 
 	if (get4byte(cbox, fd) != COREWAR_EXEC_MAGIC) // magic header
 		exit(clean_all(cbox, INPUT_ERROR));
-	cbox->champs[i].name = get_str(fd, 128, cbox);  // name
+	champ->name = get_str(fd, 128, cbox);  // name
 	if (get4byte(cbox, fd) != 0)
 		exit(clean_all(cbox, INPUT_ERROR));  // null
 	code_size = get4byte(cbox, fd);  // code size
 	if (code_size > CHAMP_MAX_SIZE)
 		exit(clean_all(cbox, INPUT_ERROR));
-	cbox->champs[i].code_size = code_size;
-	cbox->champs[i].comm = get_str(fd, COMMENT_LENGTH, cbox); // comment
+	champ->code_size = code_size;
+	champ->comm = get_str(fd, COMMENT_LENGTH, cbox); // comment
 	if (get4byte(cbox, fd) != 0)
 		exit(clean_all(cbox, INPUT_ERROR));  // null
-	cbox->champs[i].code = get_code(fd, code_size, cbox); // exec code
+//	cbox->champs[i].code = get_code(fd, code_size, cbox); // exec code
+	get_code(fd, code_size, cbox, &(cbox->arena.arena[cell]));
+//	ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
+}
+
+void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
+{
+	int fd;
+
+	if ((fd = open(file, O_RDONLY)) < 0)
+		exit(clean_all(cbox, INPUT_ERROR));
+	else
+	{
+		get_champion(fd, cbox, champ, cell);
+		close(fd);
+	}
 }

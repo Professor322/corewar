@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 21:28:46 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/12 21:24:43 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/15 20:31:28 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	invalid_operation(t_car *car, t_cbox *cbox)
 {
 	car->pos = (car->pos + 1) % MEM_SIZE;
-	ft_printf(" ---%s--- ", car->oper.name);
+//	ft_printf(" ---%s--- ", car->oper.name);
 }
 
 /*
@@ -48,7 +48,7 @@ t_oper	get_operation(char code)
 			{"aff", ft_aff, 2, TRUE, 4},
 			{"inval", invalid_operation, 1, FALSE, 4}
 	};
-	ft_printf(" ---set operation--- ");
+//	ft_printf(" ---set operation--- ");
 	return (code > 0 && code <= NUMBER_OF_OPERATIONS ?
 	operations[code - 1] : operations[NUMBER_OF_OPERATIONS]);
 }

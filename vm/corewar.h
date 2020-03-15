@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/12 22:58:09 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/15 20:16:57 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@
 # define LFORK_COMMAND_CODE					15
 # define AFF_COMMAND_CODE					16
 
+# define DUMP_FLAG "-dump"
+# define N_FLAG "-n"
+
 struct s_car;
 struct s_cbox;
 
@@ -72,17 +75,17 @@ typedef struct	s_arg		// структура одного аргумента
 
 typedef struct	s_champ
 {
-	unsigned char	id;
+//	unsigned char	id;
 	char 			*name;
 	char 			*comm;
 	unsigned int 	code_size;
-	unsigned char 			*code;
+//	unsigned char 			*code;
 }				t_champ;
 
 typedef struct	s_arena
 {
-	unsigned char 	*arena;
-	t_champ	*last_alive;
+	unsigned char 	arena[MEM_SIZE];
+	int		last_alive;
 	size_t 	cycle;
 	int 	cycles_to_die;
 	size_t 	live_count;
@@ -110,7 +113,7 @@ typedef struct	s_car
 	unsigned char 	carry;
 	t_oper	 		oper;
 	unsigned int	pos;
-	t_boolean 		is_alive;
+//	t_boolean 		is_alive;  // ???
 	int 			regs[REG_NUMBER];
 	size_t			last_live;
 }				t_car;
@@ -148,17 +151,16 @@ typedef struct	s_valid_args
 }				t_valid_args;
 
 
-void	init_timeline(t_cbox *cbox);
-void	init_arena(int champs_count, t_cbox *cbox);
+void	init_arena(int champs_count, t_cbox *cbox, char **argv);
 
 
 /*
 ** champions, champions_parse
 */
-void			get_champion(char *file, t_champ *champ, int i, t_cbox *cbox);
-void			greet_champions(t_champ *champs, int size);
-void			greet_winner(t_arena* arena);
-void			init_champion(int fd, t_cbox *cbox, int i);
+void			greet_champions(t_champ *champs);
+int				count_champions(t_champ *champs);
+void			greet_winner(t_cbox* cbox);
+void			init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ);
 
 /*
 ** cars
@@ -168,6 +170,10 @@ void			make_car(t_cbox *cbox, char player, unsigned int pos);
 void			reschedule_car(t_cbox *cbox, t_car *car, int time_delta);
 void			print_car(t_car *car); // just for debug
 
+/*
+**
+*/
+int				parse_input(char **argv, int argc, t_cbox *cbox);
 
 t_oper			get_operation(char code);
 

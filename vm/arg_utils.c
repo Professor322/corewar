@@ -148,7 +148,7 @@ int		validate_command_byte(t_carbox *carbox)
 	return c == carbox->op_command_code;
 }
 
-int		validate_user(t_cbox *cbox, int value)
+int		validate_user(t_cbox *cbox, int value) // todo: ????
 {
 	if (value < 0 || value > cbox->champs_amount)
 		return 0;

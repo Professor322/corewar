@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/12 22:41:28 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/03/15 21:50:44 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	t_car	*car;
 	int 	cycle;
 
-	ft_printf("\n{GREEN}It is now cycle %d\033[00m", cbox->cycle_counter);
+//	ft_printf("\n{GREEN}It is now cycle %d\033[00m", cbox->cycle_counter);
 	cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
 	while (cbox->timeline[cycle]->len)
 	{
 		car = (t_car *) pop_que(cbox->timeline[cycle]).data;
 		if (car == NULL)  // todo: kill car
 			continue;
-		print_car(car);  // todo DEBUG
+//		print_car(car);  // todo DEBUG
 		if (car->oper.f == NULL)
 		{
 			// set new operation
