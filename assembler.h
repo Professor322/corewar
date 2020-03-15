@@ -198,21 +198,17 @@ t_node		*ht_find_node(t_ht *ht, char *name);
 ///new parse
 int 	read_line(t_champ **champ_ptr);
 void 	parse_header(t_champ **champ_ptr);
-void 	parse(t_champ **champ_ptr);
+char 	**parse_args(t_champ **champ_ptr, char *line, const int cmd);
 void 	parse_exec(t_champ **champ_ptr);
+void 	parse(t_champ **champ_ptr);
 ///parse
-void	ft_parse(int fd, t_champ **champ);
 void 	skip_spaces(char **line);
 char 	*is_label(char *line);
 int 	is_command(char **line);
-void	parse_label(t_champ *champ, char **line, char *label_end);
-char	**parse_command(char *line, const int cmd, t_champ **champ);
-char 	*parse_arg(char **line);
-void	compile_command(const int cmd, char **args, t_champ *champ);
-void 	get_header(int fd, t_champ *champ);
+void	parse_label(t_champ **champ_ptr, char **line, char *label_end);
+void	compile_command(t_champ **champ_ptr, const int cmd, char **args);
 ///writing
 void      		write_exec_code_in_file(int fd, t_pvec *command_vec, t_champ *champ);
-void			ft_exit(char *str);
 t_arg		    *get_arg(char *arg, int dir_size, t_champ *champ, t_arg *arg_parse);
 void            *dir_arg(t_arg *arg_parse, int size, char *arg, t_champ *champ);
 void            reg_arg(t_arg *arg_parse, char *arg);

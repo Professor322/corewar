@@ -4,13 +4,6 @@
 
 #include "../assembler.h"
 
-int 	read_line(t_champ **champ_ptr)
-{
-	const int value = get_next_line((*champ_ptr)->fd_input, &((*champ_ptr)->line));
-	(*champ_ptr)->counter++;
-	return value;
-}
-
 void	add_full_line(t_champ **champ_ptr, t_cvec **content, char **line, const enum e_header_token token)
 {
 	const char *back_slash = '\n';

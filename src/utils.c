@@ -3,7 +3,6 @@
 //
 #include "../assembler.h"
 
-///не менять порядок
 t_command g_commands[COMMANDS_NUM] = {
 		{"live", 4, 1, live},
 		{"lldi", 4, 3, lldi},
@@ -35,39 +34,31 @@ void 	skip_spaces(char **line)
 	while (**line && ft_isspace(**line))
 		(*line)++;
 }
-/*
-void 	get_exec_line(t_champ **champ, char *line)
-{
-	char	*lbl;
-	int		cmd;
 
-	if (!line)
-		return ;
-	skip_spaces(&line);
-	if (!*line || *line == COMMENT_CHAR || *line == ALT_COMMENT_CHAR)
-		return ;
-	if ((lbl = is_label(line)))
-		parse_label(*champ, &line, lbl);
-	if (line && (cmd  = is_command(&line)) >= 0)
-		compile_command(cmd, parse_command(line, cmd, champ), *champ);
+int 	read_line(t_champ **champ_ptr)
+{
+	const int value = get_next_line((*champ_ptr)->fd_input, &((*champ_ptr)->line));
+	(*champ_ptr)->counter++;
+	return value;
 }
 
-
-void	get_exec(int fd, t_champ **champ)
+char		*is_label(char *line)
 {
-	char *line;
+	const char *lb = ft_strchr(line, LABEL_CHAR);
 
-	line = NULL;
-	while (get_next_line(fd, &line))
-	{
-		get_exec_line(champ, line);
-		ft_memdel((void**)&line);
-	}
+	while (line != lb && ft_strchr(LABEL_CHARS, *line))
+		line++;
+	return (line == lb ? (char*)lb : NULL);
 }
 
-void 	ft_parse(int fd, t_champ **champ)
+int 	is_command(char **line)
 {
-	get_header(fd, *champ);
-	get_exec(fd, champ);
+	int i;
+
+	i = -1;
+	skip_spaces(line);
+	while (++i < COMMANDS_NUM)
+		if (!ft_strncmp(*line, g_commands[i].name, g_commands[i].name_len))
+			return (i);
+	return (-1);
 }
-*/
