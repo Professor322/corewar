@@ -39,7 +39,8 @@ void 	parse_exec(t_champ **champ_ptr)
 			error_manager(INCORRECT_SYNTAX, champ_ptr);
 		parse_label(champ_ptr, &line, lbl);
 	}
-	if (line)
+	skip_spaces(&line);
+	if (line && *line && *line != COMMENT_CHAR && *line != ALT_COMMENT_CHAR)
 	{
 		cmd = is_command(&line);
 		if (cmd < 0)

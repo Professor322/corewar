@@ -32,27 +32,17 @@ void	error_manager(enum e_error_type error_type, t_champ **champ)
 	else if (error_type == INCORRECT_SYNTAX)
 		error_message("Incorrect syntax");
 	else if (error_type == NON_EXISTING_COMMAND)
-	{
-
-	}
+		error_message("Non existing command");
 	else if (error_type == NON_EXISTING_LABEL)
-	{
-
-	}
+		error_message("Labels with out command");
 	else if (error_type == WRONG_NUMBER_OF_ARGS)
 		error_message("Wrong number of args");
 	else if (error_type == WRONG_TYPE_OF_ARGS)
-    {
         error_message("Wrong type of command arguments");
-    }
 	else if (error_type == LABELS_WITHOUT_COMMAND)
-	{
         error_message("Wrong label");
-	}
 	else if (error_type == NO_BACKSLASH)
-	{
-
-	}
+		error_message("No backslash at the end of the file");
 	else if (error_type == UNEXPECTED_END_OF_FILE)
 		error_message("Unexpected end of file");
 	finish_him(champ);
