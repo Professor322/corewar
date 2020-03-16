@@ -219,6 +219,7 @@ int             reverse_int(int s);
 short           reverse_short(short s);
 t_b_command 	*init_b_cmd(int cmd_code, t_champ *champ, char **cmd);
 t_b_command     *compile(int cmd_code, t_champ *champ, int d_size, char **cmd);
+void 			help_error(char **to_del, int type, t_champ **champ);
 ///commands
 t_b_command     *add(char **command, t_champ *champ);
 t_b_command     *aff(char **command, t_champ *champ);

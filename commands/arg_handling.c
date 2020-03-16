@@ -40,26 +40,26 @@ void			*label_init(t_arg *arg, int size, char *l_name, t_champ *champ)
 	return (byte_command);
 }
 
-void			*dir_arg(t_arg *arg_parse, int d_size, char *arg, t_champ *champ)
+void			*dir_arg(t_arg *arg_pars, int d_size, char *arg, t_champ *champ)
 {
 	unsigned int	dir_val;
 	int				temp;
 
 	if (arg[1] && arg[1] == ':')
 	{
-		if (!(label_init(arg_parse, d_size, arg + 2, champ)))
+		if (!(label_init(arg_pars, d_size, arg + 2, champ)))
 			return (NULL);
 	}
 	else
 	{
 		temp = ft_atoi(++arg);
 		dir_val = temp < 0 ? ~(temp * -1) + 1 : temp;
-		arg_parse->bin = d_size == 4 ? reverse_int((int)dir_val) :
+		arg_pars->bin = d_size == 4 ? reverse_int((int)dir_val) :
 			reverse_short((short)dir_val);
-		arg_parse->size = d_size;
+		arg_pars->size = d_size;
 	}
-	arg_parse->type = T_DIR;
-	return(arg_parse);
+	arg_pars->type = T_DIR;
+	return (arg_pars);
 }
 
 void			reg_arg(t_arg *arg_parse, char *arg)
@@ -84,14 +84,10 @@ t_b_command		*compile(int cmd_code, t_champ *champ, int d_size, char **cmd)
 	byte_shift = 6;
 	while (*cmd)
 	{
-		i++;
-		if (!(arg = get_arg(*cmd, d_size, champ, &b_cmd->args[i])))
-		{
-			ft_del_twodem_arr((void***)&cmd);
-			error_manager(WRONG_TYPE_OF_ARGS, &champ);
-		}
+		if (!(arg = get_arg(*cmd, d_size, champ, &b_cmd->args[++i])))
+			help_error(cmd, MALLOC_ERROR, &champ);
 		b_cmd->args[i] = *arg;
-		if ((*cmd && i != 0) || i > 0)
+		if ((*cmd++ && i != 0) || i > 0)
 		{
 			if (i == 1)
 				b_cmd->arg_type_code += b_cmd->args[i - 1].type << byte_shift;
@@ -99,7 +95,6 @@ t_b_command		*compile(int cmd_code, t_champ *champ, int d_size, char **cmd)
 			b_cmd->arg_type_code += b_cmd->args[i].type << byte_shift;
 		}
 		champ->command_size += (b_cmd->args[i].size + (i < 2));
-		cmd++;
 	}
 	return (b_cmd);
 }
