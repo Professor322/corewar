@@ -16,8 +16,3 @@ int	logical_validate_permitted_types(t_arg *args)
         return 1;
     return 0;
 }
-
-int logical_get_arguments(t_arg *args)
-{
-    //todo
-}

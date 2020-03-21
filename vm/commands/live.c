@@ -23,7 +23,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 
 	val = args[0].value;
 	if (validate_user(cbox, val))
-		car->is_alive = TRUE;
+		car->last_live = cbox->cycle_counter; //todo cycle_counter?
 }
 
 void		ft_live(t_car *car, t_cbox *cbox)

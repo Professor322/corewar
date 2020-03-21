@@ -208,6 +208,9 @@ void		exec_command(t_carbox *carbox,
 						 int (*validate_permitted_types)(t_arg*));
 
 
+void        clone_regs(const int old[REG_NUMBER], int new[REG_NUMBER]);
+void        clone_car(t_car *old, t_car *new);
+
 /*
  * OPERATIONS
  */
