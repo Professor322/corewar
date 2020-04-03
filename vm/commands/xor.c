@@ -20,8 +20,9 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->carry = 1;
 	else
 		car->carry = 0;
+	//print_car(car); ft_printf("\n");
     if (cbox->flags & V_FLAG_CHECK) {
-        ft_printf("P    %lu | xor %d %d r%d\n", car->id + 1,
+        ft_printf("P% 5lu | xor %d %d r%d\n", car->id + 1,
                   val1, val2, reg);
     }
 }

@@ -23,5 +23,5 @@ void clone_car(t_car *old, t_car *new)
     new->carry = old->carry;
     new->id = old->id;
     new->oper = old->oper;
-    clone_regs(new->regs, old->regs);
+    clone_regs(old->regs, new->regs);
 }

@@ -72,7 +72,7 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 
 void	print_car(t_car *car)
 {
-	ft_printf("\nP\t%d | %s | pos=%-4d, carry=%d",
+	ft_printf("🚗P\t%d | %s | pos=%-4d, carry=%d",
 			car->id,
 			car->oper.f != NULL ? car->oper.name : "NULL",
 			car->pos,
@@ -81,5 +81,14 @@ void	print_car(t_car *car)
 	int i = -1;
 	while (++i < REG_NUMBER)
 		ft_printf("r%d %-2d, ", i+1, car->regs[i]);
-	ft_printf("]");
+	ft_printf("]\n");
+}
+
+void	print_car_without_reg(t_car *car)
+{
+    ft_printf("P\t%d | %4s | pos=%-4d, carry=%d",
+              car->id,
+              car->oper.f != NULL ? car->oper.name : "NULL",
+              car->pos,
+              car->carry);
 }

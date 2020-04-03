@@ -20,13 +20,24 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     t_car *new_car;
     int value;
 
+    //print_cars(cbox); print_timeline(cbox);
+
     new_car = fetch_free_car(cbox);
-    value = get_int_from_arg(old_car, cbox, args[0]);
     clone_car(old_car, new_car);
+    new_car->id = cbox->car_counter;
+    cbox->car_counter += 1;
+
+    value = get_int_from_arg(old_car, cbox, args[0]);
     new_car->pos += IND_OFFSET(value);
-    reschedule_car(cbox, new_car, get_operation(FORK_COMMAND_CODE).delay);
-    //P    2 | fork -21 (2076)
-    ft_printf("P    %lu | fork %d (%d)\n", old_car->id + 1, value, new_car->pos);
+
+    new_car->oper = get_operation(cbox->arena.arena[new_car->pos]);
+    //reschedule_car(cbox, new_car, get_operation(FORK_COMMAND_CODE).delay);
+    reschedule_car(cbox, new_car, new_car->oper.delay);
+    if (cbox->flags & V_FLAG_CHECK) {
+        ft_printf("P% 5lu | fork %d (%d)\n", old_car->id + 1, value, new_car->pos);
+    }
+    //ft_printf("\t\tfork: car=%d -> new=%d\n", old_car->id, new_car->id);
+    //print_cars(cbox); print_timeline(cbox);
 }
 
 void		ft_fork(t_car *car, t_cbox *cbox)

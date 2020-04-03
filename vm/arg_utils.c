@@ -197,3 +197,27 @@ void	write_int_to_bytes(unsigned char *arr, unsigned int pos, unsigned int val)
 	arr[POS(pos++)] = val >> 8;
 	arr[POS(pos)] = val;
 }
+
+void    print_cars(t_cbox *cbox) {
+    int idx;
+
+    ft_printf("🏎️  🏎  ️🏎️\n");
+    idx = -1;
+    while (++idx < cbox->car_counter) {
+        print_car(((t_car **) cbox->cars->cont)[idx]);
+    }
+}
+
+void    print_timeline(t_cbox *cbox) {
+    int idx;
+
+    ft_printf("⏱️\n");
+    idx = -1;
+    while (++idx < SIZE_OF_TIMELINE) {
+        if (cbox->timeline[idx]->len) {
+            ft_printf("idx = %3d\tcont= %d --- ", idx, cbox->timeline[idx]->len);
+            print_car_without_reg(((t_car **) cbox->timeline[idx]->cont)[0]);
+            ft_printf("\n");
+        }
+    }
+}
