@@ -25,6 +25,8 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     clone_car(old_car, new_car);
     new_car->pos += IND_OFFSET(value);
     reschedule_car(cbox, new_car, get_operation(FORK_COMMAND_CODE).delay);
+    //P    2 | fork -21 (2076)
+    ft_printf("P    %lu | fork %d (%d)\n", old_car->id + 1, value, new_car->pos);
 }
 
 void		ft_fork(t_car *car, t_cbox *cbox)

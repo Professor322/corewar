@@ -22,7 +22,10 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 	if (car->carry == 1)
 		car->pos = car->pos + IND_OFFSET(val1);
     if (cbox->flags & V_FLAG_CHECK) {
-        ft_printf("P    %lu | zjmp %d\n", car->id + 1, val1);
+        if (car->carry == 1)
+            ft_printf("P    %lu | zjmp %d\n", car->id + 1, val1);
+        else
+            ft_printf("P    %lu | zjmp %d FAILED\n", car->id + 1, val1);
     }
 }
 
