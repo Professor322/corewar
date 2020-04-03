@@ -76,11 +76,26 @@ void	cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args)
 	}
 }
 
+int     get_fd_debug(void)
+{
+    static int fdd;
+
+    if (fdd == 0) {
+        fdd = open("debug.txt", O_WRONLY | O_CREAT, 0644);
+        if (fdd == -1) {
+            ft_printf("get_fd_debug - FAILED\n");
+            exit(1);
+        }
+    }
+    return fdd;
+}
+
 int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 {
 	char 	c;
 	short	s;
 	int		i;
+    //dprintf(get_fd_debug(), "pos =%u\tsize=%d\n", pos, size);
 	if (size == 1)
 	{
 		c = arr[POS(pos)];
@@ -99,7 +114,10 @@ int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 			| ((int)arr[POS(pos + 3)]);
 		return i;
 	}
+    dprintf(get_fd_debug(), "Failed");
 	ft_printf("INT TO BYTES CONVERSTION FAILED\n");
+    //ft_printf("arr =%s\n");
+    //ft_printf("pos =%u\nsize=%d\n");
 	exit(-42);
 }
 

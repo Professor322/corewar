@@ -18,6 +18,7 @@
 # include "vector.h"
 # include "op.h"
 # include <fcntl.h>
+# include <stdio.h>
 
 # define SIZE_OF_QUE 100
 # define SIZE_OF_TIMELINE 1000
@@ -54,6 +55,8 @@
 
 # define DUMP_FLAG "-dump"
 # define N_FLAG "-n"
+# define V_FLAG "-v"
+# define V_FLAG_CHECK 0x01
 
 struct s_car;
 struct s_cbox;
@@ -128,6 +131,7 @@ typedef struct	s_cbox
 	size_t 		cycle_counter;
 	t_vector	*dead_cars; // vector of ponters to dead(free) cars
 	t_vector	*cars; // vector of pointers to all cars
+	char        flags;
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -236,5 +240,5 @@ void			ft_aff(t_car *car, t_cbox *cbox);
 int				logical_validate_permitted_types(t_arg *args);
 int				sub_add_validate_permitted_types(t_arg *args);
 
-
+int             get_fd_debug(void);
 #endif

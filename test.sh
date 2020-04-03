@@ -1,10 +1,16 @@
 #!/bin/sh
-
-while getopts 'a:b:d:' opts; do
+flag_v='false'
+from=1
+echo "example:"
+echo "./test.sh -a big_feet -b bee_gees -d 4000 -v -f 100"
+echo
+while getopts 'a:b:d:vf:' opts; do
 	case "${opts}" in
 		a) name1=${OPTARG} ;;
 		b) name2=${OPTARG} ;;
 		d) dump_max=${OPTARG} ;;
+    v) flag_v='true' ;;
+    f) from=${OPTARG} ;;
 	esac
 done
 #name1='jumper'
@@ -13,11 +19,19 @@ done
 
 diff='diff control our'
 
-echo "$dump_max"
+echo "work from $from to $dump_max:"
 
 control_paths="./vm_champs/corewar vm_champs/champs/$name1.cor vm_champs/champs/$name2.cor"
 our_paths="./cmake-build-debug/corewar vm_champs/champs/$name1.cor vm_champs/champs/$name2.cor"
-for dump in $( seq 1 $dump_max )
+
+if ${flag_v}; then
+  control_paths="${control_paths} -v 4"
+  our_paths="${our_paths} -v"
+fi
+
+echo "$control_paths"
+echo "$our_paths"
+for dump in $( seq $from $dump_max )
 do
 	echo "dump $dump"
 	control="$control_paths -d $dump"

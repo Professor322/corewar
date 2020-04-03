@@ -50,7 +50,7 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 		// not need to check
 		return 1;
 	// do check:
-	ft_printf("\n{RED}Its check time\033[00m");
+	dprintf(get_fd_debug(), "\t >>> Its check time");
 	if (arena->live_count >= NBR_LIVE || arena->checks_count == MAX_CHECKS - 1)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
@@ -91,6 +91,8 @@ unsigned char	do_the_fight(t_cbox *cbox)
 		else
 		{
 			// do operation
+			if (ft_strcmp(car->oper.name, "ld"))
+			    dprintf(get_fd_debug(), "oper_to_do=\t\t\t%s\n", car->oper.name);
 			car->oper.f(car, cbox);
 			ft_bzero(&car->oper, sizeof(t_oper)); // ??
 			// set new operation will be in next turn
