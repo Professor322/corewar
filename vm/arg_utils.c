@@ -221,3 +221,18 @@ void    print_timeline(t_cbox *cbox) {
         }
     }
 }
+
+int     countdown(int setup) {
+    static int count;
+    static int unset;
+    if (unset == 0) {
+        unset = 1;
+        count = setup;
+    }
+    if (count > 0) {
+        count--;
+        return 0;
+    }
+    return 1;
+
+}

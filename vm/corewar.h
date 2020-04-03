@@ -244,4 +244,5 @@ int             get_fd_debug(void);
 void            print_cars(t_cbox *);
 void	        print_car_without_reg(t_car *car);
 void            print_timeline(t_cbox *cbox);
+int             countdown(int setup);
 #endif

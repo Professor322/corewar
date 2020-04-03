@@ -19,6 +19,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
         ft_printf("P% 5lu | add r%d r%d r%d\n", car->id + 1,
                   reg1, reg2, reg3);
     }
+
 }
 
 void		ft_add(t_car *car, t_cbox *cbox)

@@ -31,6 +31,7 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     new_car->pos += IND_OFFSET(value);
 
     new_car->oper = get_operation(cbox->arena.arena[new_car->pos]);
+    //old_car->oper = get_operation(cbox->arena.arena[new_car->pos]);
     //reschedule_car(cbox, new_car, get_operation(FORK_COMMAND_CODE).delay);
     reschedule_car(cbox, new_car, new_car->oper.delay);
     if (cbox->flags & V_FLAG_CHECK) {
@@ -38,6 +39,7 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     }
     //ft_printf("\t\tfork: car=%d -> new=%d\n", old_car->id, new_car->id);
     //print_cars(cbox); print_timeline(cbox);
+    //print_timeline(cbox);
 }
 
 void		ft_fork(t_car *car, t_cbox *cbox)
