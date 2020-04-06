@@ -14,7 +14,15 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 	reg2 = args[1].value;
 	reg3 = args[2].value;
 	car->regs[REG(reg3)] = car->regs[REG(reg1)] - car->regs[REG(reg2)];
+	if (car->regs[REG(reg3)] == 0)
+	    car->carry = 1;
+	else
+        car->carry = 0;
 	cbox = cbox;
+    if (cbox->flags & V_FLAG_CHECK) {
+        ft_printf("P% 5lu | sub r%d r%d r%d\n", car->id + 1,
+                  reg1, reg2, reg3);
+    }
 }
 
 void		ft_sub(t_car *car, t_cbox *cbox)

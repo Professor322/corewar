@@ -211,12 +211,19 @@ void    print_cars(t_cbox *cbox) {
 
 void    print_timeline(t_cbox *cbox) {
     int idx;
+    int cycle;
+    int delta;
 
-    ft_printf("⏱️\n");
+    cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
+    ft_printf("⏱️  = %d\n", cycle);
     idx = -1;
     while (++idx < SIZE_OF_TIMELINE) {
         if (cbox->timeline[idx]->len) {
-            ft_printf("idx = %3d\tcont= %d --- ", idx, cbox->timeline[idx]->len);
+            if (idx < cycle)
+                delta = SIZE_OF_TIMELINE - cycle + idx;
+            else
+                delta = idx - cycle;
+            ft_printf("idx = %3d [%3d]\tcont= %d --- ", delta, idx, cbox->timeline[idx]->len);
             print_car_without_reg(((t_car **) cbox->timeline[idx]->cont)[0]);
             ft_printf("\n");
         }

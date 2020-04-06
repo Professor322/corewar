@@ -69,6 +69,7 @@ int		main(int argc, char **argv)
 
 	while (do_the_fight(&cbox) && (!dump || cbox.cycle_counter < dump - 1))
 		cbox.cycle_counter++;
+    //print_timeline(&cbox);
 	if (dump)
 		dump_arena(cbox.arena.arena);
 	else
