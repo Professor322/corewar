@@ -27,6 +27,8 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
         else
             ft_printf("P% 5lu | zjmp %d FAILED\n", car->id + 1, val1);
     }
+    //if (countdown(1))
+      //  print_cars(cbox);//print_timeline(cbox);
 }
 
 void		ft_zjmp(t_car *car, t_cbox *cbox)

@@ -34,7 +34,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
         ft_printf("P% 5lu | live %d\n", car->id + 1, val);
     }
     //if (countdown(1))
-        //print_timeline(cbox); //print_cars(cbox);
+    //   print_cars(cbox);//print_timeline(cbox);
 }
 
 void		ft_live(t_car *car, t_cbox *cbox)

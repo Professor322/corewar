@@ -73,7 +73,7 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 void	print_car(t_car *car)
 {
 	ft_printf("🚗P\t%d | %s | pos=%-4d, carry=%d",
-			car->id,
+			car->id + 1,
 			car->oper.f != NULL ? car->oper.name : "NULL",
 			car->pos,
 			car->carry);
@@ -87,7 +87,7 @@ void	print_car(t_car *car)
 void	print_car_without_reg(t_car *car)
 {
     ft_printf("P\t%d | %4s | pos=%-4d, carry=%d",
-              car->id,
+              car->id + 1,
               car->oper.f != NULL ? car->oper.name : "NULL",
               car->pos,
               car->carry);
