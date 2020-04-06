@@ -89,7 +89,7 @@ typedef struct	s_arena
 {
 	unsigned char 	arena[MEM_SIZE];
 	int		last_alive;
-	size_t 	cycle;
+	size_t 	last_check;
 	int 	cycles_to_die;
 	size_t 	live_count;
 	size_t 	checks_count; 
@@ -245,4 +245,6 @@ void            print_cars(t_cbox *);
 void	        print_car_without_reg(t_car *car);
 void            print_timeline(t_cbox *cbox);
 int             countdown(int setup);
+size_t          cars_len(t_vector *cars_vec);
+void            print_cur_timeline(t_cbox *cbox);
 #endif

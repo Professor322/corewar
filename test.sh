@@ -25,7 +25,7 @@ control_paths="./vm_champs/corewar vm_champs/champs/$name1.cor vm_champs/champs/
 our_paths="./cmake-build-debug/corewar vm_champs/champs/$name1.cor vm_champs/champs/$name2.cor"
 
 if ${flag_v}; then
-  control_paths="${control_paths} -v 4"
+  control_paths="${control_paths} -v 6"
   our_paths="${our_paths} -v"
 fi
 

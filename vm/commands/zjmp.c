@@ -23,9 +23,9 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->pos = car->pos + IND_OFFSET(val1);
     if (cbox->flags & V_FLAG_CHECK) {
         if (car->carry == 1)
-            ft_printf("P% 5lu | zjmp %d OK\n", car->id + 1, val1);
+            ft_printf("P % 4lu | zjmp %d OK\n", car->id + 1, val1);
         else
-            ft_printf("P% 5lu | zjmp %d FAILED\n", car->id + 1, val1);
+            ft_printf("P % 4lu | zjmp %d FAILED\n", car->id + 1, val1);
     }
     //if (countdown(1))
       //  print_cars(cbox);//print_timeline(cbox);

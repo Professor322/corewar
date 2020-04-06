@@ -13,6 +13,10 @@
 #include "corewar.h"
 
 
+size_t   cars_len(t_vector *cars_vec) {
+    return cars_vec->len / sizeof(t_car *);
+}
+
 /*
 ** fetch space for new car
 */
@@ -20,6 +24,7 @@ t_car	*fetch_free_car(t_cbox *cbox)
 {
 	t_car	**cars;
 	t_car	*new;
+	size_t  dead_idx;
 
 	if (!cbox->dead_cars->len)
 	{
@@ -33,9 +38,10 @@ t_car	*fetch_free_car(t_cbox *cbox)
 	}
 	// get car from cemetery, clean up grave
 	cars = (t_car **)(cbox->dead_cars->cont);
-	new = cars[cbox->dead_cars->len - 1];
-	ft_bzero(cars[cbox->dead_cars->len - 1], sizeof(t_car *));
-	cbox->dead_cars->len -= 1;
+    dead_idx = cars_len(cbox->dead_cars);
+	new = cars[dead_idx - 1];
+	//ft_bzero(&cars[dead_idx - 1], sizeof(t_car *));
+	cbox->dead_cars->len -= sizeof(t_car *);
 	return new;
 }
 

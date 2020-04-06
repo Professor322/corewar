@@ -70,7 +70,8 @@ int		main(int argc, char **argv)
 	while (do_the_fight(&cbox) && (!dump || cbox.cycle_counter < dump - 1))
 		cbox.cycle_counter++;
     //print_timeline(&cbox);
-	if (dump)
+    print_cur_timeline(&cbox);
+	if (dump == cbox.cycle_counter + 1)
 		dump_arena(cbox.arena.arena);
 	else
 		greet_winner(&cbox);

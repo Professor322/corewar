@@ -16,6 +16,7 @@
 unsigned char	kill_cars(t_cbox *cbox)
 {
 	size_t i;
+    size_t cars_vec;
 	t_car	**cars;
 	t_arena	ar;
 	unsigned char somebody_alive;
@@ -24,18 +25,23 @@ unsigned char	kill_cars(t_cbox *cbox)
 	cars = (t_car **)(cbox->cars->cont);
 	ar = cbox->arena;
 	i = 0;
-	while (i < cbox->cars->len)
+    cars_vec = cars_len(cbox->cars);
+	while (i < cars_vec)
 	{
-		if (!cars[i]->id)
-			continue;
-		somebody_alive = 1;
-		if (cars[i]->last_live <= ar.cycle - ar.cycles_to_die)
+		if (!cars[i]) {
+            i++;
+            continue;
+		}
+		if (cars[i]->last_live <= cbox->cycle_counter + 1 - ar.cycles_to_die)
 		{
 			// kill it: clean space of car and put it's pointer to cemetery
+			ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
 			ft_bzero(cars[i], sizeof(t_car));
-			if (!(ft_vadd(cbox->dead_cars, cars[i], sizeof(t_car *))))
+			if (!(ft_vadd(cbox->dead_cars, &cars[i], sizeof(t_car *))))
 				exit(clean_all(cbox, MALLOC_ERROR));
 		}
+		else
+            somebody_alive = 1;
 		i++;
 	}
 	return somebody_alive;
@@ -46,15 +52,17 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 	if (arena->cycles_to_die <= 0)
 		// end of game
 		return 0;
-	if (!cbox->cycle_counter || cbox->cycle_counter % arena->cycles_to_die)
+	if ((cbox->cycle_counter - arena->last_check) != arena->cycles_to_die)
 		// not need to check
 		return 1;
 	// do check:
 	dprintf(get_fd_debug(), "\t >>> Its check time");
+	arena->last_check = cbox->cycle_counter;
 	if (arena->live_count >= NBR_LIVE || arena->checks_count == MAX_CHECKS - 1)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
 		arena->checks_count = 0;
+		ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 	}
 	else
 		arena->checks_count += 1;
@@ -74,7 +82,7 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	t_car	*car;
 	int 	cycle;
 
-//	ft_printf("\n{GREEN}It is now cycle %d\033[00m", cbox->cycle_counter);
+	ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
 	cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
 	while (cbox->timeline[cycle]->len)
 	{

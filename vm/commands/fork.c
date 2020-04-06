@@ -35,7 +35,7 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     //reschedule_car(cbox, new_car, get_operation(FORK_COMMAND_CODE).delay);
     reschedule_car(cbox, new_car, new_car->oper.delay);
     if (cbox->flags & V_FLAG_CHECK) {
-        ft_printf("P% 5lu | fork %d (%d)\n", old_car->id + 1, value, new_car->pos);
+        ft_printf("P % 4lu | fork %d (%d)\n", old_car->id + 1, value, new_car->pos);
     }
     //ft_printf("\t\tfork: car=%d -> new=%d\n", old_car->id, new_car->id);
     //print_cars(cbox); print_timeline(cbox);

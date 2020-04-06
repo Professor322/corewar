@@ -16,7 +16,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 	car->regs[REG(reg3)] = car->regs[REG(reg1)] + car->regs[REG(reg2)];
 	cbox = cbox;
     if (cbox->flags & V_FLAG_CHECK) {
-        ft_printf("P% 5lu | add r%d r%d r%d\n", car->id + 1,
+        ft_printf("P % 4lu | add r%d r%d r%d\n", car->id + 1,
                   reg1, reg2, reg3);
     }
 

@@ -223,9 +223,36 @@ void    print_timeline(t_cbox *cbox) {
                 delta = SIZE_OF_TIMELINE - cycle + idx;
             else
                 delta = idx - cycle;
-            ft_printf("idx = %3d [%3d]\tcont= %d --- ", delta, idx, cbox->timeline[idx]->len);
+            ft_printf("idx = %3d [%3d]\tcont= %d --- ", delta, idx, cbox->timeline[idx]->len/sizeof(t_pque));
             print_car_without_reg(((t_car **) cbox->timeline[idx]->cont)[0]);
             ft_printf("\n");
+        }
+    }
+}
+
+void    print_cur_timeline(t_cbox *cbox) {
+    int idx;
+    int cycle;
+    int car;
+    int delta;
+
+    cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
+    ft_printf("⏳  = %d\n", cycle);
+    idx = -1;
+    while (++idx < SIZE_OF_TIMELINE) {
+        if (cbox->timeline[idx]->len) {
+            if (idx < cycle)
+                delta = SIZE_OF_TIMELINE - cycle + idx;
+            else
+                delta = idx - cycle;
+            car = -1;
+            while (++car < cbox->timeline[idx]->len/sizeof(t_pque)) {
+                if (((t_car *) (((t_pque *) cbox->timeline[idx]->cont)[car].data))->id == 546) {
+                    ft_printf("idx = %3d [%3d]\tcont= %d --- ", delta, idx, cbox->timeline[idx]->len/sizeof(t_pque));
+                    print_car_without_reg(((t_pque *) cbox->timeline[idx]->cont)[car].data);
+                    ft_printf("\n");
+                }
+            }
         }
     }
 }
