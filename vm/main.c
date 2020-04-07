@@ -32,6 +32,7 @@ void	init_arena(int champs_count, t_cbox *cbox, char **argv)
 	unsigned int	cell;
 
 	cbox->arena.cycles_to_die = CYCLE_TO_DIE;
+	cbox->arena.last_check = 0;
 	i = -1;
 	cell = 0;
 	while (++i < MAX_PLAYERS)
@@ -70,7 +71,7 @@ int		main(int argc, char **argv)
 	while (do_the_fight(&cbox) && (!dump || cbox.cycle_counter < dump - 1))
 		cbox.cycle_counter++;
     //print_timeline(&cbox);
-    print_cur_timeline(&cbox);
+    //print_cur_timeline(&cbox);
 	if (dump == cbox.cycle_counter + 1)
 		dump_arena(cbox.arena.arena);
 	else

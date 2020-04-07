@@ -1,16 +1,18 @@
 #!/bin/sh
 flag_v='false'
 from=1
+tal=0
 echo "example:"
 echo "./test.sh -a big_feet -b bee_gees -d 4000 -v -f 100"
 echo
-while getopts 'a:b:d:vf:' opts; do
+while getopts 'a:b:d:vf:t:' opts; do
 	case "${opts}" in
 		a) name1=${OPTARG} ;;
 		b) name2=${OPTARG} ;;
 		d) dump_max=${OPTARG} ;;
     v) flag_v='true' ;;
     f) from=${OPTARG} ;;
+    t) tal=${OPTARG} ;;
 	esac
 done
 #name1='jumper'
@@ -40,10 +42,23 @@ do
 #	echo "OUR $our"
 	eval "$control" > control
 	eval "$our" > our
-	echo "diff control our"
 	diff_res=$(eval $diff)
-	if [ "${diff_res}" ]; then 
-		echo "$diff_res"
-		exit 1 
+	if [ "${diff_res}" ]; then
+	    echo "diff control our  ⚠️"
+		  echo "$diff_res"
+			echo "diff end          ⚠️"
+			echo
+		if [ "$tal" -ne "0" ]; then
+		  real_tal=$(( $tal + 64 ))
+      eval "tail -n $real_tal our | head -n $tal"
+      echo
+      echo "our - 👆  ###  👇 - original"
+      echo
+      eval "tail -n $real_tal control | head -n $tal"
+      echo
+    fi
+		exit 1
+	else
+	    echo "diff control our ✅️"
 	fi
 done

@@ -1,4 +1,4 @@
-./test.sh -a big_feet -b bee_gees -d 4000 -v -f 1535
+./test.sh -a big_feet -b bee_gees -d 40001 -v -f 18750 -t 100
 
 can_try:
 	-v 15

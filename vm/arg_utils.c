@@ -237,7 +237,7 @@ void    print_cur_timeline(t_cbox *cbox) {
     int delta;
 
     cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
-    ft_printf("⏳  = %d\n", cycle);
+    //ft_printf("⏳  = %d\n", cycle);
     idx = -1;
     while (++idx < SIZE_OF_TIMELINE) {
         if (cbox->timeline[idx]->len) {
