@@ -2,6 +2,7 @@
 flag_v='false'
 from=1
 tal=0
+dump_max=100000
 echo "example:"
 echo "./test.sh -a big_feet -b bee_gees -d 4000 -v -f 100"
 echo
@@ -31,8 +32,6 @@ if ${flag_v}; then
   our_paths="${our_paths} -v"
 fi
 
-echo "$control_paths"
-echo "$our_paths"
 for dump in $( seq $from $dump_max )
 do
 	echo "dump $dump"
@@ -57,8 +56,11 @@ do
       eval "tail -n $real_tal control | head -n $tal"
       echo
     fi
-		exit 1
+		break
 	else
 	    echo "diff control our ✅️"
 	fi
 done
+echo
+echo "$control_paths -d $dump"
+echo "$our_paths -dump $dump"

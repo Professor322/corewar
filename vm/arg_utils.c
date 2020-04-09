@@ -150,7 +150,7 @@ int		get_arg_values(t_car *car, t_cbox *cbox, t_arg *args)
 		if (args[arg_i].type == REG && !valid_reg_number(args[arg_i].value))
 		{
 			//todo remove printf before release
-			ft_printf("BAD REG NUMBER\n");
+			//ft_printf("BAD REG NUMBER\n");
 			return 0;
 		}
 		arg_i++;

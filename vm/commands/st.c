@@ -28,6 +28,9 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->regs[REG(param.value)] = val;
 	else // IND
 		write_int_to_bytes(cbox->arena.arena, car->pos + IND_OFFSET(param.value), val);
+    if (cbox->flags & V_FLAG_CHECK) {
+        ft_printf("P % 4lu | st r%d %d\n", car->id + 1, args[0].value, IND_OFFSET(param.value));
+    }
 }
 
 void 		ft_st(t_car *car, t_cbox *cbox)
