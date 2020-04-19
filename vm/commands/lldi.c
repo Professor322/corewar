@@ -31,6 +31,13 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
         car->carry = 1;
     else
         car->carry = 0;
+    if (cbox->flags & V_FLAG_CHECK) {
+        //ft_printf("%d\t", cbox->cycle_counter);
+        ft_printf("P % 4lu | lldi %d %d r%d\n", car->id + 1, val1, val2, reg);
+        ft_printf("       | -> load from %d + %d = %d (with pc %d)\n"
+                , val1, val2, val1 + val2, car->pos + val1 + val2);
+        // 1025 ? -> ./test.sh -a mandragore -b littlepuppy -f 2624 -t 8 -v
+    }
 }
 
 void ft_lldi(t_car *car, t_cbox *cbox)

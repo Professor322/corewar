@@ -18,6 +18,7 @@
 # include "vector.h"
 # include "op.h"
 # include <fcntl.h>
+# include <stdio.h>
 
 # define SIZE_OF_QUE 100
 # define SIZE_OF_TIMELINE 1000
@@ -54,6 +55,8 @@
 
 # define DUMP_FLAG "-dump"
 # define N_FLAG "-n"
+# define V_FLAG "-v"
+# define V_FLAG_CHECK 0x01
 
 struct s_car;
 struct s_cbox;
@@ -86,7 +89,7 @@ typedef struct	s_arena
 {
 	unsigned char 	arena[MEM_SIZE];
 	int		last_alive;
-	size_t 	cycle;
+	size_t 	last_check;
 	int 	cycles_to_die;
 	size_t 	live_count;
 	size_t 	checks_count; 
@@ -128,6 +131,7 @@ typedef struct	s_cbox
 	size_t 		cycle_counter;
 	t_vector	*dead_cars; // vector of ponters to dead(free) cars
 	t_vector	*cars; // vector of pointers to all cars
+	char        flags;
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -208,6 +212,9 @@ void		exec_command(t_carbox *carbox,
 						 int (*validate_permitted_types)(t_arg*));
 
 
+void        clone_regs(const int old[REG_NUMBER], int new[REG_NUMBER]);
+void        clone_car(t_car *old, t_car *new);
+
 /*
  * OPERATIONS
  */
@@ -233,5 +240,11 @@ void			ft_aff(t_car *car, t_cbox *cbox);
 int				logical_validate_permitted_types(t_arg *args);
 int				sub_add_validate_permitted_types(t_arg *args);
 
-
+int             get_fd_debug(void);
+void            print_cars(t_cbox *);
+void	        print_car_without_reg(t_car *car);
+void            print_timeline(t_cbox *cbox);
+int             countdown(int setup);
+size_t          cars_len(t_vector *cars_vec);
+void            print_cur_timeline(t_cbox *cbox);
 #endif

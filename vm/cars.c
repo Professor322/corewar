@@ -13,6 +13,10 @@
 #include "corewar.h"
 
 
+size_t   cars_len(t_vector *cars_vec) {
+    return cars_vec->len / sizeof(t_car *);
+}
+
 /*
 ** fetch space for new car
 */
@@ -20,6 +24,7 @@ t_car	*fetch_free_car(t_cbox *cbox)
 {
 	t_car	**cars;
 	t_car	*new;
+	size_t  dead_idx;
 
 	if (!cbox->dead_cars->len)
 	{
@@ -33,9 +38,10 @@ t_car	*fetch_free_car(t_cbox *cbox)
 	}
 	// get car from cemetery, clean up grave
 	cars = (t_car **)(cbox->dead_cars->cont);
-	new = cars[cbox->dead_cars->len - 1];
-	ft_bzero(cars[cbox->dead_cars->len - 1], sizeof(t_car *));
-	cbox->dead_cars->len -= 1;
+    dead_idx = cars_len(cbox->dead_cars);
+	new = cars[dead_idx - 1];
+	//ft_bzero(&cars[dead_idx - 1], sizeof(t_car *));
+	cbox->dead_cars->len -= sizeof(t_car *);
 	return new;
 }
 
@@ -72,8 +78,8 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 
 void	print_car(t_car *car)
 {
-	ft_printf("\nP\t%d | %s | pos=%-4d, carry=%d",
-			car->id,
+	ft_printf("🚗P\t%d | %s | pos=%-4d, carry=%d",
+			car->id + 1,
 			car->oper.f != NULL ? car->oper.name : "NULL",
 			car->pos,
 			car->carry);
@@ -81,5 +87,14 @@ void	print_car(t_car *car)
 	int i = -1;
 	while (++i < REG_NUMBER)
 		ft_printf("r%d %-2d, ", i+1, car->regs[i]);
-	ft_printf("]");
+	ft_printf("]\n");
+}
+
+void	print_car_without_reg(t_car *car)
+{
+    ft_printf("P\t%d | %4s | pos=%-4d, carry=%d",
+              car->id + 1,
+              car->oper.f != NULL ? car->oper.name : "NULL",
+              car->pos,
+              car->carry);
 }

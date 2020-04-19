@@ -42,6 +42,6 @@ void	greet_winner(t_cbox *cbox)
 {
 	t_champ champ;
 
-	champ = cbox->champs[cbox->arena.last_alive - 1];
+	champ = cbox->champs[cbox->arena.last_alive];
 	ft_printf("Player %d, \"%s\", has won !\n", cbox->arena.last_alive, champ.name);
 }

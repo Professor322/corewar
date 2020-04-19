@@ -76,11 +76,26 @@ void	cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args)
 	}
 }
 
+int     get_fd_debug(void)
+{
+    static int fdd;
+
+    if (fdd == 0) {
+        fdd = open("debug.txt", O_WRONLY | O_CREAT, 0644);
+        if (fdd == -1) {
+            ft_printf("get_fd_debug - FAILED\n");
+            exit(1);
+        }
+    }
+    return fdd;
+}
+
 int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 {
 	char 	c;
 	short	s;
 	int		i;
+    //dprintf(get_fd_debug(), "pos =%u\tsize=%d\n", pos, size);
 	if (size == 1)
 	{
 		c = arr[POS(pos)];
@@ -99,7 +114,10 @@ int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 			| ((int)arr[POS(pos + 3)]);
 		return i;
 	}
+    dprintf(get_fd_debug(), "Failed");
 	ft_printf("INT TO BYTES CONVERSTION FAILED\n");
+    //ft_printf("arr =%s\n");
+    //ft_printf("pos =%u\nsize=%d\n");
 	exit(-42);
 }
 
@@ -132,7 +150,7 @@ int		get_arg_values(t_car *car, t_cbox *cbox, t_arg *args)
 		if (args[arg_i].type == REG && !valid_reg_number(args[arg_i].value))
 		{
 			//todo remove printf before release
-			ft_printf("BAD REG NUMBER\n");
+			//ft_printf("BAD REG NUMBER\n");
 			return 0;
 		}
 		arg_i++;
@@ -168,7 +186,8 @@ void	exec_command(t_carbox *carbox,
 	}
 	if (prepare_arguments(carbox, args, validate_permitted_types))
 		op_unique_commands(carbox->car, carbox->cbox, args);
-	move_car(carbox->car, args);
+	if (carbox->car->oper.f != ft_zjmp || carbox->car->carry != 1)
+	    move_car(carbox->car, args);
 }
 
 
@@ -178,4 +197,77 @@ void	write_int_to_bytes(unsigned char *arr, unsigned int pos, unsigned int val)
 	arr[POS(pos++)] = val >> 16;
 	arr[POS(pos++)] = val >> 8;
 	arr[POS(pos)] = val;
+}
+
+void    print_cars(t_cbox *cbox) {
+    int idx;
+
+    ft_printf("🏎️  🏎  ️🏎️\n");
+    idx = -1;
+    while (++idx < cbox->car_counter) {
+        print_car(((t_car **) cbox->cars->cont)[idx]);
+    }
+}
+
+void    print_timeline(t_cbox *cbox) {
+    int idx;
+    int cycle;
+    int delta;
+
+    cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
+    ft_printf("⏱️  = %d\n", cycle);
+    idx = -1;
+    while (++idx < SIZE_OF_TIMELINE) {
+        if (cbox->timeline[idx]->len) {
+            if (idx < cycle)
+                delta = SIZE_OF_TIMELINE - cycle + idx;
+            else
+                delta = idx - cycle;
+            ft_printf("idx = %3d [%3d]\tcont= %d --- ", delta, idx, cbox->timeline[idx]->len/sizeof(t_pque));
+            print_car_without_reg(((t_car **) cbox->timeline[idx]->cont)[0]);
+            ft_printf("\n");
+        }
+    }
+}
+
+void    print_cur_timeline(t_cbox *cbox) {
+    int idx;
+    int cycle;
+    int car;
+    int delta;
+
+    cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
+    //ft_printf("⏳  = %d\n", cycle);
+    idx = -1;
+    while (++idx < SIZE_OF_TIMELINE) {
+        if (cbox->timeline[idx]->len) {
+            if (idx < cycle)
+                delta = SIZE_OF_TIMELINE - cycle + idx;
+            else
+                delta = idx - cycle;
+            car = -1;
+            while (++car < cbox->timeline[idx]->len/sizeof(t_pque)) {
+                if (((t_car *) (((t_pque *) cbox->timeline[idx]->cont)[car].data))->id == 546) {
+                    ft_printf("idx = %3d [%3d]\tcont= %d --- ", delta, idx, cbox->timeline[idx]->len/sizeof(t_pque));
+                    print_car_without_reg(((t_pque *) cbox->timeline[idx]->cont)[car].data);
+                    ft_printf("\n");
+                }
+            }
+        }
+    }
+}
+
+int     countdown(int setup) {
+    static int count;
+    static int unset;
+    if (unset == 0) {
+        unset = 1;
+        count = setup;
+    }
+    if (count > 0) {
+        count--;
+        return 0;
+    }
+    return 1;
+
 }
