@@ -62,7 +62,10 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
 		arena->checks_count = 0;
-		ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
+		if (cbox->flags & V_FLAG_CYCLES) {
+			ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
+		}
+
 	}
 	else
 		arena->checks_count += 1;
@@ -82,7 +85,9 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	t_car	*car;
 	int 	cycle;
 
-	ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
+	if (cbox->flags & V_FLAG_CYCLES) {
+		ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
+	}
 	cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
 	while (cbox->timeline[cycle]->len)
 	{

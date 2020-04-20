@@ -1,17 +1,17 @@
 #!/bin/sh
-flag_v='false'
+flag_v=0
 from=1
 tal=0
 dump_max=100000
 echo "example:"
-echo "./test.sh -a big_feet -b bee_gees -d 4000 -v -f 100"
+echo "./test.sh -a big_feet -b bee_gees -d 4000 -v 6 -f 100"
 echo
-while getopts 'a:b:d:vf:t:' opts; do
+while getopts 'a:b:d:v:f:t:' opts; do
 	case "${opts}" in
 		a) name1=${OPTARG} ;;
 		b) name2=${OPTARG} ;;
 		d) dump_max=${OPTARG} ;;
-    v) flag_v='true' ;;
+    v) flag_v=${OPTARG} ;;
     f) from=${OPTARG} ;;
     t) tal=${OPTARG} ;;
 	esac
@@ -27,9 +27,9 @@ echo "work from $from to $dump_max:"
 control_paths="./vm_champs/corewar vm_champs/champs/$name1.cor vm_champs/champs/$name2.cor"
 our_paths="./cmake-build-debug/corewar vm_champs/champs/$name1.cor vm_champs/champs/$name2.cor"
 
-if ${flag_v}; then
-  control_paths="${control_paths} -v 6"
-  our_paths="${our_paths} -v"
+if (( $flag_v > 0 )); then
+  control_paths="${control_paths} -v ${flag_v}"
+  our_paths="${our_paths} -v ${flag_v}"
 fi
 
 for dump in $( seq $from $dump_max )
