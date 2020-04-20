@@ -6,20 +6,15 @@
 //TODO доделать
 static int	validate_permitted_types(t_arg *args)
 {
-    args[0].size = 4;
     args[0].type = DIR;
     args[1].type = NONE;
     args[2].type = NONE;
     args[3].type = NONE;
-    if (args[0].type == DIR
-		&&
-		args[1].type == NONE
-		&&
-		args[2].type == NONE
-		&&
-		args[3].type == NONE)
-		return 1;
-	return 0;
+    args[0].size = 4;
+    args[1].size = 0;
+    args[2].size = 0;
+    args[3].size = 0;
+    return 1;
 }
 
 static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]) {

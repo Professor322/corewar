@@ -108,6 +108,7 @@ typedef struct	s_oper
 	int 		delay;
 	t_boolean 	has_type_byte;
 	int 		t_dir_size;
+	int         args_amount;
 }				t_oper;
 
 typedef struct	s_car

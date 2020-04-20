@@ -68,13 +68,20 @@ int		main(int argc, char **argv)
 	init_arena(n, &cbox, argv);
 	greet_champions(cbox.champs);
 
-	while (do_the_fight(&cbox) && (!dump || cbox.cycle_counter < dump - 1))
-		cbox.cycle_counter++;
-    //print_timeline(&cbox);
-    //print_cur_timeline(&cbox);
-	if (dump == cbox.cycle_counter + 1)
-		dump_arena(cbox.arena.arena);
-	else
+	while (do_the_fight(&cbox) && (!dump || cbox.cycle_counter < dump))
+    {
+        cbox.cycle_counter++;
+        if (dump == cbox.cycle_counter)
+        {
+            dump_arena(cbox.arena.arena);
+            return (clean_all(&cbox, SUCCESS));
+        }
+    }
+//    print_timeline(&cbox);
+//    print_cur_timeline(&cbox);
+//	if (dump == cbox.cycle_counter)
+//		dump_arena(cbox.arena.arena);
+//	else
 		greet_winner(&cbox);
 	return (clean_all(&cbox, SUCCESS));
 }

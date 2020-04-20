@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-
+void print_bytes(t_cbox *cbox, t_car *car, int i);
 unsigned char	kill_cars(t_cbox *cbox)
 {
 	size_t i;
@@ -62,7 +62,8 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
 		arena->checks_count = 0;
-		ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
+        if (cbox->flags & V_FLAG_CHECK)
+		    ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 	}
 	else
 		arena->checks_count += 1;
@@ -82,13 +83,15 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	t_car	*car;
 	int 	cycle;
 
-	ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
+    if (cbox->flags & V_FLAG_CHECK)
+	    ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
 	cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
 	while (cbox->timeline[cycle]->len)
 	{
 		car = (t_car *) pop_que(cbox->timeline[cycle]).data;
 		if (car == NULL)  // todo: kill car
 			continue;
+//		print_bytes(cbox, car, 4);
 //		print_car(car);  // todo DEBUG
 		if (car->oper.f == NULL)
 		{
@@ -108,4 +111,16 @@ unsigned char	do_the_fight(t_cbox *cbox)
 		}
 	}
 	return (check(cbox, &cbox->arena));
+}
+
+void print_bytes(t_cbox *cbox, t_car *car, int i)
+{
+    unsigned char *arena = cbox->arena.arena;
+    int pos = car->pos;
+    ft_printf("car pos %d\n", pos);
+    for (int j = 0; j < i; j++)
+    {
+        ft_printf("%.2x ", arena[pos +  j]);
+    }
+    ft_printf("\n");
 }
