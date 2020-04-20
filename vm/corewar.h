@@ -56,6 +56,7 @@
 # define DUMP_FLAG "-dump"
 # define N_FLAG "-n"
 # define V_FLAG "-v"
+# define V_FLAG_DEATHS 8
 # define V_FLAG_OPER 4
 # define V_FLAG_CYCLES 2
 

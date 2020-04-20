@@ -24,17 +24,18 @@ unsigned char	kill_cars(t_cbox *cbox)
 	somebody_alive = 0;
 	cars = (t_car **)(cbox->cars->cont);
 	ar = cbox->arena;
-	i = 0;
-    cars_vec = cars_len(cbox->cars);
-	while (i < cars_vec)
+	i = cars_len(cbox->cars);
+	while (--i != -1) // max value of size_t
 	{
 		if (!cars[i]) {
-            i++;
             continue;
 		}
 		if (cars[i]->last_live <= cbox->cycle_counter + 1 - ar.cycles_to_die)
 		{
 			// kill it: clean space of car and put it's pointer to cemetery
+			if (cbox->flags & V_FLAG_DEATHS) {
+				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", cars[i]->id + 1,  cbox->cycle_counter - cars[i]->last_live, ar.cycles_to_die);
+			}
 			//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
 			ft_bzero(cars[i], sizeof(t_car));
 			if (!(ft_vadd(cbox->dead_cars, &cars[i], sizeof(t_car *))))
@@ -42,13 +43,13 @@ unsigned char	kill_cars(t_cbox *cbox)
 		}
 		else
             somebody_alive = 1;
-		i++;
 	}
 	return somebody_alive;
 }
 
 unsigned char check(t_cbox *cbox, t_arena *arena)
 {
+	unsigned char	out;
     if (arena->cycles_to_die <= 0)
 		// end of game
 		return 0;
@@ -57,6 +58,7 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 		return 1;
 	// do check:
 	dprintf(get_fd_debug(), "\t >>> Its check time");
+	out = kill_cars(cbox);
 	arena->last_check = cbox->cycle_counter + 1;
 	if (arena->live_count >= NBR_LIVE || arena->checks_count == MAX_CHECKS - 1)
 	{
@@ -70,7 +72,7 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 	else
 		arena->checks_count += 1;
 	arena->live_count = 0;
-	return kill_cars(cbox);
+	return out;
 }
 
 
