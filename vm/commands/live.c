@@ -7,12 +7,12 @@
 static int	validate_permitted_types(t_arg *args)
 {
     args[0].type = DIR;
-    args[1].type = NONE;
-    args[2].type = NONE;
-    args[3].type = NONE;
     args[0].size = 4;
+    args[1].type = NONE;
     args[1].size = 0;
+    args[2].type = NONE;
     args[2].size = 0;
+    args[3].type = NONE;
     args[3].size = 0;
     return 1;
 }
