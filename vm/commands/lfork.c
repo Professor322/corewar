@@ -23,11 +23,14 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     t_car *new_car;
     int value;
 
-    new_car = fetch_free_car(cbox);
     value = get_int_from_arg(old_car, cbox, args[0]);
+    new_car = fetch_free_car(cbox);
     clone_car(old_car, new_car);
+    new_car->id = cbox->car_counter;
+    cbox->car_counter += 1;
     new_car->pos = POS(new_car->pos + value);
-    reschedule_car(cbox, new_car, get_operation(LFORK_COMMAND_CODE).delay);
+    new_car->oper = get_operation(cbox->arena.arena[new_car->pos]);
+    reschedule_car(cbox, new_car, new_car->oper.delay);
     if (cbox->flags & V_FLAG_CHECK) {
         ft_printf("P % 4lu | lfork %d (%d)\n", old_car->id + 1, value, new_car->pos);
     }
