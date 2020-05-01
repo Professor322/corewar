@@ -56,7 +56,9 @@
 # define DUMP_FLAG "-dump"
 # define N_FLAG "-n"
 # define V_FLAG "-v"
-# define V_FLAG_CHECK 0x01
+# define V_FLAG_DEATHS 8
+# define V_FLAG_OPER 4
+# define V_FLAG_CYCLES 2
 
 struct s_car;
 struct s_cbox;
@@ -132,7 +134,7 @@ typedef struct	s_cbox
 	size_t 		cycle_counter;
 	t_vector	*dead_cars; // vector of ponters to dead(free) cars
 	t_vector	*cars; // vector of pointers to all cars
-	char        flags;
+    int			flags;
 }				t_cbox;
 
 typedef struct	s_carbox

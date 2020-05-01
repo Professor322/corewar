@@ -26,6 +26,9 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     value = get_int_from_arg(old_car, cbox, args[0]);
     new_car = fetch_free_car(cbox);
     clone_car(old_car, new_car);
+//    new_car->pos += value;
+//    reschedule_car(cbox, new_car, get_operation(LFORK_COMMAND_CODE).delay);
+//    if (cbox->flags & V_FLAG_OPER) {
     new_car->id = cbox->car_counter;
     cbox->car_counter += 1;
     new_car->pos = new_car->pos + value;

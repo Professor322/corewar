@@ -1,18 +1,22 @@
 #!/bin/sh
-flag_v='false'
+flag_v=0
 floor=0
 dump_max=40000
 tal=0
 echo "example:"
-echo "./tbinary.sh -a Asombra -b Explosive_Kitty -v"
+echo "./tbinary.sh -a Asombra -b Explosive_Kitty -v 6"
+echo "    -v N      : Verbosity levels, can be added together to enable several
+                - 2 : Show cycles
+                - 4 : Show operations (Params are NOT litteral ...)
+                - 8 : Show deaths"
 echo "job:"
-while getopts 'a:b:d:f:v' opts; do
+while getopts 'a:b:d:f:v:' opts; do
 	case "${opts}" in
 		a) name1=${OPTARG} ;;
 		b) name2=${OPTARG} ;;
 		d) dump_max=${OPTARG} ;;
     f) from=${OPTARG} ;;
-    v) flag_v='true' ;;
+    v) flag_v=${OPTARG} ;;
 	esac
 done
 #name1='jumper'
@@ -24,9 +28,9 @@ run_compare() {
   control_paths="./vm_champs/corewar vm_champs/champs/$name1.cor vm_champs/champs/$name2.cor"
   our_paths="./cmake-build-debug/corewar vm_champs/champs/$name1.cor vm_champs/champs/$name2.cor"
 
-  if ${flag_v}; then
-    control_paths="${control_paths} -v 6"
-    our_paths="${our_paths} -v"
+  if (( $flag_v > 0 )); then
+    control_paths="${control_paths} -v ${flag_v}"
+    our_paths="${our_paths} -v ${flag_v}"
   fi
   control="$control_paths -d $dump"
   our="$our_paths -dump $dump"
@@ -55,6 +59,6 @@ do
   fi
   dump=$(( (($dump_max - $floor) / 2) + $floor ))
 done
-echo "./test.sh -a $name1 -b $name2 -f $dump -t 8 -v"
+echo "./test.sh -a $name1 -b $name2 -f $dump -t 8 -v $flag_v"
 
 

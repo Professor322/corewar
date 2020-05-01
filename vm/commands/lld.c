@@ -32,7 +32,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->carry = 1;
 	else
 		car->carry = 0;
-    if (cbox->flags & V_FLAG_CHECK)
+    if (cbox->flags & V_FLAG_OPER)
         ft_printf("P % 4lu | lld %d r%d\n", car->id + 1, val0, reg);
 }
 
