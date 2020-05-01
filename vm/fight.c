@@ -12,7 +12,6 @@
 
 #include "corewar.h"
 
-
 unsigned char	kill_cars(t_cbox *cbox)
 {
 	size_t i;
@@ -64,10 +63,8 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
 		arena->checks_count = 0;
-		if (cbox->flags & V_FLAG_CYCLES) {
-			ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
-		}
-
+    if (cbox->flags & V_FLAG_CHECK)
+		  ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 	}
 	else
 		arena->checks_count += 1;
@@ -96,19 +93,23 @@ unsigned char	do_the_fight(t_cbox *cbox)
 		car = (t_car *) pop_que(cbox->timeline[cycle]).data;
 		if (car == NULL)  // todo: kill car
 			continue;
+//		print_bytes(cbox, car, 4);
 //		print_car(car);  // todo DEBUG
 		if (car->oper.f == NULL)
 		{
 			// set new operation
-			car->oper = get_operation(cbox->arena.arena[car->pos]);
+			car->oper = get_operation(cbox->arena.arena[POS(car->pos)]);
 			reschedule_car(cbox, car, car->oper.delay - 1);
 		}
 		else
 		{
+//		    print_bytes(cbox, car, 30);
 			// do operation
 			if (ft_strcmp(car->oper.name, "ld"))
 			    dprintf(get_fd_debug(), "oper_to_do=\t\t\t%s\n", car->oper.name);
 			car->oper.f(car, cbox);
+//            if (car->regs[11] == 190057729) ft_printf("\033[0;91m");
+//            ft_printf("r12 value %d\n\033[0;10m", car->regs[11]);
 			ft_bzero(&car->oper, sizeof(t_oper)); // ??
 			// set new operation will be in next turn
 			reschedule_car(cbox, car, 1);

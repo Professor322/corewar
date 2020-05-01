@@ -10,14 +10,17 @@ void	 move_car(t_car *car, t_arg *args)
 
 	i = 0;
 	car->pos += OP_BYTE_OFFSET;
+//    ft_printf("moving offset byte 1\n");
 	car->pos += car->oper.has_type_byte;
+//    ft_printf("moving type byte %d\n", car->oper.has_type_byte);
 	while (i < CW_MAX_ARGS)
 	{
 		if (args[i].type)
 			car->pos += args[i].size;
+//		ft_printf("moving bytes %d\n", args[i].size);
 		i++;
 	}
-	car->pos = POS(car->pos);
+//	car->pos = POS(car->pos);
 }
 
 int		get_default_arg_size(t_arg_type type)
@@ -67,12 +70,23 @@ void	cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args)
 	unsigned int i;
 	unsigned char byte;
 
+//	ft_printf("started getting arg types");
 	byte = cbox->arena.arena[POS(car->pos + OP_BYTE_OFFSET)];
 	i = 0;
 	while (i < CW_MAX_ARGS) {
-		args[i].type = byte >> ((CW_MAX_ARGS - i - 1) * 2) & 0b11;
-		args[i].size = get_arg_size(car, args[i].type);
-		i++;
+	    if (i < car->oper.args_amount)
+        {
+            args[i].type = byte >> ((CW_MAX_ARGS - i - 1) * 2) & 0b11;
+            args[i].size = get_arg_size(car, args[i].type);
+        }
+	    else
+        {
+            args[i].type = 0;
+            args[i].size = 0;
+        }
+//		ft_printf("arg type: %d, arg size: %d\n", args[i].type, args[i].size);
+//      ft_printf("%d %d\n",car->oper.args_amount, CW_MAX_ARGS);
+        i++;
 	}
 }
 
@@ -162,7 +176,7 @@ int		validate_command_byte(t_carbox *carbox)
 {
 	unsigned char c;
 
-	c = carbox->cbox->arena.arena[carbox->car->pos];
+	c = carbox->cbox->arena.arena[POS(carbox->car->pos)];
 	return c == carbox->op_command_code;
 }
 
@@ -179,9 +193,10 @@ void	exec_command(t_carbox *carbox,
 {
 	t_arg		args[CW_MAX_ARGS];
 
+//	ft_printf("command %d\n", carbox->op_command_code);
 	if (!validate_command_byte(carbox))
 	{
-		carbox->car->pos = POS(carbox->car->pos + 1);
+		carbox->car->pos = carbox->car->pos + 1;
 		return ;
 	}
 	if (prepare_arguments(carbox, args, validate_permitted_types))
@@ -270,4 +285,16 @@ int     countdown(int setup) {
     }
     return 1;
 
+}
+
+void print_bytes(t_cbox *cbox, t_car *car, int bytes_amount)
+{
+	unsigned char *arena = cbox->arena.arena;
+	int pos = car->pos;
+	ft_printf("car pos %d\n", pos);
+	for (int j = 0; j < bytes_amount; j++)
+	{
+		ft_printf("%.2x ", arena[pos +  j]);
+	}
+	ft_printf("\n");
 }
