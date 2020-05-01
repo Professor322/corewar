@@ -248,4 +248,6 @@ void            print_timeline(t_cbox *cbox);
 int             countdown(int setup);
 size_t          cars_len(t_vector *cars_vec);
 void            print_cur_timeline(t_cbox *cbox);
+void			print_bytes(t_cbox *cbox, t_car *car, int bytes_amount);
+
 #endif

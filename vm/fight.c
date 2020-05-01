@@ -12,7 +12,6 @@
 
 #include "corewar.h"
 
-void print_bytes(t_cbox *cbox, t_car *car, int i);
 unsigned char	kill_cars(t_cbox *cbox)
 {
 	size_t i;
@@ -84,7 +83,11 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	int 	cycle;
 
     if (cbox->flags & V_FLAG_CHECK)
-	    ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
+    {
+        ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
+//        if ((cbox->cycle_counter+1) % 10 == 0)
+//            print_timeline(cbox);
+    }
 	cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
 	while (cbox->timeline[cycle]->len)
 	{
@@ -96,31 +99,22 @@ unsigned char	do_the_fight(t_cbox *cbox)
 		if (car->oper.f == NULL)
 		{
 			// set new operation
-			car->oper = get_operation(cbox->arena.arena[car->pos]);
+			car->oper = get_operation(cbox->arena.arena[POS(car->pos)]);
 			reschedule_car(cbox, car, car->oper.delay - 1);
 		}
 		else
 		{
+//		    print_bytes(cbox, car, 30);
 			// do operation
 			if (ft_strcmp(car->oper.name, "ld"))
 			    dprintf(get_fd_debug(), "oper_to_do=\t\t\t%s\n", car->oper.name);
 			car->oper.f(car, cbox);
+//            if (car->regs[11] == 190057729) ft_printf("\033[0;91m");
+//            ft_printf("r12 value %d\n\033[0;10m", car->regs[11]);
 			ft_bzero(&car->oper, sizeof(t_oper)); // ??
 			// set new operation will be in next turn
 			reschedule_car(cbox, car, 1);
 		}
 	}
 	return (check(cbox, &cbox->arena));
-}
-
-void print_bytes(t_cbox *cbox, t_car *car, int i)
-{
-    unsigned char *arena = cbox->arena.arena;
-    int pos = car->pos;
-    ft_printf("car pos %d\n", pos);
-    for (int j = 0; j < i; j++)
-    {
-        ft_printf("%.2x ", arena[pos +  j]);
-    }
-    ft_printf("\n");
 }

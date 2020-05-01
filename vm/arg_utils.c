@@ -176,7 +176,7 @@ int		validate_command_byte(t_carbox *carbox)
 {
 	unsigned char c;
 
-	c = carbox->cbox->arena.arena[carbox->car->pos];
+	c = carbox->cbox->arena.arena[POS(carbox->car->pos)];
 	return c == carbox->op_command_code;
 }
 
@@ -285,4 +285,16 @@ int     countdown(int setup) {
     }
     return 1;
 
+}
+
+void print_bytes(t_cbox *cbox, t_car *car, int bytes_amount)
+{
+	unsigned char *arena = cbox->arena.arena;
+	int pos = car->pos;
+	ft_printf("car pos %d\n", pos);
+	for (int j = 0; j < bytes_amount; j++)
+	{
+		ft_printf("%.2x ", arena[pos +  j]);
+	}
+	ft_printf("\n");
 }
