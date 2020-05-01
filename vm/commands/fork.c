@@ -31,9 +31,9 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     cbox->car_counter += 1;
 
     value = get_int_from_arg(old_car, cbox, args[0]);
-    new_car->pos = POS(new_car->pos + IND_OFFSET(value));
+    new_car->pos = new_car->pos + IND_OFFSET(value);
 
-    new_car->oper = get_operation(cbox->arena.arena[new_car->pos]);
+    new_car->oper = get_operation(cbox->arena.arena[POS(new_car->pos)]);
     //old_car->oper = get_operation(cbox->arena.arena[new_car->pos]);
     //reschedule_car(cbox, new_car, get_operation(FORK_COMMAND_CODE).delay);
     reschedule_car(cbox, new_car, new_car->oper.delay);
