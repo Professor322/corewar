@@ -252,7 +252,7 @@ void    print_cur_eventloop(t_cbox *cbox) {
     int delta;
 
     cycle = cbox->cycle_counter % SIZE_OF_EVENTLOOP;
-    //ft_printf("⏳  = %d\n", cycle);
+    ft_printf("⏳  = %d\n", cycle);
     idx = -1;
     while (++idx < SIZE_OF_EVENTLOOP) {
         if (cbox->eventloop[idx]->len) {
@@ -270,6 +270,32 @@ void    print_cur_eventloop(t_cbox *cbox) {
             }
         }
     }
+}
+
+void    print_full_eventloop(t_cbox *cbox) {
+	int idx;
+	int cycle;
+	int delta;
+	int car;
+
+	cycle = cbox->cycle_counter % SIZE_OF_EVENTLOOP;
+	ft_printf("⏱️  = %d\n", cycle);
+	idx = -1;
+	while (++idx < SIZE_OF_EVENTLOOP) {
+		if (cbox->eventloop[idx]->len) {
+			if (idx < cycle)
+				delta = SIZE_OF_EVENTLOOP - cycle + idx;
+			else
+				delta = idx - cycle;
+			car = -1;
+			while (++car < cbox->eventloop[idx]->len/sizeof(t_pque)) {
+				ft_printf("idx = %3d [%3d]\tcont= %d --- ", delta, idx, cbox->eventloop[idx]->len/sizeof(t_pque));
+				print_car_without_reg(((t_pque *) cbox->eventloop[idx]->cont)[car].data);
+				ft_printf("\n");
+			}
+			ft_printf("\n");
+		}
+	}
 }
 
 int     countdown(int setup) {

@@ -132,8 +132,8 @@ unsigned char	do_the_fight(t_cbox *cbox)
 		{
 //		    print_bytes(cbox, car, 30);
 			// do operation
-			if (ft_strcmp(car->oper.name, "ld"))
-			    dprintf(get_fd_debug(), "oper_to_do=\t\t\t%s\n", car->oper.name);
+			//if (ft_strcmp(car->oper.name, "ld"))
+			//    dprintf(get_fd_debug(), "oper_to_do=\t\t\t%s\n", car->oper.name);
 			car->oper.f(car, cbox);
 //            if (car->regs[11] == 190057729) ft_printf("\033[0;91m");
 //            ft_printf("r12 value %d\n\033[0;10m", car->regs[11]);

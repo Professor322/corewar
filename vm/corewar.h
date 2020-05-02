@@ -253,5 +253,6 @@ int             countdown(int setup);
 size_t          cars_len(t_vector *cars_vec);
 void            print_cur_eventloop(t_cbox *cbox);
 void			print_bytes(t_cbox *cbox, t_car *car, int bytes_amount);
+void    		print_full_eventloop(t_cbox *cbox);
 
 #endif
