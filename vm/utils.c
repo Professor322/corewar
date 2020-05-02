@@ -58,3 +58,17 @@ void	dump_arena(unsigned char *arena)
 	}
 	ft_printf("\n");
 }
+
+// h - heap
+// v - general vector
+void car_to_vec(t_car *car, t_vector *target, t_cbox *cbox, char type)
+{
+	if (type == 'h') {
+			if (!push_que(cbox->rip, car, -car->id))
+				exit(clean_all(cbox, MALLOC_ERROR));
+	}
+	if (type == 'v') {
+		if (!(ft_vadd(target, &car, sizeof(t_car *))))
+			exit(clean_all(cbox, MALLOC_ERROR));
+	}
+}

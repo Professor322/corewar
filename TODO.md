@@ -1,10 +1,9 @@
 ./test.sh -a big_feet -b bee_gees -d 40001 -f 18750 -t 100 -v 14
 
 ⚠️
-./test.sh -a mandragore -b littlepuppy -f 2624 -t 8 -v 14
 ./test.sh -a ultima -b ultima -f 1079 -t 8 -v 14
-./test.sh -a Wall -b Wall -f 3504 -t 8 -v 14
-./test.sh -a Kappa -b Kappa -f 5777 -t 8 -v 14
+./test.sh -a Kappa -b Kappa -f 6422 -t 8 -v 14
+./test.sh -a mandragore -b littlepuppy -f 40000 -t 8 -v 14
 
 can_try:
 	-v 15 (not in our corewar)
