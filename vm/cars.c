@@ -47,14 +47,15 @@ t_car	*fetch_free_car(t_cbox *cbox)
 
 
 /*
-** reschedule car in timeline (now + time_delta)
+** reschedule car in eventloop (now + time_delta)
 */
 void	reschedule_car(t_cbox *cbox, t_car *car, int time_delta)
 {
 	int	next_time;
 
-	next_time = (cbox->cycle_counter + time_delta) % SIZE_OF_TIMELINE;
-	if (!push_que(cbox->timeline[next_time], car, -car->id))
+	next_time = (cbox->cycle_counter + time_delta) % SIZE_OF_EVENTLOOP;
+	car->in_event_loop = next_time + 1;
+	if (!push_que(cbox->eventloop[next_time], car, -car->id))
 		exit(clean_all(cbox, MALLOC_ERROR));
 }
 
@@ -71,7 +72,7 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 	cbox->car_counter += 1;
 	new->regs[0] = player;
 	new->pos = pos;
-	// add to timeline
+	// add to eventloop
 	reschedule_car(cbox, new, 0);
 }
 

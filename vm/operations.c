@@ -14,7 +14,7 @@
 
 /*
 ** If operation is invalid, move carry to the next byte
-** and put it to the next unit at timeline
+** and put it to the next unit at eventloop
 */
 void	invalid_operation(t_car *car, t_cbox *cbox)
 {
@@ -24,7 +24,7 @@ void	invalid_operation(t_car *car, t_cbox *cbox)
 
 /*
 ** Try to set operation if there is no one in the carry.
-** If operation is valid, move carry to N-1 units by timeline,
+** If operation is valid, move carry to N-1 units by eventloop,
 ** otherwise move it just to the next unit
 */
 t_oper	get_operation(char code)

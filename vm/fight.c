@@ -12,6 +12,24 @@
 
 #include "corewar.h"
 
+void refresh_heap(t_cbox *cbox, int index)
+{
+	t_vector *tmp;
+	t_car	*car;
+
+	while (cbox->eventloop[index]->len){
+		car = (t_car *) pop_que(cbox->eventloop[index]).data;
+		if (car->in_event_loop == 0)
+			continue;
+		//print_car_without_reg(car);
+		if (!push_que(cbox->rip, car, -car->id))
+			exit(clean_all(cbox, MALLOC_ERROR));
+	}
+	tmp = cbox->eventloop[index];
+	cbox->eventloop[index] = cbox->rip;
+	cbox->rip = tmp;
+}
+
 unsigned char	kill_cars(t_cbox *cbox)
 {
 	size_t i;
@@ -19,14 +37,16 @@ unsigned char	kill_cars(t_cbox *cbox)
 	t_car	**cars;
 	t_arena	ar;
 	unsigned char somebody_alive;
+	unsigned char to_refresh[SIZE_OF_EVENTLOOP];
 
+	ft_bzero((void*)to_refresh, SIZE_OF_EVENTLOOP* sizeof(unsigned char));
 	somebody_alive = 0;
 	cars = (t_car **)(cbox->cars->cont);
 	ar = cbox->arena;
 	i = cars_len(cbox->cars);
 	while (--i != -1) // max value of size_t
 	{
-		if (!cars[i]) {
+		if (cars[i]->in_event_loop == 0) {
             continue;
 		}
 		if (cars[i]->last_live <= cbox->cycle_counter + 1 - ar.cycles_to_die)
@@ -36,12 +56,19 @@ unsigned char	kill_cars(t_cbox *cbox)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", cars[i]->id + 1,  cbox->cycle_counter - cars[i]->last_live, ar.cycles_to_die);
 			}
 			//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
+			to_refresh[cars[i]->in_event_loop - 1] = 1;
 			ft_bzero(cars[i], sizeof(t_car));
 			if (!(ft_vadd(cbox->dead_cars, &cars[i], sizeof(t_car *))))
 				exit(clean_all(cbox, MALLOC_ERROR));
 		}
 		else
             somebody_alive = 1;
+	}
+	i = -1;
+	while (++i < SIZE_OF_EVENTLOOP)
+	{
+		if (to_refresh[i])
+			refresh_heap(cbox, i);
 	}
 	return somebody_alive;
 }
@@ -63,7 +90,7 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
 		arena->checks_count = 0;
-    if (cbox->flags & V_FLAG_CHECK)
+    if (cbox->flags & V_FLAG_CYCLES)
 		  ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 	}
 	else
@@ -74,7 +101,7 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 
 
 /*
-** For each carry in the unit at timeline do one of two options:
+** For each carry in the unit at eventloop do one of two options:
 ** - try to set operation if there is no one in the carry;
 ** - execute operation
 */
@@ -87,12 +114,12 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	if (cbox->flags & V_FLAG_CYCLES) {
 		ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
 	}
-	cycle = cbox->cycle_counter % SIZE_OF_TIMELINE;
-	while (cbox->timeline[cycle]->len)
+	cycle = cbox->cycle_counter % SIZE_OF_EVENTLOOP;
+	while (cbox->eventloop[cycle]->len)
 	{
-		car = (t_car *) pop_que(cbox->timeline[cycle]).data;
-		if (car == NULL)  // todo: kill car
-			continue;
+		car = (t_car *) pop_que(cbox->eventloop[cycle]).data;
+		//if (car == NULL)  // todo: kill car
+		//	continue;
 //		print_bytes(cbox, car, 4);
 //		print_car(car);  // todo DEBUG
 		if (car->oper.f == NULL)

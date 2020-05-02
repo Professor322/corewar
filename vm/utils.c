@@ -20,8 +20,8 @@ int 	clean_all(t_cbox *cbox, char code_exit)
 	int 	i;
 
 	i = -1;
-	while (++i < SIZE_OF_TIMELINE)
-		ft_vdel(&cbox->timeline[i]);
+	while (++i < SIZE_OF_EVENTLOOP)
+		ft_vdel(&cbox->eventloop[i]);
 	i = -1;
 	while (++i < MAX_PLAYERS)
 	{
