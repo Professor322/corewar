@@ -23,7 +23,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 
 	val1 = get_int_from_arg(car, cbox, args[0]);
 	if (car->carry == 1)
-		car->pos = POS(car->pos + IND_OFFSET(val1));
+		car->pos = car->pos + IND_OFFSET(val1);
     if (cbox->flags & V_FLAG_OPER) {
         if (car->carry == 1)
             ft_printf("P % 4lu | zjmp %d OK\n", car->id + 1, val1);
