@@ -18,7 +18,7 @@
 */
 void	invalid_operation(t_car *car, t_cbox *cbox)
 {
-	car->pos = car->pos + 1;
+	car->pos = POS(car->pos + 1);
 //	ft_printf(" ---%s--- ", car->oper.name);
 }
 

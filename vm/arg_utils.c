@@ -20,7 +20,7 @@ void	 move_car(t_car *car, t_arg *args)
 //		ft_printf("moving bytes %d\n", args[i].size);
 		i++;
 	}
-//	car->pos = POS(car->pos);
+	car->pos = POS(car->pos);
 }
 
 int		get_default_arg_size(t_arg_type type)
@@ -196,7 +196,7 @@ void	exec_command(t_carbox *carbox,
 //	ft_printf("command %d\n", carbox->op_command_code);
 	if (!validate_command_byte(carbox))
 	{
-		carbox->car->pos = carbox->car->pos + 1;
+		carbox->car->pos = POS(carbox->car->pos + 1);
 		return ;
 	}
 	if (prepare_arguments(carbox, args, validate_permitted_types))
