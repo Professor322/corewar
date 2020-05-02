@@ -76,7 +76,8 @@ int		main(int argc, char **argv)
         if (dump == cbox.cycle_counter)
         {
             dump_arena(cbox.arena.arena);
-			//print_eventloop(&cbox);
+			//print_full_eventloop(&cbox);
+			//print_cur_eventloop(&cbox);
             return (clean_all(&cbox, SUCCESS));
         }
     }
