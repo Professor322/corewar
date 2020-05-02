@@ -38,22 +38,28 @@ run_compare() {
   echo " $dump"
   eval "$control" > control
   eval "$our" > our
+  last_line=$(tail -1 control)
   diff_res=$(eval $diff)
     if [ "${diff_res}" ]; then
         echo "       - diff control our  ⚠️"
+    elif [[ $last_line == *"has won"* ]]; then
+        echo "       - diff control our  🏁"
     else
         echo "       - diff control our  ✅️"
     fi
 }
 
 dump_mem=$floor
-dump=$(( ( ( $dump_max - $floor ) / 2 ) + $floor ))
+#dump=$(( ( ( $dump_max - $floor ) / 2 ) + $floor ))
+dump=$dump_max
 while [ "$dump" -ne "$dump_mem" ]
 do
   dump_mem=$dump
   run_compare
   if [ "${diff_res}" ]; then
         dump_max=$dump
+    elif [[ $last_line == *"has won"* ]]; then
+        break
     else
         floor=$dump
   fi

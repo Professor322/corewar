@@ -256,4 +256,6 @@ void            print_cur_eventloop(t_cbox *cbox);
 void			print_bytes(t_cbox *cbox, t_car *car, int bytes_amount);
 void    		print_full_eventloop(t_cbox *cbox);
 
+void			car_to_vec(t_car *car, t_vector *target, t_cbox *cbox, char type);
+
 #endif

@@ -32,6 +32,7 @@ t_car	*fetch_free_car(t_cbox *cbox)
 		if (!(new = ft_memalloc(sizeof(t_car))))
 			exit(clean_all(cbox, MALLOC_ERROR));
 		// remember it in overall cars array
+		//car_to_vec(new, cbox->cars, cbox, 'v');
 		if (!(cbox->cars = ft_vadd(cbox->cars, &new, sizeof(t_car*))))
 			exit(clean_all(cbox, MALLOC_ERROR));
 		return new;
@@ -55,6 +56,7 @@ void	reschedule_car(t_cbox *cbox, t_car *car, int time_delta)
 
 	next_time = (cbox->cycle_counter + time_delta) % SIZE_OF_EVENTLOOP;
 	car->in_event_loop = next_time + 1;
+	//car_to_vec(car, cbox->eventloop[next_time], cbox, 'h');
 	if (!push_que(cbox->eventloop[next_time], car, -car->id))
 		exit(clean_all(cbox, MALLOC_ERROR));
 }

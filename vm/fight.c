@@ -22,6 +22,7 @@ void refresh_heap(t_cbox *cbox, int index)
 		if (car->in_event_loop == 0)
 			continue;
 		//print_car_without_reg(car);
+		//car_to_vec(car, cbox->rip, cbox, 'h');
 		if (!push_que(cbox->rip, car, -car->id))
 			exit(clean_all(cbox, MALLOC_ERROR));
 	}
@@ -30,39 +31,64 @@ void refresh_heap(t_cbox *cbox, int index)
 	cbox->rip = tmp;
 }
 
+void make_rip_ritual()
+{
+
+}
+
 unsigned char	kill_cars(t_cbox *cbox)
 {
 	size_t i;
-    size_t cars_vec;
+   // size_t cars_vec;
 	t_car	**cars;
-	t_arena	ar;
+	t_car	*car;
+	//t_arena	ar;
 	unsigned char somebody_alive;
 	unsigned char to_refresh[SIZE_OF_EVENTLOOP];
 
 	ft_bzero((void*)to_refresh, SIZE_OF_EVENTLOOP* sizeof(unsigned char));
 	somebody_alive = 0;
 	cars = (t_car **)(cbox->cars->cont);
-	ar = cbox->arena;
+	//ar = cbox->arena;
 	i = cars_len(cbox->cars);
 	while (--i != -1) // max value of size_t
 	{
 		if (cars[i]->in_event_loop == 0) {
             continue;
 		}
-		if (cars[i]->last_live <= cbox->cycle_counter + 1 - ar.cycles_to_die)
+		if (cars[i]->last_live < cbox->cycle_counter + 1 - cbox->arena.cycles_to_die)
 		{
-			// kill it: clean space of car and put it's pointer to cemetery
-			if (cbox->flags & V_FLAG_DEATHS) {
-				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", cars[i]->id + 1,  cbox->cycle_counter - cars[i]->last_live, ar.cycles_to_die);
-			}
-			//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
-			to_refresh[cars[i]->in_event_loop - 1] = 1;
-			ft_bzero(cars[i], sizeof(t_car));
-			if (!(ft_vadd(cbox->dead_cars, &cars[i], sizeof(t_car *))))
+			// remember car to kill
+			//car_to_vec(cars[i], cbox->rip, cbox, 'h');
+			if (!push_que(cbox->rip, cars[i], -cars[i]->id))
 				exit(clean_all(cbox, MALLOC_ERROR));
+			// kill it: clean space of car and put it's pointer to cemetery
+			//if (cbox->flags & V_FLAG_DEATHS) {
+			//	ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", cars[i]->id + 1,  cbox->cycle_counter - cars[i]->last_live, ar.cycles_to_die);
+			//}
+			//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
+			//to_refresh[cars[i]->in_event_loop - 1] = 1;
+			//ft_bzero(cars[i], sizeof(t_car));
+			//if (!(ft_vadd(cbox->dead_cars, &cars[i], sizeof(t_car *))))
+			//	exit(clean_all(cbox, MALLOC_ERROR));
 		}
 		else
             somebody_alive = 1;
+	}
+	while (cbox->rip->len)
+	{
+		car = (t_car *) pop_que(cbox->rip).data;
+		// kill it: clean space of car and put it's pointer to cemetery
+		if (cbox->flags & V_FLAG_DEATHS) {
+			ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
+					car->id + 1,  cbox->cycle_counter - car->last_live, cbox->arena.cycles_to_die);
+		}
+		//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
+		to_refresh[car->in_event_loop - 1] = 1;
+		ft_bzero(car, sizeof(t_car));
+		//car_to_vec(car, cbox->dead_cars, cbox, 'v');
+		if (!(ft_vadd(cbox->dead_cars, &car, sizeof(t_car *))))
+			exit(clean_all(cbox, MALLOC_ERROR));
 	}
 	i = -1;
 	while (++i < SIZE_OF_EVENTLOOP)
@@ -73,17 +99,19 @@ unsigned char	kill_cars(t_cbox *cbox)
 	return somebody_alive;
 }
 
-unsigned char check(t_cbox *cbox, t_arena *arena)
-{
-	unsigned char	out;
-    if (arena->cycles_to_die <= 0)
+unsigned char check(t_cbox *cbox, t_arena *arena) {
+	unsigned char out;
+	if (arena->cycles_to_die <= 0)
+	{
 		// end of game
+		kill_cars(cbox);
 		return 0;
+	}
 	if (((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die)
 		// not need to check
 		return 1;
 	// do check:
-	dprintf(get_fd_debug(), "\t >>> Its check time");
+	//dprintf(get_fd_debug(), "\t >>> Its check time");
 	out = kill_cars(cbox);
 	arena->last_check = cbox->cycle_counter + 1;
 	if (arena->live_count >= NBR_LIVE || arena->checks_count == MAX_CHECKS - 1)

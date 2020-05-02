@@ -42,6 +42,7 @@ do
 	eval "$control" > control
 	eval "$our" > our
 	diff_res=$(eval $diff)
+	last_line=$(tail -1 control)
 	if [ "${diff_res}" ]; then
 	    echo "diff control our  ⚠️"
 		  echo "$diff_res"
@@ -57,6 +58,9 @@ do
       echo
     fi
 		break
+	elif [[ $last_line == *"has won"* ]]; then
+        echo "diff control our ✅  End of game 🏁️"
+        break
 	else
 	    echo "diff control our ✅️"
 	fi
