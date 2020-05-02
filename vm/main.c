@@ -17,12 +17,14 @@ void	do_all_mallocs(t_cbox *cbox)
 	int i;
 
 	i = -1;
-	while (++i < SIZE_OF_TIMELINE)
-		if (!(ft_vnew(&(cbox->timeline[i]), SIZE_OF_QUE)))
+	while (++i < SIZE_OF_EVENTLOOP)
+		if (!(ft_vnew(&(cbox->eventloop[i]), SIZE_OF_QUE)))
 			exit(clean_all(cbox, MALLOC_ERROR));
 	if (!(ft_vnew(&(cbox->cars), SIZE_OF_CARS)))
 		exit(clean_all(cbox, MALLOC_ERROR));
 	if (!(ft_vnew(&(cbox->dead_cars), SIZE_OF_CARS)))
+		exit(clean_all(cbox, MALLOC_ERROR));
+	if (!(ft_vnew(&(cbox->rip), SIZE_OF_QUE)))
 		exit(clean_all(cbox, MALLOC_ERROR));
 }
 
@@ -53,7 +55,7 @@ void	init_arena(int champs_count, t_cbox *cbox, char **argv)
 int		main(int argc, char **argv)
 {
 	int 		n;  // number of players
-	t_cbox		cbox;  // corewar-box: champions, arena, timeline
+	t_cbox		cbox;  // corewar-box: champions, arena, eventloop
 	int 		dump;  // cycle to stop and dump arena
 
 	ft_bzero(&cbox, sizeof(t_cbox));
@@ -74,11 +76,11 @@ int		main(int argc, char **argv)
         if (dump == cbox.cycle_counter)
         {
             dump_arena(cbox.arena.arena);
+			//print_eventloop(&cbox);
             return (clean_all(&cbox, SUCCESS));
         }
     }
-//    print_timeline(&cbox);
-//    print_cur_timeline(&cbox);
+//    print_cur_eventloop(&cbox);
 //	if (dump == cbox.cycle_counter)
 //		dump_arena(cbox.arena.arena);
 //	else

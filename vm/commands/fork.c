@@ -23,7 +23,7 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     t_car *new_car;
     int value;
 
-    //print_cars(cbox); print_timeline(cbox);
+    //print_cars(cbox); print_eventloop(cbox);
 
     new_car = fetch_free_car(cbox);
     clone_car(old_car, new_car);
@@ -41,8 +41,8 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
         ft_printf("P % 4lu | fork %d (%d)\n", old_car->id + 1, value, new_car->pos);
     }
     //ft_printf("\t\tfork: car=%d -> new=%d\n", old_car->id, new_car->id);
-    //print_cars(cbox); print_timeline(cbox);
-    //print_timeline(cbox);
+    //print_cars(cbox); print_eventloop(cbox);
+    //print_eventloop(cbox);
 }
 
 void		ft_fork(t_car *car, t_cbox *cbox)

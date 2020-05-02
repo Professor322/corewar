@@ -21,7 +21,7 @@
 # include <stdio.h>
 
 # define SIZE_OF_QUE 100
-# define SIZE_OF_TIMELINE 1000
+# define SIZE_OF_EVENTLOOP 1000
 # define SIZE_OF_CARS 1000
 
 # define NUMBER_OF_OPERATIONS 16
@@ -122,6 +122,7 @@ typedef struct	s_car
 //	t_boolean 		is_alive;  // ???
 	int 			regs[REG_NUMBER];
 	size_t			last_live;
+	int 			in_event_loop; // starts with 1, never equal 0 except dead car
 }				t_car;
 
 typedef struct	s_cbox
@@ -129,11 +130,12 @@ typedef struct	s_cbox
 	t_arena		arena;  // just arena
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
 	int			champs_amount;
-	t_vector	*timeline[SIZE_OF_TIMELINE];  // array of bin-heaps with priority
+	t_vector	*eventloop[SIZE_OF_EVENTLOOP];  // array of bin-heaps with priority
 	size_t		car_counter;
 	size_t 		cycle_counter;
 	t_vector	*dead_cars; // vector of ponters to dead(free) cars
 	t_vector	*cars; // vector of pointers to all cars
+	t_vector	*rip; // vector for refresh heap in event_loop in death case
     int			flags;
 }				t_cbox;
 
@@ -246,10 +248,10 @@ int				sub_add_validate_permitted_types(t_arg *args);
 int             get_fd_debug(void);
 void            print_cars(t_cbox *);
 void	        print_car_without_reg(t_car *car);
-void            print_timeline(t_cbox *cbox);
+void            print_eventloop(t_cbox *cbox);
 int             countdown(int setup);
 size_t          cars_len(t_vector *cars_vec);
-void            print_cur_timeline(t_cbox *cbox);
+void            print_cur_eventloop(t_cbox *cbox);
 void			print_bytes(t_cbox *cbox, t_car *car, int bytes_amount);
 
 #endif
