@@ -45,7 +45,7 @@ t_oper	get_operation(char code)
 			{"lld", ft_lld, 10, TRUE, 4, 2},
 			{"lldi", ft_lldi, 50, TRUE, 2, 3},
 			{"lfork", ft_lfork, 1000, FALSE, 2, 2},
-			{"aff", ft_aff, 2, TRUE, 4, 2},
+			{"aff", ft_aff, 2, TRUE, 4, 1},
 			{"inval", invalid_operation, 1, FALSE, 4, 0}
 	};
 //	ft_printf(" ---set operation--- ");
