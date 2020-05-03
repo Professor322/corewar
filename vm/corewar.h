@@ -90,7 +90,7 @@ typedef struct	s_champ
 typedef struct	s_arena
 {
 	unsigned char 	arena[MEM_SIZE];
-	int		last_alive;
+	int		last_alive;  // real number of champion (1, 2, .. )
 	size_t 	last_check;
 	int 	cycles_to_die;
 	size_t 	live_count;
@@ -129,7 +129,7 @@ typedef struct	s_cbox
 {
 	t_arena		arena;  // just arena
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
-	int			champs_amount;
+//	int			champs_amount;
 	t_vector	*eventloop[SIZE_OF_EVENTLOOP];  // array of bin-heaps with priority
 	size_t		car_counter;
 	size_t 		cycle_counter;
