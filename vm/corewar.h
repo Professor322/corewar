@@ -21,7 +21,7 @@
 # include <stdio.h>
 
 # define SIZE_OF_QUE 100
-# define SIZE_OF_EVENTLOOP 1001
+# define SIZE_OF_EVENTLOOP 1000
 # define SIZE_OF_CARS 1000
 
 # define NUMBER_OF_OPERATIONS 16

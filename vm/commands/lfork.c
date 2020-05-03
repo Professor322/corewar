@@ -32,8 +32,13 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     new_car->id = cbox->car_counter;
     cbox->car_counter += 1;
     new_car->pos = new_car->pos + value;
-    new_car->oper = get_operation(cbox->arena.arena[POS(new_car->pos)]);
-    reschedule_car(cbox, new_car, new_car->oper.delay);
+//    new_car->oper = get_operation(cbox->arena.arena[POS(new_car->pos)]);
+
+    ft_bzero(&new_car->oper, sizeof(t_oper)); // ??
+    // set new operation will be in next turn
+    reschedule_car(cbox, new_car, 1);
+
+//    reschedule_car(cbox, new_car, new_car->oper.delay);
     if (cbox->flags & V_FLAG_OPER) {
         ft_printf("P % 4lu | lfork %d (%d)\n", old_car->id + 1, value, new_car->pos);
     }
