@@ -25,7 +25,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
     car->last_live = cbox->cycle_counter; //todo cycle_counter?
     cbox->arena.live_count++;
     if (validate_user(cbox, -val)) {
-        cbox->arena.last_alive = val;
+        cbox->arena.last_alive = -val;
     }
     if (cbox->flags & V_FLAG_OPER) {
         ft_printf("P % 4lu | live %d\n", car->id + 1, val);
