@@ -65,6 +65,6 @@ do
   fi
   dump=$(( (($dump_max - $floor) / 2) + $floor ))
 done
-echo "./test.sh -a $name1 -b $name2 -f $dump -t 8 -v $flag_v"
+echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $dump"
 
 
