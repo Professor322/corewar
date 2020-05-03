@@ -34,7 +34,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
     if (cbox->flags & V_FLAG_OPER) {
         ft_printf("P % 4lu | ldi %d %d r%d\n", car->id + 1, val1, val2, reg);
         ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n"
-                , val1, val2, IND_OFFSET(val1 + val2), NOTZERO(car->pos + IND_OFFSET(val1 + val2)));
+                , val1, val2, IND_OFFSET(val1 + val2), car->pos + IND_OFFSET(val1 + val2));
 
     }
 }

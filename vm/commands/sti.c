@@ -34,7 +34,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
         //ft_printf("%d\t", cbox->cycle_counter);
         ft_printf("P % 4lu | sti r%d %d %d\n", car->id + 1, args[0].value, val1, val2);
         ft_printf("       | -> store to %d + %d = %d (with pc and mod %d)\n"
-                , val1, val2, val1 + val2, NOTZERO(car->pos + IND_OFFSET(val1 + val2)));
+                , val1, val2, val1 + val2, car->pos + IND_OFFSET(val1 + val2));
 
 //        ft_printf("       | -> store to %d + %d = %d (with pc and mod %d)\n"
 //                , val1, val2, IND_OFFSET(val1 + val2) == 1 ? 1025 : IND_OFFSET(val1 + val2), car->pos + IND_OFFSET(val1 + val2));
