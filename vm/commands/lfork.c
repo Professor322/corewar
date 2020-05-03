@@ -35,7 +35,7 @@ static void	op_unique_commands(t_car *old_car, t_cbox *cbox, t_arg args[CW_MAX_A
     new_car->oper = get_operation(cbox->arena.arena[POS(new_car->pos)]);
     reschedule_car(cbox, new_car, new_car->oper.delay);
     if (cbox->flags & V_FLAG_OPER) {
-        ft_printf("P % 4lu | lfork %d (%d)\n", old_car->id + 1, value, NOTZERO(new_car->pos));
+        ft_printf("P % 4lu | lfork %d (%d)\n", old_car->id + 1, value, new_car->pos);
     }
 }
 

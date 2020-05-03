@@ -29,7 +29,6 @@
 # define POS(x) ((x) % MEM_SIZE)
 # define REG(x) ((x) - 1)
 # define IND_OFFSET(x)  ((x) % IDX_MOD)
-# define NOTZERO(x) (x == 0 ? MEM_SIZE : x)
 
 #define T_REG_BYTE_SIZE						1
 #define T_DIR_BYTE_SIZE						4
