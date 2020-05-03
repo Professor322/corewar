@@ -321,7 +321,6 @@ void print_bytes(t_cbox *cbox, t_car *car, int bytes_amount)
 {
 	unsigned char *arena = cbox->arena.arena;
 	int pos = car->pos;
-	ft_printf("car pos %d\n", pos);
 	for (int j = 0; j < bytes_amount; j++)
 	{
 		ft_printf("%.2x ", arena[pos +  j]);
