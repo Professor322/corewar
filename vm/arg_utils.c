@@ -180,11 +180,14 @@ int		validate_command_byte(t_carbox *carbox)
 	return c == carbox->op_command_code;
 }
 
-int		validate_user(t_cbox *cbox, int value) // todo: ????
+// value is real number of champion (1, 2, .. )
+int		validate_user(t_cbox *cbox, int value)
 {
-	if (value < 0 || value > cbox->champs_amount)
+	if (value <= 0 || value > MAX_PLAYERS)
 		return 0;
-	return 1;
+	if (cbox->champs[value - 1].code_size)
+	    return 1;
+	return 0;
 }
 
 void	exec_command(t_carbox *carbox,
