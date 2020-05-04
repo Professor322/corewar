@@ -3,6 +3,7 @@
 path="vm_champs/champs"
 #path="vm_champs/test"
 tm=1
+from=0
 source="0_tscan_timeout"
 max_dump=100000
 tmp_out="run_out"
@@ -11,10 +12,11 @@ tmp_run="run_tmp"
 echo "example:"
 echo "./tscan.sh -t 1 -s 0_tscan_timeout"
 
-while getopts 't:s:' opts; do
+while getopts 't:s:f:' opts; do
 	case "${opts}" in
 		t) tm=${OPTARG} ;;
 		s) source=${OPTARG} ;;
+    f) from=${OPTARG} ;;
 	esac
 done
 
@@ -79,15 +81,22 @@ init() {
 
 #init
 
-echo "${tm}_tscan_done_finish" > ${tm}_tscan_done_finish
-echo "${tm}_tscan_done_diff_ok" > ${tm}_tscan_done_diff_ok
-echo "${tm}_tscan_done_diff_bad" > ${tm}_tscan_done_diff_bad
-rm ${tm}_tscan_timeout 2> /dev/null
-
+if [ "$from" -eq "0" ]; then
+    rm ${tm}_tscan_done_finish 2> /dev/null
+    rm ${tm}_tscan_done_diff_ok 2> /dev/null
+    rm ${tm}_tscan_done_diff_bad 2> /dev/null
+    rm ${tm}_tscan_timeout 2> /dev/null
+fi
+idx=0
 while read line; do
-  echo "$line"
+  idx=$((idx + 1))
+  if [ "$idx" -le "$from" ]; then
+    continue
+  fi
+  echo "$idx \t$line"
   champ_a=$(echo $line | cut -d ' ' -f 1)
   champ_b=$(echo $line | cut -d ' ' -f 2)
   run_with_timeout
   log
+  echo "\t\tFor continue use this: ./tscan.sh -t $tm -s $source -f $idx"
 done < $source
