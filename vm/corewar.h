@@ -122,7 +122,7 @@ typedef struct	s_car
 	unsigned int	pos;
 //	t_boolean 		is_alive;  // ???
 	int 			regs[REG_NUMBER];
-	size_t			last_live;
+	ssize_t			last_live;
 	int 			in_event_loop; // starts with 1, never equal 0 except dead car
 }				t_car;
 
