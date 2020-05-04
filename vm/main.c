@@ -63,6 +63,7 @@ int		main(int argc, char **argv)
 
 //	ft_printf("\n{RED}welcome back to HELLLLL\n\n");
 
+    //TODO HELP TEXT
 	n = count_champions(cbox.champs);
 
 	do_all_mallocs(&cbox);

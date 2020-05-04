@@ -69,6 +69,7 @@ int	parse_input(char **argv, int argc, t_cbox *cbox)
 	dump = 0;
 	i = 0;
     cbox->flags = 0;
+    cbox->a_flag = FALSE;
 	while (++i < argc)
 	{
 		if (!(ft_strcmp(argv[i], DUMP_FLAG)))
@@ -77,6 +78,8 @@ int	parse_input(char **argv, int argc, t_cbox *cbox)
 			parse_n(argv[i - 1], i, argc, cbox);
         else if (!(ft_strcmp(argv[i], V_FLAG)))
             cbox->flags = parse_dump(argv[++i]); // TODO parse_flag_v
+        else if (!(ft_strcmp(argv[i], A_FLAG)))
+            cbox->a_flag = TRUE;
 		else if (is_champ_file(argv[i]))
 			remember_champion(cbox, i);
 		else
