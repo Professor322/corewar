@@ -12,7 +12,9 @@
 
 #include "corewar.h"
 
-
+/*
+** length of array of pointers to car
+*/
 size_t   cars_len(t_vector *cars_vec) {
     return cars_vec->len / sizeof(t_car *);
 }
@@ -32,9 +34,9 @@ t_car	*fetch_free_car(t_cbox *cbox)
 		if (!(new = ft_memalloc(sizeof(t_car))))
 			exit(clean_all(cbox, MALLOC_ERROR));
 		// remember it in overall cars array
-		//car_to_vec(new, cbox->cars, cbox, 'v');
-		if (!(cbox->cars = ft_vadd(cbox->cars, &new, sizeof(t_car*))))
-			exit(clean_all(cbox, MALLOC_ERROR));
+		car_to_vec(new, cbox->cars, cbox);
+//		if (!(cbox->cars = ft_vadd(cbox->cars, &new, sizeof(t_car*))))
+//			exit(clean_all(cbox, MALLOC_ERROR));
 		return new;
 	}
 	// get car from cemetery, clean up grave
@@ -56,9 +58,9 @@ void	reschedule_car(t_cbox *cbox, t_car *car, int time_delta)
 
 	next_time = (cbox->cycle_counter + time_delta) % SIZE_OF_EVENTLOOP;
 	car->in_event_loop = next_time + 1;
-	//car_to_vec(car, cbox->eventloop[next_time], cbox, 'h');
-	if (!push_que(cbox->eventloop[next_time], car, -car->id))
-		exit(clean_all(cbox, MALLOC_ERROR));
+	car_to_heap(car, cbox->eventloop[next_time], cbox);
+//	if (!push_que(cbox->eventloop[next_time], car, -car->id))
+//		exit(clean_all(cbox, MALLOC_ERROR));
 }
 
 
@@ -80,7 +82,7 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 }
 
 
-void	print_car(t_car *car)
+void	print_car(t_car *car) // todo: debug, delete it
 {
 	ft_printf("🚗P\t%d | %s | pos=%-4d, carry=%d",
 			car->id + 1,
@@ -94,7 +96,7 @@ void	print_car(t_car *car)
 	ft_printf("]\n");
 }
 
-void	print_car_without_reg(t_car *car)
+void	print_car_without_reg(t_car *car) // todo: debug, delete it
 {
     ft_printf("P\t%d | %4s | pos=%-4d, carry=%d",
               car->id + 1,
