@@ -191,7 +191,7 @@ t_oper			get_operation(char code);
 unsigned char		do_the_fight(t_cbox *cbox);
 
 int				clean_all(t_cbox *cbox, char code_exit);
-void            cw_exit(char *str, t_cbox *cbox);
+void            cw_exit(t_cbox *cbox, char *msg, char *file);
 void 			dump_arena(unsigned char *arena);
 
 int				prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS], int (*validate_permitted_types)(t_arg*));

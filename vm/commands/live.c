@@ -3,7 +3,7 @@
 //
 
 #include "corewar.h"
-//TODO доделать
+
 static int	validate_permitted_types(t_arg *args)
 {
     args[0].type = DIR;
@@ -22,7 +22,7 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 
     val = args[0].value;
     //val = get_int_from_arg(car, cbox, args[0]);
-    car->last_live = cbox->cycle_counter; //todo cycle_counter?
+    car->last_live = cbox->cycle_counter;
     cbox->arena.live_count++;
     if (validate_user(cbox, -val)) {
         cbox->arena.last_alive = -val;

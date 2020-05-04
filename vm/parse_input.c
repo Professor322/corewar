@@ -80,10 +80,13 @@ int	parse_input(char **argv, int argc, t_cbox *cbox)
             cbox->flags = parse_dump(argv[++i]); // TODO parse_flag_v
         else if (!(ft_strcmp(argv[i], A_FLAG)))
             cbox->a_flag = TRUE;
-		else if (is_champ_file(argv[i]))
+		else if (is_champ_file(argv[i])) //todo there is no such validation
 			remember_champion(cbox, i);
 		else
-			exit(INPUT_ERROR);
+        {
+		    ft_printf("Error: Invalid argument\n");
+            exit(INPUT_ERROR);
+        }
 	}
 	return dump;
 }

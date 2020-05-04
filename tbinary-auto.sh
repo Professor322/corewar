@@ -3,12 +3,6 @@ flag_v=0
 floor=0
 dump_max=200000
 tal=0
-echo "example:"
-echo "./tbinary.sh -a Asombra -b Explosive_Kitty -v 6"
-echo "    -v N      : Verbosity levels, can be added together to enable several
-                - 2 : Show cycles
-                - 4 : Show operations (Params are NOT litteral ...)
-                - 8 : Show deaths"
 echo "job:"
 while getopts 'a:b:d:f:v:' opts; do
 	case "${opts}" in
@@ -36,8 +30,8 @@ run_compare() {
   our="$our_paths -dump $dump"
 
   echo " $dump"
-  eval "$control" > control
-  eval "$our" > our
+  eval "$control" > control-auto
+  eval "$our" > our-auto
   last_line=$(tail -1 control)
   diff_res=$(eval $diff)
     if [ "${diff_res}" ]; then
@@ -71,8 +65,6 @@ done
 if [ "${last_bad}" ]; then
   echo " $last_bad"
   echo "       - diff control our  ⚠️"
-  echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $last_bad"
-else
-  echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $dump"
 fi
 
+echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $dump"

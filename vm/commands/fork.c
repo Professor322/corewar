@@ -3,7 +3,6 @@
 //
 
 #include "corewar.h"
-//TODO TO BE TESTED
 
 static int set_types(t_arg *args)
 {

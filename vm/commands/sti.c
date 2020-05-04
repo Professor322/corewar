@@ -4,8 +4,6 @@
 
 #include "corewar.h"
 
-// TODO to be tested
-
 static int validate_permitted_types(t_arg *args)
 {
 	if (args[0].type == REG

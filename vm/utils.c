@@ -72,3 +72,10 @@ void car_to_vec(t_car *car, t_vector *target, t_cbox *cbox, char type)
 			exit(clean_all(cbox, MALLOC_ERROR));
 	}
 }
+
+void cw_exit(t_cbox *cbox, char *msg, char *filename)
+{
+    ft_printf(msg, filename);
+    ft_printf("\n");
+    exit(clean_all(cbox, INPUT_ERROR));
+}

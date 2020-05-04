@@ -41,7 +41,7 @@ char				*get_str(int fd, size_t len, t_cbox *cbox)
 	return (buffer);
 }
 
-void get_code(int fd, size_t len, t_cbox *cbox, unsigned char *place)
+char *get_code(int fd, size_t len, t_cbox *cbox, unsigned char *place)
 {
 	size_t				size;
 //	unsigned char	*buffer;
@@ -49,45 +49,48 @@ void get_code(int fd, size_t len, t_cbox *cbox, unsigned char *place)
 //	if (!(buffer = (unsigned char*)malloc(sizeof(char) * len)))
 //		exit(clean_all(cbox, MALLOC_ERROR));
 	size = read(fd, place, len);
-	if (size < len) //todo: || (read(fd, buffer, len) != 0))
-		exit(clean_all(cbox, INPUT_ERROR));  // exact size, end of file
+	if (size != len) //todo: || (read(fd, buffer, len) != 0))
+		return "Error: File %s has a code size that differs from what its header says";
+    return NULL;
 //	return (buffer);
 }
 
-void	get_champion(int fd, t_cbox *cbox, t_champ *champ, int cell)
+char	*get_champion(int fd, t_cbox *cbox, t_champ *champ, int cell)
 {
 	int code_size;
 
-	//TODO ERROR TEXTS
+	//TODO add error  "Error: File aff.s is too small to be a champion"
 	if (get4byte(cbox, fd) != COREWAR_EXEC_MAGIC) // magic header
-		exit(clean_all(cbox, INPUT_ERROR));
+        return "Error: File %s has an invalid header";
 	champ->name = get_str(fd, 128, cbox);  // name
 	if (get4byte(cbox, fd) != 0)
-		exit(clean_all(cbox, INPUT_ERROR));  // null
+        return "Error: File %s has a code size that differs from what its header says";
 	code_size = get4byte(cbox, fd);  // code size
 	if (code_size > CHAMP_MAX_SIZE)
-		exit(clean_all(cbox, INPUT_ERROR));
+    {
+        ft_printf("Champion size limit is %d. ", CHAMP_MAX_SIZE);
+        return "File %s size exceed max limit";
+    }
 	champ->code_size = code_size;
 	champ->comm = get_str(fd, COMMENT_LENGTH, cbox); // comment
 	if (get4byte(cbox, fd) != 0)
-		exit(clean_all(cbox, INPUT_ERROR));  // null
+        return "Error: File %s has a code size that differs from what its header says";
 //	cbox->champs[i].code = get_code(fd, code_size, cbox); // exec code
-	get_code(fd, code_size, cbox, &(cbox->arena.arena[cell]));
+    return get_code(fd, code_size, cbox, &(cbox->arena.arena[cell]));
 //	ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
 }
-//todo "Syntax error - unexpected end of input (Perhaps you forgot to end with a newline ?)"
-//todo "Error: File vm_champs/champs/42.cor has too large a code (993 bytes > 682 bytes)"
-
 
 void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
 {
-	int fd;
+	int     fd;
+	char    *msg;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 		exit(clean_all(cbox, INPUT_ERROR));
 	else
 	{
-		get_champion(fd, cbox, champ, cell);
+		if ((msg = get_champion(fd, cbox, champ, cell)))
+		    cw_exit(cbox, msg, file);
 		close(fd);
 	}
 }
