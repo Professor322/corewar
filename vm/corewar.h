@@ -56,6 +56,7 @@
 # define DUMP_FLAG "-dump"
 # define N_FLAG "-n"
 # define V_FLAG "-v"
+# define A_FLAG "-a"
 # define V_FLAG_DEATHS 8
 # define V_FLAG_OPER 4
 # define V_FLAG_CYCLES 2
@@ -137,6 +138,7 @@ typedef struct	s_cbox
 	t_vector	*cars; // vector of pointers to all cars
 	t_vector	*rip; // vector for refresh heap in event_loop in death case
     int			flags;
+    t_boolean   a_flag;
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -189,6 +191,7 @@ t_oper			get_operation(char code);
 unsigned char		do_the_fight(t_cbox *cbox);
 
 int				clean_all(t_cbox *cbox, char code_exit);
+void            cw_exit(char *str, t_cbox *cbox);
 void 			dump_arena(unsigned char *arena);
 
 int				prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS], int (*validate_permitted_types)(t_arg*));

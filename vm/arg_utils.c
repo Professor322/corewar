@@ -196,13 +196,6 @@ void	exec_command(t_carbox *carbox,
 {
 	t_arg		args[CW_MAX_ARGS];
 
-//	ft_printf("command %d\n", carbox->op_command_code);
-
-//	if (!validate_command_byte(carbox))
-//	{
-//		carbox->car->pos = POS(carbox->car->pos + 1);
-//		return ;
-//	}
 	if (prepare_arguments(carbox, args, validate_permitted_types))
 		op_unique_commands(carbox->car, carbox->cbox, args);
 	if (carbox->car->oper.f != ft_zjmp || carbox->car->carry != 1)

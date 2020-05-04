@@ -58,6 +58,7 @@ void	get_champion(int fd, t_cbox *cbox, t_champ *champ, int cell)
 {
 	int code_size;
 
+	//TODO ERROR TEXTS
 	if (get4byte(cbox, fd) != COREWAR_EXEC_MAGIC) // magic header
 		exit(clean_all(cbox, INPUT_ERROR));
 	champ->name = get_str(fd, 128, cbox);  // name
@@ -74,6 +75,9 @@ void	get_champion(int fd, t_cbox *cbox, t_champ *champ, int cell)
 	get_code(fd, code_size, cbox, &(cbox->arena.arena[cell]));
 //	ft_memmove(&(cbox->arena.arena[cell]), cbox->champs[i].code, cbox->champs[i].code_size);
 }
+//todo "Syntax error - unexpected end of input (Perhaps you forgot to end with a newline ?)"
+//todo "Error: File vm_champs/champs/42.cor has too large a code (993 bytes > 682 bytes)"
+
 
 void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
 {
