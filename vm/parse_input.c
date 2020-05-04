@@ -26,14 +26,14 @@ void parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
 	cbox->champs[next_nbr].code_size = next_arg; // in code_size we put index of argc where to get champion file
 }
 
-int parse_dump(char *s)
+int parse_int_flag_value(char *s)
 {
-	int dump;
+	int val;
 
-	dump = ft_atoi(s);
-	if (dump < 0)
+	val = ft_atoi(s);
+	if (val < 0)
 		exit(INPUT_ERROR);
-	return dump;
+	return val;
 }
 
 unsigned char is_champ_file(char *file_name)
@@ -66,20 +66,19 @@ int	parse_input(char **argv, int argc, t_cbox *cbox)
 	int i;
 	int dump;
 
-	dump = 0;
+	dump = -1;
 	i = 0;
     cbox->flags = 0;
-    cbox->a_flag = FALSE;
 	while (++i < argc)
 	{
 		if (!(ft_strcmp(argv[i], DUMP_FLAG)))
-			dump = parse_dump(argv[++i]);
+			dump = parse_int_flag_value(argv[++i]);
 		else if (!(ft_strcmp(argv[i], N_FLAG)) && (i += 2))
 			parse_n(argv[i - 1], i, argc, cbox);
         else if (!(ft_strcmp(argv[i], V_FLAG)))
-            cbox->flags = parse_dump(argv[++i]); // TODO parse_flag_v
+            cbox->flags += parse_int_flag_value(argv[++i]);
         else if (!(ft_strcmp(argv[i], A_FLAG)))
-            cbox->a_flag = TRUE;
+            cbox->flags += A_FLAG_EXIST;
 		else if (is_champ_file(argv[i])) //todo there is no such validation
 			remember_champion(cbox, i);
 		else

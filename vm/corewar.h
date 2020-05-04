@@ -60,6 +60,7 @@
 # define V_FLAG_DEATHS 8
 # define V_FLAG_OPER 4
 # define V_FLAG_CYCLES 2
+# define A_FLAG_EXIST 16
 
 # define HEADER_SIZE    (sizeof(unsigned int) * 4 + PROG_NAME_LENGTH + COMMENT_LENGTH)
 
@@ -121,7 +122,6 @@ typedef struct	s_car
 	unsigned char 	carry;
 	t_oper	 		oper;
 	unsigned int	pos;
-//	t_boolean 		is_alive;  // ???
 	int 			regs[REG_NUMBER];
 	ssize_t			last_live;
 	int 			in_event_loop; // starts with 1, never equal 0 except dead car
@@ -131,15 +131,13 @@ typedef struct	s_cbox
 {
 	t_arena		arena;  // just arena
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
-//	int			champs_amount;
 	t_vector	*eventloop[SIZE_OF_EVENTLOOP];  // array of bin-heaps with priority
 	size_t		car_counter;
 	size_t 		cycle_counter;
 	t_vector	*dead_cars; // vector of ponters to dead(free) cars
 	t_vector	*cars; // vector of pointers to all cars
 	t_vector	*rip; // vector for refresh heap in event_loop in death case
-    int			flags;
-    t_boolean   a_flag;
+    unsigned int    flags;
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -161,10 +159,6 @@ typedef struct	s_valid_args
 	t_arg_type	*args;
 	int 		valid; //boolean
 }				t_valid_args;
-
-
-void	init_arena(int champs_count, t_cbox *cbox, char **argv);
-
 
 /*
 ** champions, champions_parse
