@@ -105,6 +105,9 @@ unsigned char check(t_cbox *cbox, t_arena *arena) {
 	{
 		// end of game
 		kill_cars(cbox);
+        arena->cycles_to_die -= CYCLE_DELTA;
+        if (cbox->flags & V_FLAG_CYCLES)
+            ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 		return 0;
 	}
 	if (((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die)
@@ -146,8 +149,6 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	while (cbox->eventloop[cycle]->len)
 	{
 		car = (t_car *) pop_que(cbox->eventloop[cycle]).data;
-		//if (car == NULL)  // todo: kill car
-		//	continue;
 //		print_bytes(cbox, car, 4);
 //		print_car(car);  // todo DEBUG
 		if (car->oper.f == NULL)
