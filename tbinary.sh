@@ -71,6 +71,8 @@ done
 if [ "${last_bad}" ]; then
   echo " $last_bad"
   echo "       - diff control our  ⚠️"
+  echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $last_bad"
+else
+  echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $dump"
 fi
 
-echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $dump"
