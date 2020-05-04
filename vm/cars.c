@@ -74,6 +74,7 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 	cbox->car_counter += 1;
 	new->regs[0] = player;
 	new->pos = pos;
+	new->last_live = -1;
 	// add to eventloop
 	reschedule_car(cbox, new, 0);
 }

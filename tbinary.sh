@@ -42,6 +42,7 @@ run_compare() {
   diff_res=$(eval $diff)
     if [ "${diff_res}" ]; then
         echo "       - diff control our  ⚠️"
+        last_bad=$dump_mem
     elif [[ $last_line == *"has won"* ]]; then
         echo "       - diff control our  🏁"
     else
@@ -56,15 +57,20 @@ while [ "$dump" -ne "$dump_mem" ]
 do
   dump_mem=$dump
   run_compare
-  if [ "${diff_res}" ]; then
-        dump_max=$dump
-    elif [[ $last_line == *"has won"* ]]; then
-        break
-    else
-        floor=$dump
+  if [ "${diff_res}" ]; then # difference exist
+      dump_max=$dump
+  elif [[ $last_line == *"has won"* ]]; then
+      break
+  else
+      floor=$dump
   fi
+
   dump=$(( (($dump_max - $floor) / 2) + $floor ))
 done
+
+if [ "${last_bad}" ]; then
+  echo " $last_bad"
+  echo "       - diff control our  ⚠️"
+fi
+
 echo "./test.sh -a $name1 -b $name2 -t 8 -v $flag_v -f $dump"
-
-
