@@ -61,6 +61,8 @@
 # define V_FLAG_OPER 4
 # define V_FLAG_CYCLES 2
 
+# define HEADER_SIZE    (sizeof(unsigned int) * 4 + PROG_NAME_LENGTH + COMMENT_LENGTH)
+
 struct s_car;
 struct s_cbox;
 
@@ -82,9 +84,9 @@ typedef struct	s_arg		// структура одного аргумента
 typedef struct	s_champ
 {
     unsigned int    magic;
-	char 			name[PROG_NAME_LENGTH + 1];
+	char 			name[PROG_NAME_LENGTH + 4];
     unsigned int 	code_size;
-	char 			comm[COMMENT_LENGTH + 1];
+	char 			comm[COMMENT_LENGTH + 4];
 }				t_champ;
 
 typedef struct	s_arena
