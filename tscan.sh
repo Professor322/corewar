@@ -5,7 +5,7 @@ path="vm_champs/champs"
 tm=1
 from=0
 source="0_tscan_timeout"
-max_dump=100000
+max_dump=999999
 tmp_out="run_out"
 tmp_run="run_tmp"
 
@@ -49,10 +49,10 @@ log_no_timeout() {
     echo $f_val >> ${tm}_tscan_done_diff_ok
     echo "\t✅"
   elif [[ $state == *"🏁"* ]]; then
-    echo $name_test >> ${tm}_tscan_done_finish
+    echo $f_val >> ${tm}_tscan_done_finish
     echo "\t🏁️"
   else
-    echo $name_test >> ${tm}_tscan_done_diff_bad
+    echo $f_val >> ${tm}_tscan_done_diff_bad
     echo "\t⚠"
   fi
 }
@@ -79,7 +79,7 @@ init() {
   done
 }
 
-#init
+#init; exit 1
 
 if [ "$from" -eq "0" ]; then
     rm ${tm}_tscan_done_finish 2> /dev/null

@@ -56,7 +56,7 @@ unsigned char	kill_cars(t_cbox *cbox)
 		if (cars[i]->in_event_loop == 0) {
             continue;
 		}
-		if (cbox->cycle_counter - cars[i]->last_live >= cbox->arena.cycles_to_die)
+		if ((int)(cbox->cycle_counter - cars[i]->last_live) >= cbox->arena.cycles_to_die)
 		{
 			// remember car to kill
 			//car_to_vec(cars[i], cbox->rip, cbox, 'h');

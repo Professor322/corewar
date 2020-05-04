@@ -43,7 +43,7 @@ void	init_arena(int champs_count, t_cbox *cbox, char **argv)
 			// copy code of champion to arena
 			init_champion(argv[cbox->champs[i].code_size], cbox, cell, &cbox->champs[i]);
 			// call it last alive
-			cbox->arena.last_alive = i;
+			cbox->arena.last_alive = i + 1;
 			// make new car for this champion
 			make_car(cbox, -(i + 1), cell);
 			cell += MEM_SIZE / champs_count;
