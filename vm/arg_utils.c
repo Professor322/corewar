@@ -98,7 +98,7 @@ int     get_fd_debug(void)
         fdd = open("debug.txt", O_WRONLY | O_CREAT, 0644);
         if (fdd == -1) {
             ft_printf("get_fd_debug - FAILED\n");
-            exit(1);
+            exit(1); // todo: unsafe exit
         }
     }
     return fdd;
@@ -132,7 +132,7 @@ int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 	ft_printf("INT TO BYTES CONVERSTION FAILED\n");
     //ft_printf("arr =%s\n");
     //ft_printf("pos =%u\nsize=%d\n");
-	exit(-42);
+	exit(-42); // todo: unsafe exit
 }
 
 int 	get_int_from_arg(t_car *car, t_cbox *cbox, t_arg arg)

@@ -58,7 +58,7 @@ char    *get_champion(int fd, t_champ *champ, unsigned char *place)
     if ((error = invalid_champion(champ)))
         return error;
     real_size = read(fd, place, champ->code_size);
-    if (real_size != champ->code_size || read(fd, error, 1))
+    if (real_size != champ->code_size || read(fd, place, 1))
         return "Error: File %s has a code size that differs from what its header says";
     return NULL;
 }

@@ -16,23 +16,25 @@
 
 int 	clean_all(t_cbox *cbox, char code_exit)
 {
-//	size_t j;
+    int cars_count;
 	int 	i;
 
+	// heaps in eventloop
 	i = -1;
 	while (++i < SIZE_OF_EVENTLOOP)
 		ft_vdel(&cbox->eventloop[i]);
-	ft_vdel(&cbox->dead_cars);
-//	j = 0;
-//	while(j < cbox->cars->len)
-//	{
-//		free(&((t_car **)cbox->cars->cont)[i]);
-//	}
-//	ft_vdel(&cbox->dead_cars);
-//	if (!code_exit)
-//		ft_printf("\n{GREEN}success\033[00m\n");
-//	else
-//		ft_printf("\n{RED}%c\033[00m\n", code_exit);
+    // vec for dead cars
+    ft_vdel(&cbox->dead_cars);
+    // vec for rip
+    ft_vdel(&cbox->rip);
+	// cars
+	i = -1;
+	cars_count = cars_len(cbox->cars);
+	while (++i < cars_count)
+	    free(((t_car **)cbox->cars->cont)[i]);
+	// vec for cars
+	ft_vdel(&cbox->cars);
+
 	return code_exit;
 }
 
