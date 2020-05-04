@@ -22,12 +22,6 @@ int 	clean_all(t_cbox *cbox, char code_exit)
 	i = -1;
 	while (++i < SIZE_OF_EVENTLOOP)
 		ft_vdel(&cbox->eventloop[i]);
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		free(cbox->champs[i].name);
-		free(cbox->champs[i].comm);
-	}
 	ft_vdel(&cbox->dead_cars);
 //	j = 0;
 //	while(j < cbox->cars->len)

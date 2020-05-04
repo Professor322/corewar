@@ -81,11 +81,10 @@ typedef struct	s_arg		// структура одного аргумента
 
 typedef struct	s_champ
 {
-//	unsigned char	id;
-	char 			*name;
-	char 			*comm;
-	unsigned int 	code_size;
-//	unsigned char 			*code;
+    unsigned int    magic;
+	char 			name[PROG_NAME_LENGTH + 1];
+    unsigned int 	code_size;
+	char 			comm[COMMENT_LENGTH + 1];
 }				t_champ;
 
 typedef struct	s_arena

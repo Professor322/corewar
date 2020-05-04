@@ -66,6 +66,7 @@
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
+# define HEADER_SIZE            (sizeof(unsigned int) + PROG_NAME_LENGTH + 1 + sizeof(unsigned int) + COMMENT_LENGTH + 1)
 
 typedef struct		header_s
 {
