@@ -75,7 +75,7 @@ unsigned char	check_cars(t_cbox *cbox)
 	somebody_alive = 0;
 	cars = (t_car **)(cbox->cars->cont);
 	i = -1; //cars_len(cbox->cars);
-	while (++i < cars_len(cbox->cars)) // max value of size_t
+	while ((size_t)++i < cars_len(cbox->cars)) // max value of size_t
 	{
 		if (cars[i]->in_event_loop == 0) {
             continue;
@@ -119,7 +119,7 @@ unsigned char check(t_cbox *cbox, t_arena *arena)
 {
     unsigned char out;
 
-	if (((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die && arena->cycles_to_die > 0)
+	if (((int)((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die) && arena->cycles_to_die > 0)
 		// not need to check
 		return 1;
 	// do check:

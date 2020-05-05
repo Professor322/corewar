@@ -5,7 +5,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -gdwarf-3")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
 
 set(CMAKE_C_STANDARD 99)
-#set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-lncurses")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
 include_directories(libft/includes/ ./)
 #include_directories(include)
 

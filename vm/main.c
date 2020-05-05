@@ -57,7 +57,7 @@ void	init_arena(t_cbox *cbox, char **argv)
 int		main(int argc, char **argv)
 {
 	t_cbox		cbox;  // corewar-box: champions, arena, eventloop
-	int 		dump;  // cycle to stop and dump arena
+	size_t 		dump;  // cycle to stop and dump arena
 
 	ft_bzero(&cbox, sizeof(t_cbox));
 	dump = parse_input(argv, argc, &cbox);

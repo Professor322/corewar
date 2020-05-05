@@ -174,7 +174,7 @@ void			init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ);
 t_car			*fetch_free_car(t_cbox *cbox);
 void			make_car(t_cbox *cbox, char player, unsigned int pos);
 void			reschedule_car(t_cbox *cbox, t_car *car, int time_delta);
-void			print_car(t_car *car); // just for debug
+void			print_car(t_car *car); //
 
 /*
 **

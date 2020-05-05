@@ -49,7 +49,7 @@ char    *invalid_champion(t_champ *champ)
 
 char    *get_champion(int fd, t_champ *champ, unsigned char *place)
 {
-    int             real_size;
+    unsigned int             real_size;
     char            *error;
 
     real_size = read(fd, champ, HEADER_SIZE);
@@ -70,7 +70,10 @@ void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
 	char    *msg;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
-		exit(clean_all(cbox, INPUT_ERROR));
+	{
+	    ft_printf("Can't read source file %s", file);
+        exit(clean_all(cbox, INPUT_ERROR));
+    }
 	else
 	{
 	    if ((msg = get_champion(fd, champ, &(cbox->arena.arena[cell]))))
