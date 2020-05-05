@@ -101,16 +101,17 @@ unsigned char	kill_cars(t_cbox *cbox)
 
 unsigned char check(t_cbox *cbox, t_arena *arena) {
 	unsigned char out;
-	if (arena->cycles_to_die <= 0)
-	{
-		// end of game
-		kill_cars(cbox);
-        arena->cycles_to_die -= CYCLE_DELTA;
-        if (cbox->flags & V_FLAG_CYCLES)
-            ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
-		return 0;
-	}
-	if (((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die)
+
+//	if (arena->cycles_to_die <= 0)
+//	{
+//		// end of game
+//		kill_cars(cbox);
+//        arena->cycles_to_die -= CYCLE_DELTA;
+//        if (cbox->flags & V_FLAG_CYCLES)
+//            ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
+//		return 0;
+//	}
+	if (((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die && arena->cycles_to_die > 0)
 		// not need to check
 		return 1;
 	// do check:
@@ -121,8 +122,8 @@ unsigned char check(t_cbox *cbox, t_arena *arena) {
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
 		arena->checks_count = 0;
-    if (cbox->flags & V_FLAG_CYCLES)
-		  ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
+        if (cbox->flags & V_FLAG_CYCLES)
+            ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 	}
 	else
 		arena->checks_count += 1;
