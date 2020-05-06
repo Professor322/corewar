@@ -60,6 +60,9 @@
 # define V_FLAG_DEATHS 8
 # define V_FLAG_OPER 4
 # define V_FLAG_CYCLES 2
+# define A_FLAG_EXIST 16
+
+# define HEADER_SIZE    (sizeof(unsigned int) * 4 + PROG_NAME_LENGTH + COMMENT_LENGTH)
 
 struct s_car;
 struct s_cbox;
@@ -81,11 +84,10 @@ typedef struct	s_arg		// структура одного аргумента
 
 typedef struct	s_champ
 {
-//	unsigned char	id;
-	char 			*name;
-	char 			*comm;
-	unsigned int 	code_size;
-//	unsigned char 			*code;
+    unsigned int    magic;
+	char 			name[PROG_NAME_LENGTH + 4];
+    unsigned int 	code_size;
+	char 			comm[COMMENT_LENGTH + 4];
 }				t_champ;
 
 typedef struct	s_arena
@@ -120,7 +122,6 @@ typedef struct	s_car
 	unsigned char 	carry;
 	t_oper	 		oper;
 	unsigned int	pos;
-//	t_boolean 		is_alive;  // ???
 	int 			regs[REG_NUMBER];
 	ssize_t			last_live;
 	int 			in_event_loop; // starts with 1, never equal 0 except dead car
@@ -130,15 +131,13 @@ typedef struct	s_cbox
 {
 	t_arena		arena;  // just arena
 	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
-//	int			champs_amount;
 	t_vector	*eventloop[SIZE_OF_EVENTLOOP];  // array of bin-heaps with priority
 	size_t		car_counter;
 	size_t 		cycle_counter;
 	t_vector	*dead_cars; // vector of ponters to dead(free) cars
 	t_vector	*cars; // vector of pointers to all cars
 	t_vector	*rip; // vector for refresh heap in event_loop in death case
-    int			flags;
-    t_boolean   a_flag;
+    unsigned int    flags;
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -161,10 +160,6 @@ typedef struct	s_valid_args
 	int 		valid; //boolean
 }				t_valid_args;
 
-
-void	init_arena(int champs_count, t_cbox *cbox, char **argv);
-
-
 /*
 ** champions, champions_parse
 */
@@ -179,7 +174,7 @@ void			init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ);
 t_car			*fetch_free_car(t_cbox *cbox);
 void			make_car(t_cbox *cbox, char player, unsigned int pos);
 void			reschedule_car(t_cbox *cbox, t_car *car, int time_delta);
-void			print_car(t_car *car); // just for debug
+void			print_car(t_car *car); //
 
 /*
 **
@@ -258,6 +253,7 @@ void            print_cur_eventloop(t_cbox *cbox);
 void			print_bytes(t_cbox *cbox, t_car *car, int bytes_amount);
 void    		print_full_eventloop(t_cbox *cbox);
 
-void			car_to_vec(t_car *car, t_vector *target, t_cbox *cbox, char type);
+void			car_to_vec(t_car *car, t_vector *vec, t_cbox *cbox);
+void			car_to_heap(t_car *car, t_vector *heap, t_cbox *cbox);
 
 #endif

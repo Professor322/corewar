@@ -12,81 +12,74 @@
 
 #include "corewar.h"
 
-void parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
-{
-	int next_nbr;
+/*
+** get number from string
+** check it can be champion number, not already in use
+** check there is exist next argument (with champion file name)
+** remember next argument index in champ[number]->code_size
+*/
 
-	if (next_arg >= argc) // no champion file in next argument
+void			parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
+{
+	int	next_nbr;
+
+	if (next_arg >= argc)
 		exit(INPUT_ERROR);
 	next_nbr = ft_atoi(s);
-	if (next_nbr > MAX_PLAYERS || next_nbr < 1) // invalid index of champion
+	if (next_nbr > MAX_PLAYERS || next_nbr < 1)
 		exit(INPUT_ERROR);
-	if (cbox->champs[next_nbr].code_size) // index already in use
+	if (cbox->champs[next_nbr].code_size)
 		exit(INPUT_ERROR);
-	cbox->champs[next_nbr].code_size = next_arg; // in code_size we put index of argc where to get champion file
+	cbox->champs[next_nbr].code_size = next_arg;
 }
 
-int parse_dump(char *s)
+int				parse_int_flag_value(char *s)
 {
-	int dump;
+	int val;
 
-	dump = ft_atoi(s);
-	if (dump < 0)
+	val = ft_atoi(s);
+	if (val < 0)
 		exit(INPUT_ERROR);
-	return dump;
+	return (val);
 }
 
-unsigned char is_champ_file(char *file_name)
-{
-	int len;
+/*
+** remember next argument index in first unoccupied champ->code_size
+*/
 
-	len = ft_strlen(file_name);
-	if (len > 4 && file_name[len - 4] == '.' && file_name[len - 3] == 'c' &&
-		file_name[len - 2] == 'o' && file_name[len - 1] == 'r')
-		return 1;
-	return 0;
-}
-
-void remember_champion(t_cbox *cbox, int ind_arg)
+void			remember_champion(t_cbox *cbox, int ind_arg)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (!cbox->champs[i].code_size)
 		{
 			cbox->champs[i].code_size = ind_arg;
-			return;
+			return ;
 		}
 	exit(INPUT_ERROR);
 }
 
-int	parse_input(char **argv, int argc, t_cbox *cbox)
+int				parse_input(char **argv, int argc, t_cbox *cbox)
 {
-	int i;
-	int dump;
+	int	i;
+	int	dump;
 
-	dump = 0;
+	dump = -1;
 	i = 0;
-    cbox->flags = 0;
-    cbox->a_flag = FALSE;
 	while (++i < argc)
 	{
 		if (!(ft_strcmp(argv[i], DUMP_FLAG)))
-			dump = parse_dump(argv[++i]);
+			dump = parse_int_flag_value(argv[++i]);
 		else if (!(ft_strcmp(argv[i], N_FLAG)) && (i += 2))
 			parse_n(argv[i - 1], i, argc, cbox);
-        else if (!(ft_strcmp(argv[i], V_FLAG)))
-            cbox->flags = parse_dump(argv[++i]); // TODO parse_flag_v
-        else if (!(ft_strcmp(argv[i], A_FLAG)))
-            cbox->a_flag = TRUE;
-		else if (is_champ_file(argv[i])) //todo there is no such validation
-			remember_champion(cbox, i);
+		else if (!(ft_strcmp(argv[i], V_FLAG)))
+			cbox->flags += parse_int_flag_value(argv[++i]);
+		else if (!(ft_strcmp(argv[i], A_FLAG)))
+			cbox->flags += A_FLAG_EXIST;
 		else
-        {
-		    ft_printf("Error: Invalid argument\n");
-            exit(INPUT_ERROR);
-        }
+			remember_champion(cbox, i);
 	}
-	return dump;
+	return (dump);
 }

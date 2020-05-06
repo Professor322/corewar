@@ -67,7 +67,7 @@ int		get_arg_size(t_car *car, t_arg_type type)
 
 void	cw_get_arg_types(t_car *car, t_cbox *cbox, t_arg *args)
 {
-	unsigned int i;
+	int i;
 	unsigned char byte;
 
 //	ft_printf("started getting arg types");
@@ -98,7 +98,7 @@ int     get_fd_debug(void)
         fdd = open("debug.txt", O_WRONLY | O_CREAT, 0644);
         if (fdd == -1) {
             ft_printf("get_fd_debug - FAILED\n");
-            exit(1);
+            exit(1); // todo: unsafe exit
         }
     }
     return fdd;
@@ -132,7 +132,7 @@ int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 	ft_printf("INT TO BYTES CONVERSTION FAILED\n");
     //ft_printf("arr =%s\n");
     //ft_printf("pos =%u\nsize=%d\n");
-	exit(-42);
+	exit(-42); // todo: unsafe exit
 }
 
 int 	get_int_from_arg(t_car *car, t_cbox *cbox, t_arg arg)
@@ -209,7 +209,7 @@ void	write_int_to_bytes(unsigned char *arr, unsigned int pos, unsigned int val)
 	arr[POS(pos++)] = val >> 8;
 	arr[POS(pos)] = val;
 }
-
+/*
 void    print_cars(t_cbox *cbox) {
     int idx;
 
@@ -218,8 +218,9 @@ void    print_cars(t_cbox *cbox) {
     while (++idx < cbox->car_counter) {
         print_car(((t_car **) cbox->cars->cont)[idx]);
     }
-}
+}*/
 
+/*
 void    print_eventloop(t_cbox *cbox) {
     int idx;
     int cycle;
@@ -239,8 +240,9 @@ void    print_eventloop(t_cbox *cbox) {
             ft_printf("\n");
         }
     }
-}
+}*/
 
+/*
 void    print_cur_eventloop(t_cbox *cbox) {
     int idx;
     int cycle;
@@ -266,8 +268,9 @@ void    print_cur_eventloop(t_cbox *cbox) {
             }
         }
     }
-}
+}*/
 
+/*
 void    print_full_eventloop(t_cbox *cbox) {
 	int idx;
 	int cycle;
@@ -292,8 +295,9 @@ void    print_full_eventloop(t_cbox *cbox) {
 			ft_printf("\n");
 		}
 	}
-}
+}*/
 
+/*
 int     countdown(int setup) {
     static int count;
     static int unset;
@@ -307,8 +311,9 @@ int     countdown(int setup) {
     }
     return 1;
 
-}
+}*/
 
+/*
 void print_bytes(t_cbox *cbox, t_car *car, int bytes_amount)
 {
 	unsigned char *arena = cbox->arena.arena;
@@ -319,3 +324,4 @@ void print_bytes(t_cbox *cbox, t_car *car, int bytes_amount)
 	}
 	ft_printf("\n");
 }
+*/

@@ -21,37 +21,61 @@ void refresh_heap(t_cbox *cbox, int index)
 		car = (t_car *) pop_que(cbox->eventloop[index]).data;
 		if (car->in_event_loop == 0)
 			continue;
-		//print_car_without_reg(car);
-		//car_to_vec(car, cbox->rip, cbox, 'h');
-		if (!push_que(cbox->rip, car, -car->id))
-			exit(clean_all(cbox, MALLOC_ERROR));
+		car_to_heap(car, cbox->rip, cbox);
 	}
 	tmp = cbox->eventloop[index];
 	cbox->eventloop[index] = cbox->rip;
 	cbox->rip = tmp;
 }
 
-void make_rip_ritual()
+/*
+** kill cars in rip:
+** - clean space of car, put it pointer to dead_car cemetery
+** - refresh heap in eventloop
+*/
+void kill_cars(t_cbox *cbox)
 {
+    t_car   *car;
+    int     i;
+    unsigned char to_refresh[SIZE_OF_EVENTLOOP];
 
+    ft_bzero(to_refresh, SIZE_OF_EVENTLOOP * sizeof(unsigned char));
+    while (cbox->rip->len)
+    {
+        car = (t_car *) pop_que(cbox->rip).data;
+        // kill it: clean space of car and put it's pointer to cemetery
+        if (cbox->flags & V_FLAG_DEATHS) {
+            ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
+                      car->id + 1,  cbox->cycle_counter - car->last_live, cbox->arena.cycles_to_die);
+        }
+        to_refresh[car->in_event_loop - 1] = 1;
+        ft_bzero(car, sizeof(t_car));
+        car_to_vec(car, cbox->dead_cars, cbox);
+    }
+    i = -1;
+    while (++i < SIZE_OF_EVENTLOOP)
+    {
+        if (to_refresh[i])
+            refresh_heap(cbox, i);
+    }
 }
 
-unsigned char	kill_cars(t_cbox *cbox)
-{
-	size_t i;
-   // size_t cars_vec;
-	t_car	**cars;
-	t_car	*car;
-	//t_arena	ar;
-	unsigned char somebody_alive;
-	unsigned char to_refresh[SIZE_OF_EVENTLOOP];
 
-	ft_bzero((void*)to_refresh, SIZE_OF_EVENTLOOP* sizeof(unsigned char));
+/*
+** check cars and remember (to rip) the ones to kill
+** return 1 if somebody alive, otherwise 0
+*/
+unsigned char	check_cars(t_cbox *cbox)
+{
+	ssize_t i;
+	t_car	**cars;
+//	t_car	*car;
+	unsigned char somebody_alive;
+
 	somebody_alive = 0;
 	cars = (t_car **)(cbox->cars->cont);
-	//ar = cbox->arena;
-	i = cars_len(cbox->cars);
-	while (--i != -1) // max value of size_t
+	i = -1; //cars_len(cbox->cars);
+	while ((size_t)++i < cars_len(cbox->cars)) // max value of size_t
 	{
 		if (cars[i]->in_event_loop == 0) {
             continue;
@@ -59,67 +83,55 @@ unsigned char	kill_cars(t_cbox *cbox)
 		if ((int)(cbox->cycle_counter - cars[i]->last_live) >= cbox->arena.cycles_to_die)
 		{
 			// remember car to kill
-			//car_to_vec(cars[i], cbox->rip, cbox, 'h');
-			if (!push_que(cbox->rip, cars[i], -cars[i]->id))
-				exit(clean_all(cbox, MALLOC_ERROR));
-			// kill it: clean space of car and put it's pointer to cemetery
-			//if (cbox->flags & V_FLAG_DEATHS) {
-			//	ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", cars[i]->id + 1,  cbox->cycle_counter - cars[i]->last_live, ar.cycles_to_die);
-			//}
-			//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
-			//to_refresh[cars[i]->in_event_loop - 1] = 1;
-			//ft_bzero(cars[i], sizeof(t_car));
-			//if (!(ft_vadd(cbox->dead_cars, &cars[i], sizeof(t_car *))))
-			//	exit(clean_all(cbox, MALLOC_ERROR));
+			car_to_heap(cars[i], cbox->rip, cbox);
 		}
 		else
             somebody_alive = 1;
 	}
-	while (cbox->rip->len)
-	{
-		car = (t_car *) pop_que(cbox->rip).data;
-		// kill it: clean space of car and put it's pointer to cemetery
-		if (cbox->flags & V_FLAG_DEATHS) {
-			ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-					car->id + 1,  cbox->cycle_counter - car->last_live, cbox->arena.cycles_to_die);
-		}
-		//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
-		to_refresh[car->in_event_loop - 1] = 1;
-		ft_bzero(car, sizeof(t_car));
-		//car_to_vec(car, cbox->dead_cars, cbox, 'v');
-		if (!(ft_vadd(cbox->dead_cars, &car, sizeof(t_car *))))
-			exit(clean_all(cbox, MALLOC_ERROR));
-	}
-	i = -1;
-	while (++i < SIZE_OF_EVENTLOOP)
-	{
-		if (to_refresh[i])
-			refresh_heap(cbox, i);
-	}
+//	while (cbox->rip->len)
+//	{
+//		car = (t_car *) pop_que(cbox->rip).data;
+//		// kill it: clean space of car and put it's pointer to cemetery
+//		if (cbox->flags & V_FLAG_DEATHS) {
+//			ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
+//					car->id + 1,  cbox->cycle_counter - car->last_live, cbox->arena.cycles_to_die);
+//		}
+//		//ft_printf("%d kill= %d\n", cbox->cycle_counter, cars[i]->id + 1);
+//		to_refresh[car->in_event_loop - 1] = 1;
+//		ft_bzero(car, sizeof(t_car));
+//		car_to_vec(car, cbox->dead_cars, cbox);
+//	}
+//	i = -1;
+//	while (++i < SIZE_OF_EVENTLOOP)
+//	{
+//		if (to_refresh[i])
+//			refresh_heap(cbox, i);
+//	}
+    kill_cars(cbox);
 	return somebody_alive;
 }
 
-unsigned char check(t_cbox *cbox, t_arena *arena) {
-	unsigned char out;
-	if (arena->cycles_to_die <= 0)
-	{
-		// end of game
-		kill_cars(cbox);
-		return 0;
-	}
-	if (((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die)
+
+/*
+** if necessary check all cars and reset constants
+*/
+unsigned char check(t_cbox *cbox, t_arena *arena)
+{
+    unsigned char out;
+
+	if (((int)((cbox->cycle_counter + 1) - arena->last_check) != arena->cycles_to_die) && arena->cycles_to_die > 0)
 		// not need to check
 		return 1;
 	// do check:
 	//dprintf(get_fd_debug(), "\t >>> Its check time");
-	out = kill_cars(cbox);
+	out = check_cars(cbox);
 	arena->last_check = cbox->cycle_counter + 1;
 	if (arena->live_count >= NBR_LIVE || arena->checks_count == MAX_CHECKS - 1)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
 		arena->checks_count = 0;
-    if (cbox->flags & V_FLAG_CYCLES)
-		  ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
+        if (cbox->flags & V_FLAG_CYCLES)
+            ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 	}
 	else
 		arena->checks_count += 1;
@@ -129,8 +141,8 @@ unsigned char check(t_cbox *cbox, t_arena *arena) {
 
 
 /*
-** For each carry in the unit at eventloop do one of two options:
-** - try to set operation if there is no one in the carry;
+** For each carry in the unit of eventloop do one of two options:
+** - try to set operation if there is no one (NULL) in the carry;
 ** - execute operation
 */
 
@@ -146,8 +158,6 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	while (cbox->eventloop[cycle]->len)
 	{
 		car = (t_car *) pop_que(cbox->eventloop[cycle]).data;
-		//if (car == NULL)  // todo: kill car
-		//	continue;
 //		print_bytes(cbox, car, 4);
 //		print_car(car);  // todo DEBUG
 		if (car->oper.f == NULL)
