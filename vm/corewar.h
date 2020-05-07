@@ -108,13 +108,17 @@ typedef enum	e_boolean
 
 typedef struct	s_oper
 {
-	char 		name[6];
+//	char 		name[6];
 	void		(*f)(struct s_car*, struct s_cbox*);
 	int 		delay;
 	t_boolean 	has_type_byte;
 	int 		t_dir_size;
 	int         args_amount;
 }				t_oper;
+
+/*
+** in_event_loop: current index in loop + 1, equal 0 only if car is dead
+*/
 
 typedef struct	s_car
 {
@@ -124,20 +128,30 @@ typedef struct	s_car
 	unsigned int	pos;
 	int 			regs[REG_NUMBER];
 	ssize_t			last_live;
-	int 			in_event_loop; // starts with 1, never equal 0 except dead car
+	int 			in_event_loop;
 }				t_car;
+
+/*
+** champions by index (count from 0), not existing are NULL ->champs
+** array of heaps with priority by car->id ->eventloop
+** counter of all ever born cars (count from 0) ->car_counter
+** counter of all cycles (count_from 0) ->cycle_counter
+** ALL existed pointers to cars live in ->cars
+** pointers to malloced cars that not in use now ->dead_cars
+** helper for handling reset heap and other things ->rip
+*/
 
 typedef struct	s_cbox
 {
-	t_arena		arena;  // just arena
-	t_champ		champs[MAX_PLAYERS];  // array of champions (not-existing are NULLs)
-	t_vector	*eventloop[SIZE_OF_EVENTLOOP];  // array of bin-heaps with priority
-	size_t		car_counter;
-	size_t 		cycle_counter;
-	t_vector	*dead_cars; // vector of ponters to dead(free) cars
-	t_vector	*cars; // vector of pointers to all cars
-	t_vector	*rip; // vector for refresh heap in event_loop in death case
-    unsigned int    flags;
+	t_arena			arena;
+	t_champ			champs[MAX_PLAYERS];
+	t_vector		*eventloop[SIZE_OF_EVENTLOOP];
+	size_t			car_counter;
+	size_t			cycle_counter;
+	t_vector		*dead_cars;
+	t_vector		*cars;
+	t_vector		*rip;
+    unsigned int	flags;
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -154,34 +168,38 @@ typedef enum	e_code_exit
 	INPUT_ERROR,
 }				t_code_exit;
 
-typedef struct	s_valid_args
-{
-	t_arg_type	*args;
-	int 		valid; //boolean
-}				t_valid_args;
+//typedef struct	s_valid_args
+//{
+//	t_arg_type	*args;
+//	int 		valid; //boolean
+//}				t_valid_args;
 
 /*
 ** champions, champions_parse
 */
+
 void			greet_champions(t_champ *champs);
 int				count_champions(t_champ *champs);
 void			greet_winner(t_cbox* cbox);
-void			init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ);
+void			init_champion(char *file, t_cbox *cbox, int cell,
+				t_champ *champ);
 
 /*
 ** cars
 */
+
 t_car			*fetch_free_car(t_cbox *cbox);
 void			make_car(t_cbox *cbox, char player, unsigned int pos);
 void			reschedule_car(t_cbox *cbox, t_car *car, int time_delta);
-void			print_car(t_car *car); //
+size_t          cars_len(t_vector *cars_vec);
 
 /*
-**
+** others
 */
-int				parse_input(char **argv, int argc, t_cbox *cbox);
 
 t_oper			get_operation(char code);
+int				parse_input(char **argv, int argc, t_cbox *cbox);
+
 
 unsigned char		do_the_fight(t_cbox *cbox);
 
@@ -248,7 +266,7 @@ void            print_cars(t_cbox *);
 void	        print_car_without_reg(t_car *car);
 void            print_eventloop(t_cbox *cbox);
 int             countdown(int setup);
-size_t          cars_len(t_vector *cars_vec);
+
 void            print_cur_eventloop(t_cbox *cbox);
 void			print_bytes(t_cbox *cbox, t_car *car, int bytes_amount);
 void    		print_full_eventloop(t_cbox *cbox);

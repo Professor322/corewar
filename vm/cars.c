@@ -22,7 +22,8 @@ size_t	cars_len(t_vector *cars_vec)
 }
 
 /*
-** fetch space for new car
+** fetch pointer to new car with malloced space
+** get it from dead cars if can otherwise create new
 */
 
 t_car	*fetch_free_car(t_cbox *cbox)
@@ -33,21 +34,17 @@ t_car	*fetch_free_car(t_cbox *cbox)
 
 	if (!cbox->dead_cars->len)
 	{
-// malloc new car if we dont have dead cars
 		if (!(new = ft_memalloc(sizeof(t_car))))
 			exit(clean_all(cbox, MALLOC_ERROR));
-// remember it in overall cars array
 		car_to_vec(new, cbox->cars, cbox);
-//		if (!(cbox->cars = ft_vadd(cbox->cars, &new, sizeof(t_car*))))
-//			exit(clean_all(cbox, MALLOC_ERROR));
 		return (new);
 	}
-	// get car from cemetery, clean up grave
 	cars = (t_car **)(cbox->dead_cars->cont);
 	dead_idx = cars_len(cbox->dead_cars);
 	new = cars[dead_idx - 1];
-	//ft_bzero(&cars[dead_idx - 1], sizeof(t_car *));
 	cbox->dead_cars->len -= sizeof(t_car *);
+	ft_bzero(cbox->dead_cars->cont + cbox->dead_cars->len - 1,
+			sizeof(t_car *));
 	return (new);
 }
 
@@ -83,7 +80,7 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 }
 
 /*
-void	print_car(t_car *car) // todo: debug, delete it
+void	print_car(t_car *car) //
 {
 	ft_printf("🚗P\t%d | %s | pos=%-4d, carry=%d",
 			car->id + 1,
@@ -97,7 +94,7 @@ void	print_car(t_car *car) // todo: debug, delete it
 	ft_printf("]\n");
 }*/
 /*
-void	print_car_without_reg(t_car *car) // todo: debug, delete it
+void	print_car_without_reg(t_car *car) //
 {
     ft_printf("P\t%d | %4s | pos=%-4d, carry=%d",
               car->id + 1,
