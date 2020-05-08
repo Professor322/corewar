@@ -2,14 +2,14 @@
 // Created by Virgil Legros on 01/03/2020.
 //
 
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 void	add_full_line(t_champ **champ_ptr, t_cvec **content, char **line, const enum e_header_token token)
 {
-	const char *back_slash = '\n';
+	const char *back_slash = "\n";
 
 	ft_chr_vec_pushback(*content, *line);
-	ft_chr_vec_pushback(*content, (char*)&back_slash);
+	ft_chr_vec_pushback(*content, (char*)back_slash);
 	if ((*content)->length > g_header[token].len)
 	{
 		ft_chr_vec_del(content);

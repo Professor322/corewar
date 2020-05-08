@@ -2,7 +2,7 @@
 // Created by Virgil Legros on 29/02/2020.
 //
 
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 void	error_message(const char *message)
 {

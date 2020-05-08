@@ -2,7 +2,7 @@
 // Created by Virgil Legros on 17/01/2020.
 //
 
-#include "assembler.h"
+#include "../includes/assembler.h"
 
 t_champ *champ_init()
 {
@@ -44,6 +44,7 @@ int 	main(int argc, char **argv)
 		parse(&champ);
 		champ->fd_output = open(name,  O_WRONLY | O_CREAT| O_TRUNC, 0644);
 		write_exec_code_in_file(champ->fd_output, champ->command_vec, champ);
+		ft_printf("Writing output to %s\n", name);
 		ft_memdel((void**)&name);
 		free_memory_and_close_fd(&champ);
 	} else

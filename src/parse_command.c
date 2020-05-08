@@ -1,7 +1,7 @@
 //
 // Created by Virgil Legros on 16/01/2020.
 //
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 t_node	*create_node(t_champ **champ_ptr, const char *label, const t_b_command *command)
 {
@@ -12,19 +12,6 @@ t_node	*create_node(t_champ **champ_ptr, const char *label, const t_b_command *c
 	new_label->name = (char*)label;
 	new_label->command = (t_b_command*)command;
 	return (new_label);
-}
-
-void	printHashTable(t_ht *ht) {
-
-	for (int i = 0; i < ht->loaded->length; ++i) {
-		t_list *temp = ht->table[ht->loaded->data[i]];
-		while (temp) {
-			t_node *val = temp->content;
-			printf("label: %s, compiled command: %d\n", val->name, val->command->cumulative_size);
-			temp = temp->next;
-		}
-	}
-
 }
 
 void	compile_command(t_champ **champ_ptr, const int cmd, char **args)

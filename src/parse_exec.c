@@ -2,7 +2,7 @@
 // Created by Virgil Legros on 02/03/2020.
 //
 
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 
 void	parse_label(t_champ **champ_ptr, char **line, char *label_end)

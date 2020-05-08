@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 void			help_error(char **to_del, int type, t_champ **champ)
 {

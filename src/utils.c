@@ -1,7 +1,7 @@
 //
 // Created by Virgil Legros on 16/01/2020.
 //
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 t_command g_commands[COMMANDS_NUM] = {
 		{"live", 4, 1, live},

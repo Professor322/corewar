@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 t_b_command		*ldi(char **command, t_champ *champ)
 {

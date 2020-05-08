@@ -2,7 +2,7 @@
 // Created by professor on 15.03.20.
 //
 
-#include "../assembler.h"
+#include "../includes/assembler.h"
 
 int 	check_starter_token(const char starter)
 {
