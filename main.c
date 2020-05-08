@@ -49,7 +49,4 @@ int 	main(int argc, char **argv)
 	} else
 		help();
 	return (0);
-
-
-
 }

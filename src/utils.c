@@ -38,7 +38,9 @@ void 	skip_spaces(char **line)
 int 	read_line(t_champ **champ_ptr)
 {
 	const int value = get_next_line((*champ_ptr)->fd_input, &((*champ_ptr)->line));
-	(*champ_ptr)->counter++;
+
+	if (value > 0)
+		(*champ_ptr)->counter++;
 	return value;
 }
 
