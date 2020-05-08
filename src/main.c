@@ -17,16 +17,14 @@ t_champ *champ_init()
 }
 
 char *output_file_name(char *argv) {
-	char *file_name_end = ft_strchr(argv, '.');
-	char *name = ft_strnew(file_name_end - argv + COR);
-	*file_name_end = '\0';
-	ft_strcpy(name, argv);
-	*file_name_end = '.';
-	name[file_name_end - argv] = '.';
-	name[file_name_end - argv + 1] = 'c';
-	name[file_name_end - argv + 2] = 'o';
-	name[file_name_end - argv + 3] = 'r';
-	return 	name;
+	int i;
+
+	i = ft_strlen(argv) - 1;
+	while (i >= 0 && argv[i] != '.')
+		--i;
+	if (i >= 0 && !ft_strncmp(argv + i, ".s", 2))
+		argv[i] = '\0';
+	return ft_strjoin(argv, ".cor");
 }
 
 
@@ -34,7 +32,6 @@ int 	main(int argc, char **argv)
 {
 	char *name;
 	t_champ *champ;
-
 	if (argc == 2)
 	{
 		if (!(champ = champ_init()) || !(name = output_file_name(argv[1])))
