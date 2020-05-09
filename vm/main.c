@@ -55,6 +55,31 @@ void	init_arena(t_cbox *cbox, char **argv)
 		}
 }
 
+void	print_help(t_cbox cbox)
+{
+	int i;
+	int	any_champion;
+
+	any_champion = 0;
+	i = -1;
+	while (++i < MAX_PLAYERS)
+		any_champion += cbox.champs[i].code_size;
+	if (any_champion)
+		return ;
+	ft_printf("Usage: ./corewar [-dump N -v N -a] "
+	"[[-n N] <champion1.cor>] ...\n");
+	ft_printf("-a\t\t: Prints output from \"aff\" (Default is to hide it)\n");
+	ft_printf("-dump N\t: Dumps memory after N cycles then exits\n");
+	ft_printf("-v N\t: Verbosity levels, "
+	"can be added together to enable several\n");
+	ft_printf("\t\t- 0 : Show only essentials\n");
+	ft_printf("\t\t- 1 : Show lives\n");
+	ft_printf("\t\t- 2 : Show cycles\n");
+	ft_printf("\t\t- 4 : Show operations (Params are NOT litteral ...)\n");
+	ft_printf("\t\t- 8 : Show deaths\n");
+	exit(SUCCESS);
+}
+
 int		main(int argc, char **argv)
 {
 	t_cbox	cbox;
@@ -62,7 +87,7 @@ int		main(int argc, char **argv)
 
 	ft_bzero(&cbox, sizeof(t_cbox));
 	dump = parse_input(argv, argc, &cbox);
-//TODO HELP TEXT
+	print_help(cbox);
 	do_all_mallocs(&cbox);
 	init_arena(&cbox, argv);
 	greet_champions(cbox.champs);
