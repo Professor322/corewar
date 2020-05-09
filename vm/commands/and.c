@@ -1,10 +1,8 @@
-//
-// Created by Dacey mormont Jon connington on 21/12/2019.
-//
-
 #include "corewar.h"
 
-static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS])
+static void	op_unique_commands(t_car *car,
+		t_cbox *cbox,
+		t_arg args[CW_MAX_ARGS])
 {
 	int val1;
 	int val2;
@@ -20,9 +18,11 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->carry = 1;
 	else
 		car->carry = 0;
-    if (cbox->flags & V_FLAG_OPER) {
-        ft_printf("P % 4lu | and %d %d r%d\n", car->id + 1, val1, val2, reg);
-    }
+	if (cbox->flags & V_FLAG_OPER)
+	{
+		ft_printf("P % 4lu | and %d %d r%d\n",
+					car->id + 1, val1, val2, reg);
+	}
 }
 
 void		ft_and(t_car *car, t_cbox *cbox)
