@@ -1,15 +1,25 @@
-//
-// Created by Dacey mormont Jon connington on 21/12/2019.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   or.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/09 14:44:14 by djon-con          #+#    #+#             */
+/*   Updated: 2020/05/09 14:44:14 by djon-con         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "corewar.h"
 
-static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS])
+static void	op_unique_commands(t_car *car,
+								t_cbox *cbox,
+								t_arg args[CW_MAX_ARGS])
 {
-	int val1;
-	int val2;
-	int value;
-	int reg;
+	int	val1;
+	int	val2;
+	int	value;
+	int	reg;
 
 	val1 = get_int_from_arg(car, cbox, args[0]);
 	val2 = get_int_from_arg(car, cbox, args[1]);
@@ -20,9 +30,11 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->carry = 1;
 	else
 		car->carry = 0;
-    if (cbox->flags & V_FLAG_OPER) {
-        ft_printf("P % 4lu | or %d %d r%d\n", car->id + 1, val1, val2, reg);
-    }
+	if (cbox->flags & V_FLAG_OPER)
+	{
+		ft_printf("P % 4lu | or %d %d r%d\n",
+				car->id + 1, val1, val2, reg);
+	}
 }
 
 void		ft_or(t_car *car, t_cbox *cbox)

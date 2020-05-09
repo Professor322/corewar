@@ -76,7 +76,10 @@ void	car_to_heap(t_car *car, t_vector *heap, t_cbox *cbox)
 
 void	cw_exit(t_cbox *cbox, char *msg, char *filename)
 {
-	ft_printf(msg, filename);
-	ft_printf("\n");
+	ft_putstr_fd("Error with champion ", 2);
+	ft_putstr_fd(filename, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 	exit(clean_all(cbox, INPUT_ERROR));
 }
