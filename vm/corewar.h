@@ -60,6 +60,7 @@
 # define V_FLAG_DEATHS 8
 # define V_FLAG_OPER 4
 # define V_FLAG_CYCLES 2
+# define V_FLAG_LIVES 1
 # define A_FLAG_EXIST 16
 
 # define HEADER_SIZE (sizeof(int) * 4 + PROG_NAME_LENGTH + COMMENT_LENGTH)

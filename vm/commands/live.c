@@ -34,10 +34,15 @@ static void	op_unique_commands(t_car *car,
 	val = args[0].value;
 	car->last_live = cbox->cycle_counter;
 	cbox->arena.live_count++;
-	if (validate_user(cbox, -val))
-		cbox->arena.last_alive = -val;
 	if (cbox->flags & V_FLAG_OPER)
 		ft_printf("P % 4lu | live %d\n", car->id + 1, val);
+	if (validate_user(cbox, -val))
+	{
+		cbox->arena.last_alive = -val;
+		if (cbox->flags & V_FLAG_LIVES)
+			ft_printf("Player %d (%s) is said to be alive\n", -val,
+					cbox->champs[-val - 1].name);
+	}
 }
 
 void		ft_live(t_car *car, t_cbox *cbox)
