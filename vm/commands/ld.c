@@ -1,10 +1,18 @@
-//
-// Created by Cricun on 11.12.2019.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ld.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/09 14:44:06 by djon-con          #+#    #+#             */
+/*   Updated: 2020/05/09 14:44:06 by djon-con         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "corewar.h"
 
-static int validate_permitted_types(t_arg *args)
+static int	validate_permitted_types(t_arg *args)
 {
 	if ((args[0].type == DIR || args[0].type == IND)
 		&&
@@ -13,11 +21,13 @@ static int validate_permitted_types(t_arg *args)
 		args[2].type == NONE
 		&&
 		args[3].type == NONE)
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
-static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS])
+static void	op_unique_commands(t_car *car,
+								t_cbox *cbox,
+								t_arg args[CW_MAX_ARGS])
 {
 	int		reg;
 	int		value;
@@ -29,12 +39,11 @@ static void	op_unique_commands(t_car *car, t_cbox *cbox, t_arg args[CW_MAX_ARGS]
 		car->carry = 1;
 	else
 		car->carry = 0;
-	//dprintf(get_fd_debug(), "P % 4lu | ld %d r%d\n", car->id + 1, value, reg);
 	if (cbox->flags & V_FLAG_OPER)
-        ft_printf("P % 4lu | ld %d r%d\n", car->id + 1, value, reg);
+		ft_printf("P % 4lu | ld %d r%d\n", car->id + 1, value, reg);
 }
 
-void ft_ld(t_car *car, t_cbox *cbox)
+void		ft_ld(t_car *car, t_cbox *cbox)
 {
 	t_carbox carbox;
 
