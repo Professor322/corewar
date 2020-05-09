@@ -8,3 +8,7 @@ a.out
 vm_champs.tar
 asm
 corewar
+__pycache__
+file_*
+control
+our
