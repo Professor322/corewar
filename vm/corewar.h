@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/15 20:16:57 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:25:09 by djon-con         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +250,7 @@ int				get_int_from_bytes(unsigned char *arr, unsigned int pos,
 				int size);
 void			write_int_to_bytes(unsigned char *arr, unsigned int pos,
 				unsigned int val);
-void			write_to_reg(t_car *car, int reg, int value);
-int				read_from_reg(t_car *car, int reg);
+
 int				get_arg_size(t_car *car, t_arg_type type);
 
 int				valid_reg_number(int value);
@@ -263,14 +262,5 @@ void			exec_command(t_carbox *carbox,
 
 void			clone_regs(const int old[REG_NUMBER], int new[REG_NUMBER]);
 void			clone_car(t_car *old, t_car *new);
-
-//void            print_cars(t_cbox *);
-//void	        print_car_without_reg(t_car *car);
-//void            print_eventloop(t_cbox *cbox);
-//int             countdown(int setup);
-//
-//void            print_cur_eventloop(t_cbox *cbox);
-//void			print_bytes(t_cbox *cbox, t_car *car, int bytes_amount);
-//void    		print_full_eventloop(t_cbox *cbox);
 
 #endif

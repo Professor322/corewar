@@ -62,7 +62,6 @@ int		main(int argc, char **argv)
 
 	ft_bzero(&cbox, sizeof(t_cbox));
 	dump = parse_input(argv, argc, &cbox);
-//TODO HELP TEXT
 	do_all_mallocs(&cbox);
 	init_arena(&cbox, argv);
 	greet_champions(cbox.champs);
