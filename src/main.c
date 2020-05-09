@@ -34,7 +34,9 @@ int 	main(int argc, char **argv)
 	t_champ *champ;
 	if (argc == 2)
 	{
-		if (!(champ = champ_init()) || !(name = output_file_name(argv[1])))
+		champ = champ_init();
+		name = output_file_name(argv[1]);
+		if (!champ || !name)
 			error_manager(MALLOC_ERROR, &champ);
 		if ((champ->fd_input = open(argv[1], O_RDONLY)) == -1)
 			error_manager(NO_FILE, &champ);
