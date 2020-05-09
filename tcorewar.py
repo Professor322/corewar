@@ -32,12 +32,12 @@ def read_last(fname):
     except:
             return None
 
-def run_experience(champ_a, champ_b, dump):
+def run_experience(champ_a, champ_b, dump, v_flag=14):
     file_out_org = "file_out_org"
     file_out_our = "file_out_our"
     file_out_diff = "file_out_diff"
-    to_run_org = create_cmd(champ_a, champ_b, dump)
-    to_run_our = create_cmd(champ_a, champ_b, dump, is_org=False)
+    to_run_org = create_cmd(champ_a, champ_b, dump, v_flag=v_flag)
+    to_run_our = create_cmd(champ_a, champ_b, dump, is_org=False, v_flag=v_flag)
 
     os.system(f"{to_run_org} > {file_out_org}")
     os.system(f"{to_run_our} > {file_out_our}")
@@ -50,7 +50,7 @@ def run_experience(champ_a, champ_b, dump):
     else:
         return 1
 
-def extensible_binary_search(champ_a, champ_b, timeout=None):
+def extensible_binary_search(champ_a, champ_b, timeout=None, v_flag=14):
     low = 0
     hgh = target_dump
     cur = hgh
@@ -61,7 +61,7 @@ def extensible_binary_search(champ_a, champ_b, timeout=None):
     while memory != cur:
         memory = cur
         start_time= time.perf_counter()
-        rlt = run_experience(champ_a, champ_b, cur)
+        rlt = run_experience(champ_a, champ_b, cur, v_flag)
         end_time = time.perf_counter()
         if timeout:
             delta = end_time - start_time
@@ -91,8 +91,8 @@ def extensible_binary_search(champ_a, champ_b, timeout=None):
             return (-2, cur, math.ceil(delta))
     return (-1, last_bad, math.ceil(delta))
 
-def experience_to_run(champ_a, champ_b, timeout=None):
-    rls = extensible_binary_search(champ_a, champ_b, timeout)
+def experience_to_run(champ_a, champ_b, timeout=None, v_flag=14):
+    rls = extensible_binary_search(champ_a, champ_b, timeout, v_flag=v_flag)
     check_cmd = f"./test.sh -a {champ_a[:-4]} -b {champ_b[:-4]} -v {v_flag} -t 8 -f {rls[1]}"
     print(check_cmd)
     if rls[0] > 0:

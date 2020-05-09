@@ -39,7 +39,7 @@ with    open("file_vs_finish", "w") as fini, \
         for champ_b in team_b:
             idx += 1
             print(f"{total_figth} - {idx:<{10}}{champ_a} vs {champ_b}")
-            rls = experience_to_run(champ_a, champ_b, timeout)
+            rls = experience_to_run(champ_a, champ_b, timeout, v_flag=15)
             to_save = f"python tbinary.py {champ_a} {champ_b}"
             if rls[0] == -2:
                 print(to_save + f" -t {rls[2]}", file=tiou)
