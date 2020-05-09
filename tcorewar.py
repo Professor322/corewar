@@ -9,12 +9,13 @@ path_our    = "./cmake-build-debug/corewar"
 path_champ  = "vm_champs/champs/"
 v_flag      = 14
 
-def create_cmd(champ_a, champ_b, dump, is_org=True):
+def create_cmd(champ_a, champ_b, dump=None, is_org=True, v_flag=14):
     cmd = f"{path_org}" if is_org else f"{path_our}"
     cmd += f" {path_champ}{champ_a} {path_champ}{champ_b}"
     if v_flag:
         cmd += f" -v {v_flag}"
-    cmd += f" -d {dump}" if is_org else f" -dump {dump}"
+    if dump != None:
+        cmd += f" -d {dump}" if is_org else f" -dump {dump}"
     return cmd
 
 #https://stackoverflow.com/questions/3346430/
