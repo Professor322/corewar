@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/15 18:36:45 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/15 19:35:49 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/09 17:54:50 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,29 @@ void			remember_champion(t_cbox *cbox, int ind_arg)
 	exit(INPUT_ERROR);
 }
 
+void			visualisation_mode(int vis, t_cbox *cbox, int *dump)
+{
+	if (!vis)
+		return ;
+	cbox->flags = VIS_FLAG_EXIST;
+	*dump = -1;
+}
+
 int				parse_input(char **argv, int argc, t_cbox *cbox)
 {
 	int	i;
 	int	dump;
+	int vis;
 
 	dump = -1;
+	vis = 0;
 	i = 0;
 	while (++i < argc)
 	{
 		if (!(ft_strcmp(argv[i], DUMP_FLAG)))
 			dump = parse_int_flag_value(argv[++i]);
+		else if (!(ft_strcmp(argv[i], VIS_FLAG)))
+			vis = 1;
 		else if (!(ft_strcmp(argv[i], N_FLAG)) && (i += 2))
 			parse_n(argv[i - 1], i, argc, cbox);
 		else if (!(ft_strcmp(argv[i], V_FLAG)))
@@ -81,5 +93,6 @@ int				parse_input(char **argv, int argc, t_cbox *cbox)
 		else
 			remember_champion(cbox, i);
 	}
+	visualisation_mode(vis, cbox, &dump);
 	return (dump);
 }

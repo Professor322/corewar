@@ -6,13 +6,11 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:39:01 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/15 20:32:54 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/09 22:23:30 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-#define HEX "0123456789abcdef"
 
 /*
 ** need to clean: heps in eventloop, dead cars, rip, every car, cars
@@ -23,6 +21,7 @@ int		clean_all(t_cbox *cbox, char code_exit)
 	int	cars_count;
 	int	i;
 
+	exit_vis();
 	i = -1;
 	while (++i < SIZE_OF_EVENTLOOP)
 		if (cbox->eventloop[i])

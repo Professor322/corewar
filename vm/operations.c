@@ -32,23 +32,23 @@ void	invalid_operation(t_car *car, t_cbox *cbox)
 t_oper	get_operation(char code)
 {
 	static t_oper	operations[] = {
-			{ft_live, 10, FALSE, 4, 1},
-			{ft_ld, 5, TRUE, 4, 2},
-			{ft_st, 5, TRUE, 4, 2},
-			{ft_add, 10, TRUE, 4, 3},
-			{ft_sub, 10, TRUE, 4, 3},
-			{ft_and, 6, TRUE, 4, 3},
-			{ft_or, 6, TRUE, 4, 3},
-			{ft_xor, 6, TRUE, 4, 3},
-			{ft_zjmp, 20, FALSE, 2, 1},
-			{ft_ldi, 25, TRUE, 2, 3},
-			{ft_sti, 25, TRUE, 2, 3},
-			{ft_fork, 800, FALSE, 2, 1},
-			{ft_lld, 10, TRUE, 4, 2},
-			{ft_lldi, 50, TRUE, 2, 3},
-			{ft_lfork, 1000, FALSE, 2, 2},
-			{ft_aff, 2, TRUE, 4, 1},
-			{invalid_operation, 1, FALSE, 4, 0}
+			{ft_live, 10, T_FALSE, 4, 1},
+			{ft_ld, 5, T_TRUE, 4, 2},
+			{ft_st, 5, T_TRUE, 4, 2},
+			{ft_add, 10, T_TRUE, 4, 3},
+			{ft_sub, 10, T_TRUE, 4, 3},
+			{ft_and, 6, T_TRUE, 4, 3},
+			{ft_or, 6, T_TRUE, 4, 3},
+			{ft_xor, 6, T_TRUE, 4, 3},
+			{ft_zjmp, 20, T_FALSE, 2, 1},
+			{ft_ldi, 25, T_TRUE, 2, 3},
+			{ft_sti, 25, T_TRUE, 2, 3},
+			{ft_fork, 800, T_FALSE, 2, 1},
+			{ft_lld, 10, T_TRUE, 4, 2},
+			{ft_lldi, 50, T_TRUE, 2, 3},
+			{ft_lfork, 1000, T_FALSE, 2, 2},
+			{ft_aff, 2, T_TRUE, 4, 1},
+			{invalid_operation, 1, T_FALSE, 4, 0}
 	};
 
 	return (code > 0 && code <= NUMBER_OF_OPERATIONS ?

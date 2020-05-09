@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   champions_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:07:38 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 15:12:39 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/09 22:54:06 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
 		ft_putstr_fd("\n", 2);
 		exit(clean_all(cbox, INPUT_ERROR));
 	}
-	else
-	{
-		if ((msg = get_champion(fd, champ, &(cbox->arena.arena[cell]))))
-			cw_exit(cbox, msg, file);
-		close(fd);
-	}
+	msg = get_champion(fd, champ, &(cbox->arena.arena[cell]));
+	close(fd);
+	if (msg)
+		cw_exit(cbox, msg, file);
 }

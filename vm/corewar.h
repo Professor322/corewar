@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 15:25:09 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/09 19:19:35 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "pque.h"
 # include "vector.h"
+# include "vis.h"
 # include "op.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -53,6 +54,9 @@
 # define LFORK_COMMAND_CODE					15
 # define AFF_COMMAND_CODE					16
 
+# define HEX "0123456789abcdef"
+# define HEADER_SIZE (sizeof(int) * 4 + PROG_NAME_LENGTH + COMMENT_LENGTH)
+
 # define DUMP_FLAG "-dump"
 # define N_FLAG "-n"
 # define V_FLAG "-v"
@@ -62,8 +66,6 @@
 # define V_FLAG_CYCLES 2
 # define V_FLAG_LIVES 1
 # define A_FLAG_EXIST 16
-
-# define HEADER_SIZE (sizeof(int) * 4 + PROG_NAME_LENGTH + COMMENT_LENGTH)
 
 struct s_car;
 struct s_cbox;
@@ -111,8 +113,8 @@ typedef struct	s_arena
 
 typedef enum	e_boolean
 {
-	FALSE,
-	TRUE
+	T_FALSE,
+	T_TRUE
 }				t_boolean;
 
 typedef struct	s_oper
@@ -180,7 +182,7 @@ typedef enum	e_code_exit
 ** champions, champions_parse
 */
 
-void			greet_champions(t_champ *champs);
+void			greet_champions(t_cbox *cbox);
 int				count_champions(t_champ *champs);
 void			greet_winner(t_cbox	*cbox);
 void			init_champion(char *file, t_cbox *cbox, int cell,
@@ -202,6 +204,7 @@ size_t			cars_len(t_vector *cars_vec);
 t_oper			get_operation(char code);
 int				parse_input(char **argv, int argc, t_cbox *cbox);
 unsigned char	do_the_fight(t_cbox *cbox);
+void			init_vis(t_cbox *cbox);
 
 /*
 ** utils
