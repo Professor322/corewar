@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arg_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/09 14:43:59 by djon-con          #+#    #+#             */
+/*   Updated: 2020/05/09 14:44:19 by djon-con         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 void	move_car(t_car *car, t_arg *args)
@@ -55,8 +67,8 @@ int		get_int_from_bytes(unsigned char *arr, unsigned int pos, int size)
 			| ((int)arr[POS(pos + 3)]);
 		return (i);
 	}
-	ft_printf("INT TO BYTES CONVERSTION FAILED\n");
-	exit(-42); // todo: unsafe exit
+	ft_putstr_fd("INT TO BYTES CONVERSTION FAILED\n", 2);
+	exit(-42);
 }
 
 int		get_int_from_arg(t_car *car, t_cbox *cbox, t_arg arg)
