@@ -46,7 +46,7 @@ static void	op_unique_commands(t_car *car,
 	{
 		ft_printf("P % 4lu | lldi %d %d r%d\n",
 				car->id + 1, val1, val2, reg);
-		ft_printf("	   | -> load from %d + %d = %d (with pc %d)\n"
+		ft_printf("       | -> load from %d + %d = %d (with pc %d)\n"
 				, val1, val2, val1 + val2, car->pos + val1 + val2);
 	}
 }
