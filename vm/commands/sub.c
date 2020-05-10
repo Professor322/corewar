@@ -19,11 +19,14 @@ static void	op_unique_commands(t_car *car,
 	int reg1;
 	int reg2;
 	int reg3;
+	int	value;
 
 	reg1 = args[0].value;
 	reg2 = args[1].value;
 	reg3 = args[2].value;
-	car->regs[REG(reg3)] = car->regs[REG(reg1)] - car->regs[REG(reg2)];
+	value = car->regs[REG(reg1)] - car->regs[REG(reg2)];
+	car_change_player(reg3, -car->regs[0], -value, cbox);
+	car->regs[REG(reg3)] = value;
 	if (car->regs[REG(reg3)] == 0)
 		car->carry = 1;
 	else

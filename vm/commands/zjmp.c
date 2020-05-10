@@ -33,7 +33,10 @@ static void	op_unique_commands(t_car *car,
 
 	val1 = get_int_from_arg(car, cbox, args[0]);
 	if (car->carry == 1)
+	{
+		drive_car(car->pos, car->pos + IND_OFFSET(val1), -car->regs[0], cbox);
 		car->pos = car->pos + IND_OFFSET(val1);
+	}
 	if (cbox->flags & V_FLAG_OPER)
 	{
 		if (car->carry == 1)

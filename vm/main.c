@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 22:54:06 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/10 21:58:23 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	init_arena(t_cbox *cbox, char **argv)
 	int				i;
 	unsigned int	cell;
 
-	if (cbox->flags & VIS_FLAG_EXIST)
-		init_vis(cbox);
 	cbox->arena.cycles_to_die = CYCLE_TO_DIE;
 	cbox->arena.last_check = 0;
 	champs_count = count_champions(cbox->champs);
@@ -51,7 +49,7 @@ void	init_arena(t_cbox *cbox, char **argv)
 		{
 			init_champion(argv[cbox->champs[i].code_size], cbox, cell,
 					&cbox->champs[i]);
-			draw_start_champion(i, cell, cbox);
+			draw_champion(i, cell, cbox);
 			cbox->arena.last_alive = i + 1;
 			make_car(cbox, -(i + 1), cell);
 			cell += MEM_SIZE / champs_count;
@@ -92,6 +90,7 @@ int		main(int argc, char **argv)
 	dump = parse_input(argv, argc, &cbox);
 	print_help(cbox);
 	do_all_mallocs(&cbox);
+	start_interface(&cbox);
 	init_arena(&cbox, argv);
 	greet_champions(&cbox);
 	if (!dump)

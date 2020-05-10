@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   arg_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 14:43:59 by djon-con          #+#    #+#             */
-/*   Updated: 2020/05/09 14:44:19 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/10 03:59:20 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	move_car(t_car *car, t_arg *args)
+void	move_car(t_car *car, t_arg *args, t_cbox *cbox)
 {
 	int i;
+	int old_pos;
 
+	old_pos = car->pos;
 	i = 0;
 	car->pos += OP_BYTE_OFFSET;
 	car->pos += car->oper.has_type_byte;
@@ -26,6 +28,7 @@ void	move_car(t_car *car, t_arg *args)
 		i++;
 	}
 	car->pos = POS(car->pos);
+	drive_car(old_pos, car->pos, -car->regs[0], cbox);
 }
 
 int		get_default_arg_size(t_arg_type type)

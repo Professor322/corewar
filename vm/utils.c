@@ -21,7 +21,7 @@ int		clean_all(t_cbox *cbox, char code_exit)
 	int	cars_count;
 	int	i;
 
-	exit_vis();
+	finish_interface(cbox);
 	i = -1;
 	while (++i < SIZE_OF_EVENTLOOP)
 		if (cbox->eventloop[i])

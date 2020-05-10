@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 14:44:06 by djon-con          #+#    #+#             */
-/*   Updated: 2020/05/09 14:44:06 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/10 21:41:50 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	op_unique_commands(t_car *old_car,
 	cbox->car_counter += 1;
 	value = get_int_from_arg(old_car, cbox, args[0]);
 	new_car->pos = new_car->pos + IND_OFFSET(value);
+	place_car(new_car->pos, -new_car->regs[0], cbox);
+	change_car_count(-new_car->regs[0], cbox, 1);
 	ft_bzero(&new_car->oper, sizeof(t_oper));
 	reschedule_car(cbox, new_car, 1);
 	if (cbox->flags & V_FLAG_OPER)

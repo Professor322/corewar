@@ -25,6 +25,7 @@ static void	op_unique_commands(t_car *car,
 	val2 = get_int_from_arg(car, cbox, args[1]);
 	value = val1 ^ val2;
 	reg = args[2].value;
+	car_change_player(reg, -car->regs[0], -value, cbox);
 	car->regs[REG(reg)] = value;
 	if (value == 0)
 		car->carry = 1;

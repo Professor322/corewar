@@ -34,7 +34,7 @@ void	exec_command(t_carbox *carbox,
 	if (prepare_arguments(carbox, args, validate_permitted_types))
 		op_unique_commands(carbox->car, carbox->cbox, args);
 	if (carbox->car->oper.f != ft_zjmp || carbox->car->carry != 1)
-		move_car(carbox->car, args);
+		move_car(carbox->car, args, carbox->cbox);
 }
 
 void	write_int_to_bytes(unsigned char *arr,

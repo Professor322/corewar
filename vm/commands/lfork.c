@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lfork.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 14:44:08 by djon-con          #+#    #+#             */
-/*   Updated: 2020/05/09 14:44:08 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/10 21:41:50 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	op_unique_commands(t_car *old_car,
 	new_car->id = cbox->car_counter;
 	cbox->car_counter += 1;
 	new_car->pos = new_car->pos + value;
+	place_car(new_car->pos, -new_car->regs[0], cbox);
+	change_car_count(-new_car->regs[0], cbox, 1);
 	ft_bzero(&new_car->oper, sizeof(t_oper));
 	reschedule_car(cbox, new_car, 1);
 	if (cbox->flags & V_FLAG_OPER)

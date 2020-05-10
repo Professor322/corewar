@@ -39,6 +39,7 @@ static void	op_unique_commands(t_car *car,
 	reg = args[2].value;
 	storable = get_int_from_bytes(cbox->arena.arena,
 						car->pos + IND_OFFSET(val1 + val2), REG_SIZE);
+	car_change_player(reg, -car->regs[0], -storable, cbox);
 	car->regs[REG(reg)] = storable;
 	if (cbox->flags & V_FLAG_OPER)
 	{

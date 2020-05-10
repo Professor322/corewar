@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 18:47:18 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 15:17:46 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/10 21:27:18 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 	cbox->car_counter += 1;
 	new->regs[0] = player;
 	new->pos = pos;
+	place_car(pos, -player, cbox);
+	change_car_count(-player, cbox, 1);
+	call_it_alive(-player, cbox);
 	new->last_live = -1;
 	reschedule_car(cbox, new, 0);
 }

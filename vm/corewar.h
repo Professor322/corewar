@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 19:19:35 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/10 03:49:35 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@
 
 struct s_car;
 struct s_cbox;
+struct s_vbox;
 
 typedef enum	e_arg_type
 {
@@ -162,6 +163,7 @@ typedef struct	s_cbox
 	t_vector		*cars;
 	t_vector		*rip;
 	unsigned int	flags;
+	struct s_vbox	vbox;
 }				t_cbox;
 
 typedef struct	s_carbox
@@ -204,7 +206,6 @@ size_t			cars_len(t_vector *cars_vec);
 t_oper			get_operation(char code);
 int				parse_input(char **argv, int argc, t_cbox *cbox);
 unsigned char	do_the_fight(t_cbox *cbox);
-void			init_vis(t_cbox *cbox);
 
 /*
 ** utils
@@ -248,7 +249,7 @@ void			ft_aff(t_car *car, t_cbox *cbox);
 int				logical_validate_permitted_types(t_arg *args);
 int				sub_add_validate_permitted_types(t_arg *args);
 
-void			move_car(t_car *car, t_arg *args);
+void			move_car(t_car *car, t_arg *args, t_cbox *cbox);
 
 int				get_int_from_bytes(unsigned char *arr, unsigned int pos,
 				int size);

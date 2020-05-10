@@ -28,9 +28,9 @@ void			parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
 	next_nbr = ft_atoi(s);
 	if (next_nbr > MAX_PLAYERS || next_nbr < 1)
 		exit(INPUT_ERROR);
-	if (cbox->champs[next_nbr].code_size)
+	if (cbox->champs[next_nbr - 1].code_size)
 		exit(INPUT_ERROR);
-	cbox->champs[next_nbr].code_size = next_arg;
+	cbox->champs[next_nbr - 1].code_size = next_arg;
 }
 
 int				parse_int_flag_value(char *s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   live.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 14:44:09 by djon-con          #+#    #+#             */
-/*   Updated: 2020/05/09 14:44:09 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:49:59 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	op_unique_commands(t_car *car,
 		if (cbox->flags & V_FLAG_LIVES)
 			ft_printf("Player %d (%s) is said to be alive\n", -val,
 					cbox->champs[-val - 1].name);
+		call_it_alive(-val, cbox);
 	}
 }
 

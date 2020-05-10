@@ -38,6 +38,7 @@ static void	op_unique_commands(t_car *car,
 	else
 		val0 = get_int_from_arg(car, cbox, args[0]);
 	reg = args[1].value;
+	car_change_player(reg, -car->regs[0], -val0, cbox);
 	car->regs[REG(reg)] = val0;
 	if (val0 == 0)
 		car->carry = 1;

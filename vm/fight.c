@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
-/*   Updated: 2020/03/15 21:50:44 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:52:35 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void			kill_cars(t_cbox *cbox)
 					cbox->arena.cycles_to_die);
 		}
 		to_refresh[car->in_event_loop - 1] = 1;
+		remove_car(car->pos, -car->regs[0], cbox);
+		change_car_count(-car->regs[0], cbox, -1);
 		ft_bzero(car, sizeof(t_car));
 		car_to_vec(car, cbox->dead_cars, cbox);
 	}
@@ -131,9 +133,8 @@ unsigned char	do_the_fight(t_cbox *cbox)
 	int		cycle;
 
 	if (cbox->flags & V_FLAG_CYCLES)
-	{
 		ft_printf("It is now cycle %d\n", cbox->cycle_counter + 1);
-	}
+	show_cycle(cbox);
 	cycle = cbox->cycle_counter % SIZE_OF_EVENTLOOP;
 	while (cbox->eventloop[cycle]->len)
 	{
