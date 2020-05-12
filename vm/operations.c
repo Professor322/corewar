@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 21:28:46 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 03:21:36 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/13 02:04:15 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 void	invalid_operation(t_car *car, t_cbox *cbox)
 {
+	drive_car(car->pos, POS(car->pos + 1), -car->regs[0], cbox);
 	car->pos = POS(car->pos + 1);
-	drive_car(car->pos, -(car->pos + 1), car->regs[0], cbox);
 }
 
 /*

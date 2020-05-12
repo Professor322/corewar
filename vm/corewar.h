@@ -198,6 +198,7 @@ t_car			*fetch_free_car(t_cbox *cbox);
 void			make_car(t_cbox *cbox, char player, unsigned int pos);
 void			reschedule_car(t_cbox *cbox, t_car *car, int time_delta);
 size_t			cars_len(t_vector *cars_vec);
+size_t			queue_len(t_vector *queue_vec);
 
 /*
 ** others

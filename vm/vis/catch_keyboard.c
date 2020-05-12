@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 16:08:14 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 16:48:00 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/13 00:17:24 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ static void catch_skip_cycles(t_vbox *vbox)
 	catch_keyboard(vbox);
 }
 
+static void	catch_change_time(t_vbox *vbox, int *time, int change, char offset)
+{
+	*time += change;
+	if (*time < 0)
+		*time = 0;
+	call_downtime(*time, offset);
+	catch_keyboard(vbox);
+}
+
 void	catch_keyboard(t_vbox *vbox)
 {
 	int key;
@@ -43,6 +52,16 @@ void	catch_keyboard(t_vbox *vbox)
 		catch_pause(vbox);
 	else if (key == 's')
 		catch_skip_cycles(vbox);
+	else if (key == KEY_LEFT)
+		catch_change_time(vbox, &vbox->downtime, -10000, DOWNTIME_H);
+	else if (key == KEY_RIGHT)
+		catch_change_time(vbox, &vbox->downtime ,10000, DOWNTIME_H);
+	else if (key == KEY_DOWN)
+		catch_change_time(vbox, &vbox->downtime_on_check, -10000, CH_DOWNTIME_H);
+	else if (key == KEY_UP)
+		catch_change_time(vbox, &vbox->downtime_on_check ,10000, CH_DOWNTIME_H);
+	else
+		usleep(vbox->downtime);
 	//todo manage other keys
 //	else if (key == ERR || key == KEY_ENTER)
 //		return ;

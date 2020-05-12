@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 21:58:23 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/10 22:08:09 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	init_arena(t_cbox *cbox, char **argv)
 
 	cbox->arena.cycles_to_die = CYCLE_TO_DIE;
 	cbox->arena.last_check = 0;
+	start_interface(cbox);
 	champs_count = count_champions(cbox->champs);
 	i = -1;
 	cell = 0;
@@ -90,7 +91,6 @@ int		main(int argc, char **argv)
 	dump = parse_input(argv, argc, &cbox);
 	print_help(cbox);
 	do_all_mallocs(&cbox);
-	start_interface(&cbox);
 	init_arena(&cbox, argv);
 	greet_champions(&cbox);
 	if (!dump)

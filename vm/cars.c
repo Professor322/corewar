@@ -22,6 +22,15 @@ size_t	cars_len(t_vector *cars_vec)
 }
 
 /*
+** length of queue
+*/
+
+size_t	queue_len(t_vector *queue_vec)
+{
+	return (queue_vec->len / sizeof(t_pque));
+}
+
+/*
 ** fetch pointer to new car with malloced space
 ** get it from dead cars if can otherwise create new
 */

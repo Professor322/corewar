@@ -6,44 +6,37 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:00:58 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 22:03:19 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/13 00:12:24 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static void	draw_commands(void)
+static void	draw_commands(t_vbox *vbox)
 {
-	move(COMM_ST_Y, STATS_ST_X);
-	printw("go to next step");
-	move(COMM_ST_Y, COMM_ST_X_2);
-	printw("<ENTER>");
-	move(COMM_ST_Y + 1, STATS_ST_X);
-	printw("run / pause");
-	move(COMM_ST_Y + 1, COMM_ST_X_2);
-	printw("<SPACE>");
-	call_it_pause(1);
-	move(COMM_ST_Y + 2, STATS_ST_X);
-	printw("skip empty cycles");
-	move(COMM_ST_Y + 2, COMM_ST_X_2);
-	printw("<S>");
-	call_it_skip_cycles(0);
+	mvprintw(COMM_ST + NEXT_H, STATS_X, "go to next step");
+	mvprintw(COMM_ST + NEXT_H, STATS_X_3, "ENTER");
+	mvprintw(COMM_ST + PAUSE_H, STATS_X, "run / pause");
+	mvprintw(COMM_ST + PAUSE_H, STATS_X_3, "SPACE");
+	call_it_pause(vbox->pause);
+	mvprintw(COMM_ST + DOWNTIME_H, STATS_X, "set downtime");
+	mvprintw(COMM_ST + DOWNTIME_H, STATS_X_3, "left / right");
+	call_downtime(vbox->downtime, DOWNTIME_H);
+	mvprintw(COMM_ST + CH_DOWNTIME_H, STATS_X, "set downtime on check");
+	mvprintw(COMM_ST + CH_DOWNTIME_H, STATS_X_3, "up / down");
+	call_downtime(vbox->downtime_on_check, CH_DOWNTIME_H);
+	mvprintw(COMM_ST + SKIP_H, STATS_X, "skip empty cycles");
+	mvprintw(COMM_ST + SKIP_H, STATS_X_3, "S");
+	call_it_skip_cycles(vbox->skip_cycles);
 }
 
-static void	draw_statistic()
+static void	draw_main(t_cbox *cbox)
 {
-	move(STATS_ST_Y + 1, STATS_ST_X);
-	printw("last alive:");
-	move(STATS_ST_Y + 2, STATS_ST_X);
-	printw("cycle:");
-	move(STATS_ST_Y + 2, STATS_ST_X_2);
-	printw("%d", 0);
-	move(STATS_ST_Y + 4, STATS_ST_X_2);
-	printw("overall");
-//	move(STATS_ST_Y + 5, STATS_ST_X);
-//	printw("undefined");
-//	move(STATS_ST_Y + 5, STATS_ST_X_2);
-//	printw("%3d", 0);
+	mvprintw(MAIN_ST + LAST_H, STATS_X, "last alive:");
+	mvprintw(MAIN_ST + CYCLE_H, STATS_X, "cycle:");
+	mvprintw(MAIN_ST + CYCLE_H, STATS_X_2, "%d", 0);
+	mvprintw(MAIN_ST + ALIVES_H, STATS_X_2, "ALIVE PROCESSES");
+	count_to_check(cbox->arena.cycles_to_die);
 }
 
 static void	draw_start_screen(t_cbox *cbox)
@@ -52,35 +45,24 @@ static void	draw_start_screen(t_cbox *cbox)
 	draw_horiz_line(0, 0, ALL_W, '#');
 	draw_horiz_line(ALL_H - 1, 0, ALL_W, '#');
 	draw_vert_line(1, 0, ALL_H - 2, '#');
-	draw_vert_line(1, STATS_ST_X - STATS_PADDING - 1, ALL_H - 2, '#');
+	draw_vert_line(1, STATS_X - STATS_PADDING - 1, ALL_H - 2, '#');
 	draw_vert_line(1, ALL_W - 1, ALL_H - 2, '#');
-	draw_horiz_line(STATS_ST_Y - STATS_PADDING - 1, STATS_ST_X, STATS_W, '#');
-	draw_horiz_line(CHAMP_ST_Y - STATS_PADDING - 1, STATS_ST_X, STATS_W, '#');
+	draw_horiz_line(LOG_BAR, STATS_X, STATS_W, '#');
+	draw_horiz_line(MAIN_BAR, STATS_X, STATS_W, '#');
+	draw_horiz_line(CHAMP_BAR, STATS_X, STATS_W, '#');
 	attroff(COLOR_PAIR(2));
 
-	draw_commands();
-	move(STATS_ST_Y - 1, STATS_ST_X);
-	printw("ARENA");
-	draw_statistic();
-	move(CHAMP_ST_Y - 1, STATS_ST_X);
-	printw("CHAMPIONS");
+	draw_commands(&cbox->vbox);
+	mvprintw(LOG_ST - 2, STATS_X, "LOG");
+	draw_main(cbox);
+//	mvprintw(CHAMP_ST - 1, STATS_X, "CHAMPIONS");
 
 	move(ARENA_ST, ARENA_ST);
 	draw_bytes((t_draw_bytes){cbox->arena.arena, 0, MEM_SIZE, ARENA_ST}, 0);
 }
 
-void	start_interface(t_cbox *cbox)
+static void		init_colors(void)
 {
-	if (!(cbox->flags & VIS_FLAG_EXIST))
-		return ;
-	initscr();
-	cbreak();
-	keypad(stdscr, TRUE);
-	nodelay(stdscr, FALSE);
-	cbox->vbox.pause = 1;
-	noecho();
-	clear();
-
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_BLACK, COLOR_WHITE);
@@ -95,6 +77,23 @@ void	start_interface(t_cbox *cbox)
 	init_pair(22, COLOR_WHITE, COLOR_YELLOW);
 	init_pair(23, COLOR_WHITE, COLOR_BLUE);
 
+}
+
+void	start_interface(t_cbox *cbox)
+{
+	if (!(cbox->flags & VIS_FLAG_EXIST))
+		return ;
+	initscr();
+	cbreak();
+	keypad(stdscr, TRUE);
+	nodelay(stdscr, FALSE);
+	cbox->vbox.pause = 1;
+	cbox->vbox.downtime = 10000;
+	cbox->vbox.downtime_on_check = 1000000;
+	noecho();
+	clear();
+
+	init_colors();
 	draw_start_screen(cbox);
 	catch_keyboard(&cbox->vbox);
 }

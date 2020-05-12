@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 02:45:56 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 20:12:57 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/13 01:56:56 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	place_car(unsigned int place, int player, t_cbox *cbox)
 		color = 20 + player - 1;
 	move_to_cell(place);
 	chgat(2, 0, color, NULL);
+	refresh();
+	mvprintw(LOG_ST, STATS_X, "place car to %d | player %d, color %d        ", place, player, color);
 	catch_keyboard(&cbox->vbox);
 }
 
@@ -38,6 +40,8 @@ void	remove_car(unsigned int place, int player, t_cbox *cbox)
 	// todo stack previous colors
 	move_to_cell(place);
 	chgat(2, 0, color, NULL);
+	refresh();
+	mvprintw(LOG_ST, STATS_X, "remove car from %d | player %d, color %d        ", place, player, color);
 	catch_keyboard(&cbox->vbox);
 }
 

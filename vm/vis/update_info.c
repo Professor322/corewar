@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 14:38:14 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 20:03:31 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/13 00:10:17 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,34 @@
 
 void	call_it_pause(int pause)
 {
-	move(COMM_ST_Y + 1, COMM_ST_X_3);
 	attron((pause ? COLOR_PAIR(3) : COLOR_PAIR(4)));
-	printw(pause ? "pause" : "run  ");
+	mvprintw(COMM_ST + PAUSE_H, STATS_X_4, pause ? "pause" : "run  ");
 	attroff((pause ? COLOR_PAIR(3) : COLOR_PAIR(4)));
+	refresh();
+}
+
+void	call_downtime(int microsec, char offset)
+{
+	mvprintw(COMM_ST + offset, STATS_X_4, "%d", microsec / 1000);
+	refresh();
 }
 
 void	call_it_skip_cycles(int skip)
 {
-	move(COMM_ST_Y + 2, COMM_ST_X_3);;
 	attron((skip ? COLOR_PAIR(4) : COLOR_PAIR(3)));
-	printw(skip ? "++" : "xx");
+	mvprintw(COMM_ST + SKIP_H, STATS_X_4, skip ? "++" : "xx");
 	attroff((skip ? COLOR_PAIR(4) : COLOR_PAIR(3)));
+	refresh();
 }
 
+void	count_to_check(int check)
+{
+	if (!check) {
+		attron(COLOR_PAIR(3));
+		mvprintw(MAIN_ST + CHECK_H, STATS_X_2, "CHECK                ");
+		attroff(COLOR_PAIR(3));
+	}
+	else
+		mvprintw(MAIN_ST + CHECK_H, STATS_X_2, "CHECK in %4d cycles", check);
+	refresh();
+}
