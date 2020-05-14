@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 14:38:14 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/13 00:10:17 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/14 23:10:18 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 
 void	call_it_pause(int pause)
 {
-	attron((pause ? COLOR_PAIR(3) : COLOR_PAIR(4)));
+	attron((pause ? COLOR_PAIR(RED) : COLOR_PAIR(GREEN)));
 	mvprintw(COMM_ST + PAUSE_H, STATS_X_4, pause ? "pause" : "run  ");
-	attroff((pause ? COLOR_PAIR(3) : COLOR_PAIR(4)));
+	attroff((pause ? COLOR_PAIR(RED) : COLOR_PAIR(GREEN)));
 	refresh();
 }
 
 void	call_downtime(int microsec, char offset)
 {
-	mvprintw(COMM_ST + offset, STATS_X_4, "%d", microsec / 1000);
+	mvprintw(COMM_ST + offset, STATS_X_4, "%-10d", microsec / 1000);
 	refresh();
 }
 
 void	call_it_skip_cycles(int skip)
 {
-	attron((skip ? COLOR_PAIR(4) : COLOR_PAIR(3)));
+	attron((skip ? COLOR_PAIR(GREEN) : COLOR_PAIR(RED)));
 	mvprintw(COMM_ST + SKIP_H, STATS_X_4, skip ? "++" : "xx");
-	attroff((skip ? COLOR_PAIR(4) : COLOR_PAIR(3)));
+	attroff((skip ? COLOR_PAIR(GREEN) : COLOR_PAIR(RED)));
 	refresh();
 }
 
 void	count_to_check(int check)
 {
 	if (!check) {
-		attron(COLOR_PAIR(3));
+		attron(COLOR_PAIR(RED));
 		mvprintw(MAIN_ST + CHECK_H, STATS_X_2, "CHECK                ");
-		attroff(COLOR_PAIR(3));
+		attroff(COLOR_PAIR(RED));
 	}
 	else
 		mvprintw(MAIN_ST + CHECK_H, STATS_X_2, "CHECK in %4d cycles", check);

@@ -35,14 +35,12 @@ void	draw_vert_line(int y, int x, int len, char symb)
 	refresh();
 }
 
-void 	draw_one_byte(unsigned char byte, int color)
+static void		draw_one_byte(unsigned char byte, int color)
 {
-	if (color)
-		attron(COLOR_PAIR(color));
+	attron(COLOR_PAIR(color));
 	addch(HEX[byte / 16]);
 	addch(HEX[byte % 16]);
-	if (color)
-		attroff(COLOR_PAIR(color));
+	attroff(COLOR_PAIR(color));
 	refresh();
 }
 
@@ -77,8 +75,6 @@ int		move_to_cell(unsigned int cell)
 	cell = cell % MEM_SIZE;
 	line = cell / ARENA_IN_BYTES + ARENA_ST;
 	raw = cell % ARENA_IN_BYTES * CELLS_PER_BYTE + ARENA_ST;
-//	if (cell && !(cell % ARENA_IN_BYTES))
-//		line--;
 	move(line, raw);
 	return (line);
 }

@@ -16,7 +16,7 @@
 # include "libft.h"
 # include "pque.h"
 # include "vector.h"
-# include "vis.h"
+# include "vm/vis/vis.h"
 # include "op.h"
 # include <fcntl.h>
 # include <stdio.h>

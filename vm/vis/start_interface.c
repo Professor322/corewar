@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:00:58 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/13 00:12:24 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/14 23:57:39 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ static void	draw_main(t_cbox *cbox)
 
 static void	draw_start_screen(t_cbox *cbox)
 {
-	attron(COLOR_PAIR(2));
+	short	color;
+
+	color = 10 * MY_BLACK + MY_WHITE;
+	attron(COLOR_PAIR(color));
 	draw_horiz_line(0, 0, ALL_W, '#');
 	draw_horiz_line(ALL_H - 1, 0, ALL_W, '#');
 	draw_vert_line(1, 0, ALL_H - 2, '#');
@@ -50,33 +53,39 @@ static void	draw_start_screen(t_cbox *cbox)
 	draw_horiz_line(LOG_BAR, STATS_X, STATS_W, '#');
 	draw_horiz_line(MAIN_BAR, STATS_X, STATS_W, '#');
 	draw_horiz_line(CHAMP_BAR, STATS_X, STATS_W, '#');
-	attroff(COLOR_PAIR(2));
+	attroff(COLOR_PAIR(color));
 
 	draw_commands(&cbox->vbox);
 	mvprintw(LOG_ST - 2, STATS_X, "LOG");
 	draw_main(cbox);
-//	mvprintw(CHAMP_ST - 1, STATS_X, "CHAMPIONS");
 
 	move(ARENA_ST, ARENA_ST);
-	draw_bytes((t_draw_bytes){cbox->arena.arena, 0, MEM_SIZE, ARENA_ST}, 0);
+	draw_bytes((t_draw_bytes){cbox->arena.arena, 0, MEM_SIZE, ARENA_ST}, 10*MY_WHITE+MY_BLACK);
 }
 
-static void		init_colors(void)
+static void		init_start_colors(void)
 {
-	start_color();
-	init_pair(1, COLOR_WHITE, COLOR_BLACK);
-	init_pair(2, COLOR_BLACK, COLOR_WHITE);
-	init_pair(3, COLOR_RED, COLOR_BLACK);
-	init_pair(4, COLOR_GREEN, COLOR_BLACK);
-	init_pair(10, COLOR_GREEN, COLOR_BLACK);
-	init_pair(11, COLOR_CYAN, COLOR_BLACK);
-	init_pair(12, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(13, COLOR_BLUE, COLOR_BLACK);
-	init_pair(20, COLOR_WHITE, COLOR_GREEN);
-	init_pair(21, COLOR_WHITE, COLOR_CYAN);
-	init_pair(22, COLOR_WHITE, COLOR_YELLOW);
-	init_pair(23, COLOR_WHITE, COLOR_BLUE);
+	short	colors[7];
+	int 	i;
+	int 	j;
 
+	start_color();
+	colors[1] = COLOR_CYAN;
+	colors[2] = COLOR_GREEN;
+	colors[3] = COLOR_BLUE;
+	colors[4] = COLOR_YELLOW;
+	colors[5] = COLOR_WHITE;
+	colors[6] = COLOR_BLACK;
+	init_pair(RED, COLOR_RED, COLOR_BLACK);
+	init_pair(GREEN, COLOR_GREEN, COLOR_BLACK);
+	i = 0;
+	while (++i < 7)
+	{
+		j = 0;
+		while (++j < 7) {
+			init_pair(10 * i + j, colors[i], colors[j]);
+		}
+	}
 }
 
 void	start_interface(t_cbox *cbox)
@@ -93,7 +102,7 @@ void	start_interface(t_cbox *cbox)
 	noecho();
 	clear();
 
-	init_colors();
+	init_start_colors();
 	draw_start_screen(cbox);
 	catch_keyboard(&cbox->vbox);
 }

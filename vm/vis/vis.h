@@ -23,6 +23,11 @@
 # define ARENA_IN_BYTES 64
 # define CELLS_PER_BYTE 3
 
+# define MY_BLACK 6
+# define MY_WHITE 5
+# define RED 3
+# define GREEN 4
+
 # define ARENA_PADDING 1
 # define ARENA_ST (1 + ARENA_PADDING)
 # define ARENA_H 64
@@ -67,15 +72,24 @@
 
 struct s_cbox;
 
+typedef struct	s_vchamp
+{
+	int				alive_cars;
+//	unsigned char	color;
+	unsigned char	place;
+}				t_vchamp;
+
 typedef struct	s_vbox
 {
 	unsigned char	pause;
 	unsigned char	skip_cycles;
 	int				downtime;
 	int 			downtime_on_check;
-	unsigned char	aliases[4];
-	int 			all_alive[4];
-	unsigned char	undefined;
+//	unsigned char	aliases[4];
+//	int 			all_alive[4];
+	unsigned char	champs_count;
+	unsigned char	colors[1024*4];
+	t_vchamp 		champs[5];
 }				t_vbox;
 
 typedef struct	s_draw_bytes
@@ -107,12 +121,14 @@ void	show_deaths(unsigned char first, struct s_cbox *cbox);
 
 void	draw_horiz_line(int y, int x, int len, char symb);
 void	draw_vert_line(int y, int x, int len, char symb);
-void 	draw_one_byte(unsigned char byte, int color);
+//void 	draw_one_byte(unsigned char byte, int color);
 void	draw_bytes(t_draw_bytes draw, int color);
 int		move_to_cell(unsigned int cell);
 
 
-
+//void	init_colors(int count, t_vbox *vbox);
+short get_text_color(int player, struct s_cbox *cbox);
+int set_new_color(int player, struct s_cbox *cbox, int index, char *mode);
 void	call_it_pause(int pause);
 void	call_downtime(int milisec, char offset);
 void	call_it_skip_cycles(int skip);
