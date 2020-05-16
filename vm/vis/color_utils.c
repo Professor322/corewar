@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:38:45 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/15 00:12:20 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 16:45:14 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 short get_text_color(int player, t_cbox *cbox)
 {
 	if (cbox)
-		return ((validate_user(cbox, player) ? player : 5) * 10 + MY_BLACK);
+		return ((short)((validate_user(cbox, player) ? player : 5) * 10 + MY_BLACK));
 	return ((short)(player * 10 + MY_BLACK));
 }
 
@@ -29,12 +29,19 @@ int set_new_color(int player, t_cbox *cbox, int index, char *mode)
 	color = cbox->vbox.colors[index];
 	text_color = color ? color / 10 : MY_WHITE;
 	back_color = color ? color % 10 : MY_BLACK;
-	if (!ft_strcmp(mode, "put_car"))
+	if (!ft_strcmp(mode, "put"))
 		color = text_color * 10 + player;
-	else if (!ft_strcmp(mode, "pop_car"))
+	else if (!ft_strcmp(mode, "pop"))
 		color = text_color * 10 + MY_BLACK;
 	else if (!ft_strcmp(mode, "bytes"))
 		color = player * 10 + back_color;
 	cbox->vbox.colors[index] = color;
+//	int x, y;
+//	getyx(stdscr, y, x);
+//	mvprintw(LOG_ST, STATS_X, "%s | place %d |player %d | mem color %d | ", mode, index, player, color);
+	if (color / 10 == color % 10)
+		color = MY_BLACK * 10 + color % 10;
+//	printw("use color %d", color);
+//	move(y, x);
 	return (color);
 }

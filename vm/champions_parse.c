@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 22:07:38 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 22:54:06 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 19:08:40 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 	{
+		finish_interface(cbox);
+		cbox->flags = 0;
 		ft_putstr_fd("Can't read source file ", 2);
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd("\n", 2);
@@ -77,5 +79,14 @@ void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
 	msg = get_champion(fd, champ, &(cbox->arena.arena[cell]));
 	close(fd);
 	if (msg)
-		cw_exit(cbox, msg, file);
+	{
+		finish_interface(cbox);
+		cbox->flags = 0;
+		ft_putstr_fd("Error with champion ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd("\n", 2);
+		exit(clean_all(cbox, INPUT_ERROR));
+	}
 }

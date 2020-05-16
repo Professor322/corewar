@@ -213,7 +213,6 @@ unsigned char	do_the_fight(t_cbox *cbox);
 */
 
 int				clean_all(t_cbox *cbox, char code_exit);
-void			cw_exit(t_cbox *cbox, char *msg, char *file);
 void			dump_arena(unsigned char *arena);
 void			car_to_vec(t_car *car, t_vector *vec, t_cbox *cbox);
 void			car_to_heap(t_car *car, t_vector *heap, t_cbox *cbox);

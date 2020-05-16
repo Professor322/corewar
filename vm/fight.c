@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/12 23:50:48 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 19:32:31 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void			kill_cars(t_cbox *cbox)
 					cbox->arena.cycles_to_die);
 		}
 		to_refresh[car->in_event_loop - 1] = 1;
-		remove_car(car->pos, -car->regs[0], cbox);
+		place_car(car->pos, -car->regs[0], cbox, "pop");
 		change_car_count(-car->regs[0], cbox, -1);
-		show_deaths(0, cbox);
+//		show_deaths(0, cbox);
 		ft_bzero(car, sizeof(t_car));
 		car_to_vec(car, cbox->dead_cars, cbox);
 	}
@@ -64,7 +64,7 @@ void			kill_cars(t_cbox *cbox)
 		if (to_refresh[i])
 			refresh_heap(cbox, i);
 	}
-	show_deaths(0, cbox);
+	show_deaths(cbox);
 }
 
 /*
@@ -93,7 +93,7 @@ unsigned char	check_cars(t_cbox *cbox)
 		else
 			somebody_alive = 1;
 	}
-	show_deaths(1, cbox);
+	show_deaths(cbox);
 	kill_cars(cbox);
 	return (somebody_alive);
 }
@@ -114,13 +114,16 @@ unsigned char	check(t_cbox *cbox, t_arena *arena)
 	if (arena->live_count >= NBR_LIVE || arena->checks_count == MAX_CHECKS - 1)
 	{
 		arena->cycles_to_die -= CYCLE_DELTA;
+		show_cycles_to_die(cbox);
 		arena->checks_count = 0;
 		if (cbox->flags & V_FLAG_CYCLES)
 			ft_printf("Cycle to die is now %d\n", arena->cycles_to_die);
 	}
 	else
 		arena->checks_count += 1;
+	show_nbr_checks(cbox);
 	arena->live_count = 0;
+	show_nbr_lives(cbox);
 	return (out);
 }
 

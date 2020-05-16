@@ -83,7 +83,7 @@ void	make_car(t_cbox *cbox, char player, unsigned int pos)
 	cbox->car_counter += 1;
 	new->regs[0] = player;
 	new->pos = pos;
-	place_car(pos, -player, cbox);
+	place_car(pos, -player, cbox, "put");
 	change_car_count(-player, cbox, 1);
 	call_it_alive(-player, cbox);
 	new->last_live = -1;

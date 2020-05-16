@@ -19,7 +19,7 @@
 ** remember next argument index in champ[number]->code_size
 */
 
-void			parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
+static void		parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
 {
 	int	next_nbr;
 
@@ -33,7 +33,7 @@ void			parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
 	cbox->champs[next_nbr - 1].code_size = next_arg;
 }
 
-int				parse_int_flag_value(char *s)
+static int			parse_int_flag_value(char *s)
 {
 	int val;
 
@@ -47,7 +47,7 @@ int				parse_int_flag_value(char *s)
 ** remember next argument index in first unoccupied champ->code_size
 */
 
-void			remember_champion(t_cbox *cbox, int ind_arg)
+static void		remember_champion(t_cbox *cbox, int ind_arg)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ void			remember_champion(t_cbox *cbox, int ind_arg)
 	exit(INPUT_ERROR);
 }
 
-void			visualisation_mode(int vis, t_cbox *cbox, int *dump)
+static void		visualisation_mode(int vis, t_cbox *cbox, int *dump)
 {
 	if (!vis)
 		return ;

@@ -38,7 +38,7 @@ static void	op_unique_commands(t_car *old_car,
 	new_car->id = cbox->car_counter;
 	cbox->car_counter += 1;
 	new_car->pos = new_car->pos + value;
-	place_car(new_car->pos, -new_car->regs[0], cbox);
+	place_car(new_car->pos, -new_car->regs[0], cbox, "put");
 	change_car_count(-new_car->regs[0], cbox, 1);
 	ft_bzero(&new_car->oper, sizeof(t_oper));
 	reschedule_car(cbox, new_car, 1);
