@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lldi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 14:44:10 by djon-con          #+#    #+#             */
-/*   Updated: 2020/05/09 14:44:10 by djon-con         ###   ########.fr       */
+/*   Updated: 2020/05/16 22:03:39 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ static void	op_unique_commands(t_car *car,
 	int		reg;
 	int		val1;
 	int		val2;
-	int 	value;
+	int		value;
 
 	val1 = get_int_from_arg(car, cbox, args[0]);
 	val2 = get_int_from_arg(car, cbox, args[1]);
 	reg = args[2].value;
-	value = get_int_from_bytes(cbox->arena.arena,car->pos + val1 + val2, REG_SIZE);
+	value = get_int_from_bytes(cbox->arena.arena, car->pos + val1 + val2,
+			REG_SIZE);
 	car_change_player(reg, -car->regs[0], -value, cbox);
 	car->regs[REG(reg)] = value;
 	if (car->regs[REG(reg)] == 0)

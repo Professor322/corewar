@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 19:32:31 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 19:37:08 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void			kill_cars(t_cbox *cbox)
 		to_refresh[car->in_event_loop - 1] = 1;
 		place_car(car->pos, -car->regs[0], cbox, "pop");
 		change_car_count(-car->regs[0], cbox, -1);
-//		show_deaths(0, cbox);
 		ft_bzero(car, sizeof(t_car));
 		car_to_vec(car, cbox->dead_cars, cbox);
 	}

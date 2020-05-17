@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:43:53 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/15 23:54:52 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 20:56:11 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	meet_winner(t_cbox *cbox)
 	refresh();
 }
 
-void	finish_interface(t_cbox *cbox)
+void		finish_interface(t_cbox *cbox)
 {
 	if (!(cbox->flags & VIS_FLAG_EXIST))
 		return ;
@@ -40,5 +40,6 @@ void	finish_interface(t_cbox *cbox)
 		meet_winner(cbox);
 		catch_keyboard(&cbox->vbox);
 	}
+	curs_set(1);
 	endwin();
 }

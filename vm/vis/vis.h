@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vis.h                                             :+:      :+:    :+:   */
+/*   vis.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 17:27:42 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 18:58:44 by mbartole         ###   ########.fr       */
+/*   Created: 2020/05/16 21:50:33 by mbartole          #+#    #+#             */
+/*   Updated: 2020/05/16 21:53:58 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@
 # define NBR_LIVE_H 7
 # define NBR_CHECKS_H 5
 
-
 struct s_cbox;
 
 typedef struct	s_vchamp
@@ -84,53 +83,59 @@ typedef struct	s_vbox
 	unsigned char	pause;
 	unsigned char	skip_cycles;
 	int				downtime;
-	int 			downtime_on_check;
+	int				downtime_on_check;
 	unsigned char	champs_count;
-	unsigned char	colors[1024*4];
-	t_vchamp 		champs[5];
+	unsigned char	colors[1024 * 4];
+	t_vchamp		champs[5];
 }				t_vbox;
 
 typedef struct	s_draw_bytes
 {
-	unsigned int start;
-	int len;
-	int cur_line;
-	int player;
+	unsigned int	start;
+	int				len;
+	int				cur_line;
+	int				player;
 }				t_draw_bytes;
 
 /*
 ** external interface
 */
 
-void	start_interface(struct s_cbox *cbox);
-void	finish_interface(struct s_cbox *cbox);
-void	color_bytes(unsigned int index, int len, int player, struct s_cbox *cbox);
-void	draw_champion(int number, unsigned int start_cell, struct s_cbox *cbox);
-void	place_car(unsigned int place, int player, struct s_cbox *cbox, char *mode);
-void	drive_car(unsigned int old_place, unsigned int new_place, int player, struct s_cbox *cbox);
-void	call_it_alive(int player, struct s_cbox *cbox);
-void	change_car_count(int player, struct s_cbox *cbox, int change);
-void	car_change_player(int reg, int old_player, int new_player, struct s_cbox *cbox);
-void	show_cycle(struct s_cbox *cbox);
-void	show_deaths(struct s_cbox *cbox);
-void	show_nbr_checks(struct s_cbox *cbox);
-void	show_nbr_lives(struct s_cbox *cbox);
-void	show_cycles_to_die(struct s_cbox *cbox);
+void			start_interface(struct s_cbox *cbox);
+void			finish_interface(struct s_cbox *cbox);
+void			color_bytes(unsigned int index, int len, int player,
+				struct s_cbox *cbox);
+void			draw_champion(int number, unsigned int start_cell,
+				struct s_cbox *cbox);
+void			place_car(unsigned int place, int player, struct s_cbox *cbox,
+				char *mode);
+void			drive_car(unsigned int old_place, unsigned int new_place,
+				int player, struct s_cbox *cbox);
+void			call_it_alive(int player, struct s_cbox *cbox);
+void			change_car_count(int player, struct s_cbox *cbox, int change);
+void			car_change_player(int reg, int old_player, int new_player,
+				struct s_cbox *cbox);
+void			show_cycle(struct s_cbox *cbox);
+void			show_deaths(struct s_cbox *cbox);
+void			show_nbr_checks(struct s_cbox *cbox);
+void			show_nbr_lives(struct s_cbox *cbox);
+void			show_cycles_to_die(struct s_cbox *cbox);
 
-void	draw_horiz_line(int y, int x, int len, char symb);
-void	draw_vert_line(int y, int x, int len, char symb);
-int		move_to_cell(unsigned int cell);
-void	clear_line(int offset);
+void			draw_horiz_line(int y, int x, int len, char symb);
+void			draw_vert_line(int y, int x, int len, char symb);
+int				move_to_cell(unsigned int cell);
+void			clear_line(int offset);
 
-short get_text_color(int player, struct s_cbox *cbox);
-int set_new_color(int player, struct s_cbox *cbox, int index, char *mode);
-void	write_to_log(int player, struct s_cbox *cbox, char *mode);
+short			get_text_color(int player, struct s_cbox *cbox);
+int				set_new_color(int player, struct s_cbox *cbox, int index,
+				char *mode);
+void			write_to_log(int player, struct s_cbox *cbox, char *mode);
 
-void	call_it_pause(int pause);
-void	call_downtime(int milisec, char offset);
-void	call_it_skip_cycles(int skip);
-void	count_to_check(int check);
+void			call_it_pause(int pause);
+void			call_downtime(int milisec, char offset);
+void			call_it_skip_cycles(int skip);
+void			count_to_check(int check);
 
-void	catch_keyboard(t_vbox *vbox);
+void			catch_keyboard(t_vbox *vbox);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 16:08:14 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 18:20:18 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 21:22:38 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static int catch_pause(t_vbox *vbox)
+static int	catch_pause(t_vbox *vbox)
 {
 	if (vbox->pause)
 	{
@@ -28,7 +28,7 @@ static int catch_pause(t_vbox *vbox)
 	return (1);
 }
 
-static int catch_skip_cycles(t_vbox *vbox)
+static int	catch_skip_cycles(t_vbox *vbox)
 {
 	vbox->skip_cycles = vbox->skip_cycles ? 0 : 1;
 	call_it_skip_cycles(vbox->skip_cycles);
@@ -44,7 +44,7 @@ static int	catch_change_time(int *time, int change, char offset)
 	return (0);
 }
 
-void	catch_keyboard(t_vbox *vbox)
+void		catch_keyboard(t_vbox *vbox)
 {
 	int key;
 

@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:55:44 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 19:38:17 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 14:19:28 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	show_cycle(t_cbox *cbox)
 	if (!cbox->cycle_counter)
 	{
 		cbox->vbox.champs[4].place = cbox->vbox.champs_count + 1;
-		mvprintw(MAIN_ST + ALIVES_H + 2 + cbox->vbox.champs_count, STATS_X, "undefined");
+		mvprintw(MAIN_ST + ALIVES_H + 2 + cbox->vbox.champs_count,
+				STATS_X, "undefined");
 		change_car_count(1000, cbox, 0);
 	}
 	to_check = ((int)((cbox->cycle_counter + 1) - cbox->arena.last_check) -
@@ -48,11 +49,10 @@ void	show_cycle(t_cbox *cbox)
 		if (!cbox->eventloop[cycle]->len)
 			return ;
 	}
-	mvprintw(MAIN_ST + CYCLE_H, STATS_X_4, "%ld", cbox->cycle_counter);
+	mvprintw(MAIN_ST + CYCLE_H, STATS_X_4, "%ld", cbox->cycle_counter + 1);
 	count_to_check(-to_check);
 	refresh();
 	usleep(cbox->vbox.downtime);
-//	catch_keyboard(&cbox->vbox);
 }
 
 void	change_car_count(int player, t_cbox *cbox, int change)
@@ -66,9 +66,9 @@ void	change_car_count(int player, t_cbox *cbox, int change)
 	place = cbox->vbox.champs[player].place;
 	cbox->vbox.champs[player].alive_cars += change;
 	color = get_text_color(player + 1, NULL);
-
 	attron(COLOR_PAIR(color));
-	mvprintw(MAIN_ST + ALIVES_H + place + 1, STATS_X_2, "%-10d", cbox->vbox.champs[player].alive_cars);
+	mvprintw(MAIN_ST + ALIVES_H + place + 1, STATS_X_2, "%-10d",
+			cbox->vbox.champs[player].alive_cars);
 	attroff(COLOR_PAIR(color));
 	refresh();
 }
@@ -89,20 +89,39 @@ void	show_deaths(t_cbox *cbox)
 
 	if (!(cbox->flags & VIS_FLAG_EXIST))
 		return ;
+
+//	clear_line(LOG_ST);
+//	move(LOG_ST, STATS_X);
+//	int i, sum, sum_vis;
+//	i = -1; sum = 0;
+//	while (++i < (int)cars_len(cbox->cars))
+//		if (((t_car **)cbox->cars->cont)[i]) {
+//			sum++;
+//			printw("| %d |", )
+//		}
+//	i = -1; sum_vis = 0;
+//	while (++i < 5)
+//		sum_vis += cbox->vbox.champs[i].alive_cars;
+//
+//	if (sum != sum_vis)
+//		attron(COLOR_PAIR(RED_W));
+//	mvprintw(LOG_ST, STATS_X, "| cars on field %d | real cars %d", sum_vis, sum);
+//	attroff(COLOR_PAIR(RED));
+
 	dead = queue_len(cbox->rip);
 	attron(COLOR_PAIR(RED));
 	draw_horiz_line(MAIN_ST + CHECK_H, STATS_X, STATS_W, '#');
 	draw_horiz_line(MAIN_ST + CHECK_H + 4, STATS_X, STATS_W, '#');
 	attroff(COLOR_PAIR(RED));
-	mvprintw(MAIN_ST + CHECK_H + 2, STATS_X, "dying processes: %d", dead);
+	mvprintw(MAIN_ST + CHECK_H + 2, STATS_X, "dying processes: %-10d", dead);
 	refresh();
 	usleep(cbox->vbox.downtime_on_check);
 	catch_keyboard(&cbox->vbox);
-	clear_line(MAIN_ST + CHECK_H);
-	clear_line(MAIN_ST + CHECK_H + 2);
-	clear_line(MAIN_ST + CHECK_H + 4);
-//	mvprintw(MAIN_ST + CHECK_H, STATS_X, "%*s", STATS_W, "");
-//	mvprintw(MAIN_ST + CHECK_H + 2, STATS_X, "%*s", STATS_W, "");
-//	mvprintw(MAIN_ST + CHECK_H + 4, STATS_X, "%*s", STATS_W, "");
-	refresh();
+	if (! dead)
+	{
+		clear_line(MAIN_ST + CHECK_H);
+		clear_line(MAIN_ST + CHECK_H + 2);
+		clear_line(MAIN_ST + CHECK_H + 4);
+		refresh();
+	}
 }

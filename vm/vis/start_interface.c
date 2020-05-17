@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:00:58 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 20:09:16 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 22:00:53 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ static void	draw_start_screen(t_cbox *cbox)
 	color_bytes(0, MEM_SIZE, 1000, cbox);
 }
 
-static void		init_start_colors(void)
+static void	init_start_colors(void)
 {
 	short	colors[7];
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 
 	start_color();
 	colors[1] = COLOR_CYAN;
@@ -88,13 +88,12 @@ static void		init_start_colors(void)
 	while (++i < 7)
 	{
 		j = 0;
-		while (++j < 7) {
+		while (++j < 7)
 			init_pair(10 * i + j, colors[i], colors[j]);
-		}
 	}
 }
 
-void	start_interface(t_cbox *cbox)
+void		start_interface(t_cbox *cbox)
 {
 	if (!(cbox->flags & VIS_FLAG_EXIST))
 		return ;

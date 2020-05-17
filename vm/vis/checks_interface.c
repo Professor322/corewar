@@ -47,3 +47,24 @@ void	show_nbr_checks(t_cbox *cbox)
 			 MAX_CHECKS - cbox->arena.checks_count);
 	refresh();
 }
+
+void	place_car(unsigned int place, int player, t_cbox *cbox, char *mode)
+{
+	int 			color;
+
+	if (!(cbox->flags & VIS_FLAG_EXIST))
+		return ;
+	color = set_new_color(player, cbox, place, mode);
+	move_to_cell(place);
+	chgat(2, 0, color, NULL);
+	refresh();
+	catch_keyboard(&cbox->vbox);
+}
+
+void	drive_car(unsigned int old_place, unsigned int new_place, int player, t_cbox *cbox)
+{
+	if (!(cbox->flags & VIS_FLAG_EXIST))
+		return ;
+	place_car(old_place, player, cbox, "pop");
+	place_car(new_place, player, cbox, "put");
+}

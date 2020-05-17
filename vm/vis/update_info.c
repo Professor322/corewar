@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 14:38:14 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 19:46:53 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/16 19:47:52 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ void	call_it_skip_cycles(int skip)
 
 void	count_to_check(int check)
 {
-//	if (!check) {
-//		mvprintw(MAIN_ST + CHECK_H, STATS_X, "%*s", STATS_W, "");
-//		attron(COLOR_PAIR(RED_W));
-//		mvprintw(MAIN_ST + CHECK_H, STATS_X_2, "CHECK");
-//		attroff(COLOR_PAIR(RED_W));
-//	}
-//	if (check > 0)
 	mvprintw(MAIN_ST + CHECK_H, STATS_X_2, "CHECK in %4d cycles", check);
 	refresh();
 }
