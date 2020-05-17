@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:55:44 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/17 20:02:46 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 20:47:29 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	change_car_count(int player, t_cbox *cbox, int change)
 			cbox->vbox.champs[player].alive_cars);
 	attroff(COLOR_PAIR(color));
 	refresh();
-	write_to_log(player + 1, cbox, "new");
 }
 
 void	car_change_player(int reg, int old_player, int new_player, t_cbox *cbox)

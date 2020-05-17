@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 14:38:14 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/17 18:32:06 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 19:26:45 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,6 @@ void	write_to_log(int player, t_cbox *cbox, char *mode)
 			printw("#%d called alive          ", player);
 		else
 			printw("undef called alive        ");
-	}
-	else if (!strcmp(mode, "new"))
-	{
-		if (player < 5)
-			printw("#%d set new car           ", player);
-		else
-			printw("undef set new car         ");
 	}
 	attroff(COLOR_PAIR(color));
 	refresh();
