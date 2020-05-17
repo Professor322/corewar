@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/17 20:29:07 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 21:23:57 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void		print_help(t_cbox cbox)
 		any_champion += cbox.champs[i].code_size;
 	if (any_champion)
 		return ;
-	ft_printf("Usage: ./corewar [-dump N -v N -a] "
+	ft_printf("Usage: ./corewar [-dump N -v N -a | -vis] "
 	"[[-n N] <champion1.cor>] ...\n");
-	ft_printf("-a\t\t: Prints output from \"aff\" (Default is to hide it)\n");
+	ft_printf("-a\t: Prints output from \"aff\" (Default is to hide it)\n");
 	ft_printf("-dump N\t: Dumps memory after N cycles then exits\n");
 	ft_printf("-v N\t: Verbosity levels, "
 	"can be added together to enable several\n");
@@ -50,6 +50,7 @@ static void		print_help(t_cbox cbox)
 	ft_printf("\t\t- 2 : Show cycles\n");
 	ft_printf("\t\t- 4 : Show operations (Params are NOT litteral ...)\n");
 	ft_printf("\t\t- 8 : Show deaths\n");
+	ft_printf("-vis\t: Ncurses output mode\n");
 	exit(SUCCESS);
 }
 

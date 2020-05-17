@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/15 18:36:45 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/09 17:54:50 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 21:33:35 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,20 @@ static void		parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
 	cbox->champs[next_nbr - 1].code_size = next_arg;
 }
 
-static int		parse_int_flag_value(char *s)
+static int		parse_int_flag_value(int *i, char **argv, int argc, char v_fl)
 {
-	int val;
+	int		val;
+	char	*s;
 
+	(*i)++;
+	if (*i == argc)
+		return (0);
+	s = argv[*i];
 	val = ft_atoi(s);
 	if (val < 0)
 		exit(INPUT_ERROR);
+	if (v_fl && val > 15)
+		return (15);
 	return (val);
 }
 
@@ -81,13 +88,13 @@ int				parse_input(char **argv, int argc, t_cbox *cbox)
 	while (++i < argc)
 	{
 		if (!(ft_strcmp(argv[i], DUMP_FLAG)))
-			dump = parse_int_flag_value(argv[++i]);
+			dump = parse_int_flag_value(&i, argv, argc, 0);
 		else if (!(ft_strcmp(argv[i], VIS_FLAG)))
 			vis = 1;
 		else if (!(ft_strcmp(argv[i], N_FLAG)) && (i += 2))
 			parse_n(argv[i - 1], i, argc, cbox);
 		else if (!(ft_strcmp(argv[i], V_FLAG)))
-			cbox->flags += parse_int_flag_value(argv[++i]);
+			cbox->flags += parse_int_flag_value(&i, argv, argc, 1);
 		else if (!(ft_strcmp(argv[i], A_FLAG)))
 			cbox->flags += A_FLAG_EXIST;
 		else
