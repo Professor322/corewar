@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 18:47:18 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 21:27:18 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 18:27:07 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,6 @@
 size_t	cars_len(t_vector *cars_vec)
 {
 	return (cars_vec->len / sizeof(t_car *));
-}
-
-/*
-** length of queue
-*/
-
-size_t	queue_len(t_vector *queue_vec)
-{
-	return (queue_vec->len / sizeof(t_pque));
 }
 
 /*
@@ -52,8 +43,7 @@ t_car	*fetch_free_car(t_cbox *cbox)
 	dead_idx = cars_len(cbox->dead_cars);
 	new = cars[dead_idx - 1];
 	cbox->dead_cars->len -= sizeof(t_car *);
-	ft_bzero(cbox->dead_cars->cont + cbox->dead_cars->len - 1,
-			sizeof(t_car *));
+	ft_bzero(cbox->dead_cars->cont + cbox->dead_cars->len, sizeof(t_car *));
 	return (new);
 }
 
@@ -70,22 +60,14 @@ void	reschedule_car(t_cbox *cbox, t_car *car, int time_delta)
 	car_to_heap(car, cbox->eventloop[next_time], cbox);
 }
 
-/*
-** make new empty car at the start of the game
-*/
-
-void	make_car(t_cbox *cbox, char player, unsigned int pos)
+void	car_to_vec(t_car *car, t_vector *vec, t_cbox *cbox)
 {
-	t_car	*new;
+	if (!(ft_vadd(vec, &car, sizeof(t_car *))))
+		exit(clean_all(cbox, MALLOC_ERROR));
+}
 
-	new = fetch_free_car(cbox);
-	new->id = cbox->car_counter;
-	cbox->car_counter += 1;
-	new->regs[0] = player;
-	new->pos = pos;
-	place_car(pos, -player, cbox, "put");
-	change_car_count(-player, cbox, 1);
-	call_it_alive(-player, cbox);
-	new->last_live = -1;
-	reschedule_car(cbox, new, 0);
+void	car_to_heap(t_car *car, t_vector *heap, t_cbox *cbox)
+{
+	if (!(push_que(heap, car, -car->id)))
+		exit(clean_all(cbox, MALLOC_ERROR));
 }

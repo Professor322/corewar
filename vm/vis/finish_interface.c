@@ -41,5 +41,7 @@ void		finish_interface(t_cbox *cbox)
 		catch_keyboard(&cbox->vbox);
 	}
 	curs_set(1);
+	clear();
+	refresh();
 	endwin();
 }

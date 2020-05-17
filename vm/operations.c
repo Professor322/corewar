@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 21:28:46 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/13 02:04:15 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 19:35:36 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** and put it to the next unit at eventloop
 */
 
-void	invalid_operation(t_car *car, t_cbox *cbox)
+static void	invalid_operation(t_car *car, t_cbox *cbox)
 {
 	drive_car(car->pos, POS(car->pos + 1), -car->regs[0], cbox);
 	car->pos = POS(car->pos + 1);
@@ -29,9 +29,9 @@ void	invalid_operation(t_car *car, t_cbox *cbox)
 ** otherwise move it just to the next unit
 */
 
-t_oper	get_operation(char code)
+t_oper		get_operation(char code)
 {
-	static t_oper	operations[] = {
+	static t_oper	opers[] = {
 			{ft_live, 10, T_FALSE, 4, 1},
 			{ft_ld, 5, T_TRUE, 4, 2},
 			{ft_st, 5, T_TRUE, 4, 2},
@@ -51,6 +51,5 @@ t_oper	get_operation(char code)
 			{invalid_operation, 1, T_FALSE, 4, 0}
 	};
 
-	return (code > 0 && code <= NUMBER_OF_OPERATIONS ?
-	operations[code - 1] : operations[NUMBER_OF_OPERATIONS]);
+	return (code > 0 && code <= OPERS_NUM ? opers[code - 1] : opers[OPERS_NUM]);
 }

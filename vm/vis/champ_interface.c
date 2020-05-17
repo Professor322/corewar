@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 02:45:56 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 21:58:10 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 20:20:20 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,10 @@ void			color_bytes(unsigned int index, int len, int plyr, t_cbox *cbox)
 	catch_keyboard(&cbox->vbox);
 }
 
-void			draw_champion(int number, unsigned int start_cell, t_cbox *cbox)
+static void		greet_champion(unsigned char place, int number, t_cbox *cbox)
 {
 	short			color;
-	unsigned char	place;
 
-	if (!(cbox->flags & VIS_FLAG_EXIST))
-		return ;
-	place = cbox->vbox.champs_count++;
-	cbox->vbox.champs[number].place = place + 1;
-	color_bytes(start_cell, cbox->champs[number].code_size, number + 1, cbox);
-	mvprintw(MAIN_ST + ALIVES_H + 2 + place, STATS_X, "player #%d", number + 1);
-	change_car_count(number + 1, cbox, 0);
 	mvprintw(CHAMP_ST + place * CHAMP_H + 1, STATS_X, "Player");
 	mvprintw(CHAMP_ST + place * CHAMP_H + 2, STATS_X, "name:");
 	mvprintw(CHAMP_ST + place * CHAMP_H + 3, STATS_X, "slogan:");
@@ -90,4 +82,18 @@ void			draw_champion(int number, unsigned int start_cell, t_cbox *cbox)
 		printw("...");
 	attroff(COLOR_PAIR(color));
 	refresh();
+}
+
+void			draw_champion(int number, unsigned int start_cell, t_cbox *cbox)
+{
+	unsigned char	place;
+
+	if (!(cbox->flags & VIS_FLAG_EXIST))
+		return ;
+	place = cbox->vbox.champs_count++;
+	cbox->vbox.champs[number].place = place + 1;
+	color_bytes(start_cell, cbox->champs[number].code_size, number + 1, cbox);
+	mvprintw(MAIN_ST + ALIVES_H + 2 + place, STATS_X, "player #%d", number + 1);
+	change_car_count(number + 1, cbox, 0);
+	greet_champion(place, number, cbox);
 }

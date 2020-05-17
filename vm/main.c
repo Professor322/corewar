@@ -6,13 +6,13 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:07 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 22:08:09 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 20:29:07 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	do_all_mallocs(t_cbox *cbox)
+static void		do_all_mallocs(t_cbox *cbox)
 {
 	int i;
 
@@ -28,36 +28,7 @@ void	do_all_mallocs(t_cbox *cbox)
 		exit(clean_all(cbox, MALLOC_ERROR));
 }
 
-/*
-** for all champions: copy code to arena,
-** call it last alive, give it new empty car
-*/
-
-void	init_arena(t_cbox *cbox, char **argv)
-{
-	int				champs_count;
-	int				i;
-	unsigned int	cell;
-
-	cbox->arena.cycles_to_die = CYCLE_TO_DIE;
-	cbox->arena.last_check = 0;
-	start_interface(cbox);
-	champs_count = count_champions(cbox->champs);
-	i = -1;
-	cell = 0;
-	while (++i < MAX_PLAYERS)
-		if (cbox->champs[i].code_size != 0)
-		{
-			init_champion(argv[cbox->champs[i].code_size], cbox, cell,
-					&cbox->champs[i]);
-			draw_champion(i, cell, cbox);
-			cbox->arena.last_alive = i + 1;
-			make_car(cbox, -(i + 1), cell);
-			cell += MEM_SIZE / champs_count;
-		}
-}
-
-void	print_help(t_cbox cbox)
+static void		print_help(t_cbox cbox)
 {
 	int i;
 	int	any_champion;
@@ -82,7 +53,34 @@ void	print_help(t_cbox cbox)
 	exit(SUCCESS);
 }
 
-int		main(int argc, char **argv)
+static void		dump_arena(unsigned char *arena)
+{
+	int	i;
+
+	i = -1;
+	while (++i < MEM_SIZE)
+	{
+		if (!i)
+			ft_printf("0x%#.4x : ", i);
+		else if (!(i % 64))
+			ft_printf("\n%#.4x : ", i);
+		ft_printf("%c%c ", HEX[arena[i] / 16], HEX[arena[i] % 16]);
+	}
+	ft_printf("\n");
+}
+
+static void		greet_winner(t_cbox *cbox)
+{
+	t_champ champ;
+
+	champ = cbox->champs[cbox->arena.last_alive - 1];
+	if (cbox->flags & VIS_FLAG_EXIST)
+		return ;
+	ft_printf("Contestant %d, \"%s\", has won !\n",
+			cbox->arena.last_alive, champ.name);
+}
+
+int				main(int argc, char **argv)
 {
 	t_cbox	cbox;
 	size_t	dump;
@@ -92,7 +90,6 @@ int		main(int argc, char **argv)
 	print_help(cbox);
 	do_all_mallocs(&cbox);
 	init_arena(&cbox, argv);
-	greet_champions(&cbox);
 	if (!dump)
 	{
 		dump_arena(cbox.arena.arena);

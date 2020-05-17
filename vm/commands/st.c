@@ -31,13 +31,14 @@ static void	op_unique_commands(t_car *car,
 {
 	t_arg		param;
 	int			val;
-	int 		pos;
+	int			pos;
 
 	param = args[1];
 	val = get_int_from_arg(car, cbox, args[0]);
 	if (param.type == REG)
 		car->regs[REG(param.value)] = val;
-	else if (param.type == IND) {
+	else if (param.type == IND)
+	{
 		pos = car->pos + IND_OFFSET(param.value);
 		write_int_to_bytes(cbox->arena.arena, pos, val);
 		color_bytes(pos, 4, -car->regs[0], cbox);

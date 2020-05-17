@@ -28,20 +28,18 @@ static int	catch_pause(t_vbox *vbox)
 	return (1);
 }
 
-static int	catch_skip_cycles(t_vbox *vbox)
+static void	catch_skip_cycles(t_vbox *vbox)
 {
 	vbox->skip_cycles = vbox->skip_cycles ? 0 : 1;
 	call_it_skip_cycles(vbox->skip_cycles);
-	return (0);
 }
 
-static int	catch_change_time(int *time, int change, char offset)
+static void	catch_change_time(int *time, int change, char offset)
 {
 	*time += change;
 	if (*time < 0)
 		*time = 0;
 	call_downtime(*time, offset);
-	return (0);
 }
 
 void		catch_keyboard(t_vbox *vbox)
@@ -55,20 +53,16 @@ void		catch_keyboard(t_vbox *vbox)
 			return ;
 		if (key == ' ' && catch_pause(vbox))
 			return ;
-		if (key == 's' && catch_skip_cycles(vbox))
-			return ;
-		if (key == KEY_LEFT &&
-		catch_change_time(&vbox->downtime, -10000, DOWNTIME_H))
-			return ;
-		if (key == KEY_RIGHT &&
-		catch_change_time(&vbox->downtime, 10000, DOWNTIME_H))
-			return ;
-		if (key == KEY_DOWN &&
-		catch_change_time(&vbox->downtime_on_check, -10000, CH_DOWNTIME_H))
-			return ;
-		if (key == KEY_UP &&
-		catch_change_time(&vbox->downtime_on_check, 10000, CH_DOWNTIME_H))
-			return ;
+		if (key == 's')
+			catch_skip_cycles(vbox);
+		else if (key == KEY_LEFT)
+			catch_change_time(&vbox->downtime, -10000, DOWNTIME_H);
+		else if (key == KEY_RIGHT)
+			catch_change_time(&vbox->downtime, 10000, DOWNTIME_H);
+		else if (key == KEY_DOWN)
+			catch_change_time(&vbox->downtime_on_check, -10000, CH_DOWNTIME_H);
+		else if (key == KEY_UP)
+			catch_change_time(&vbox->downtime_on_check, 10000, CH_DOWNTIME_H);
 		key = getch();
 	}
 	usleep(vbox->downtime);

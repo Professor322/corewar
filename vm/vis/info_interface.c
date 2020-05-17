@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:55:44 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/17 14:19:28 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 20:02:46 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	change_car_count(int player, t_cbox *cbox, int change)
 			cbox->vbox.champs[player].alive_cars);
 	attroff(COLOR_PAIR(color));
 	refresh();
+	write_to_log(player + 1, cbox, "new");
 }
 
 void	car_change_player(int reg, int old_player, int new_player, t_cbox *cbox)
@@ -89,26 +90,7 @@ void	show_deaths(t_cbox *cbox)
 
 	if (!(cbox->flags & VIS_FLAG_EXIST))
 		return ;
-
-//	clear_line(LOG_ST);
-//	move(LOG_ST, STATS_X);
-//	int i, sum, sum_vis;
-//	i = -1; sum = 0;
-//	while (++i < (int)cars_len(cbox->cars))
-//		if (((t_car **)cbox->cars->cont)[i]) {
-//			sum++;
-//			printw("| %d |", )
-//		}
-//	i = -1; sum_vis = 0;
-//	while (++i < 5)
-//		sum_vis += cbox->vbox.champs[i].alive_cars;
-//
-//	if (sum != sum_vis)
-//		attron(COLOR_PAIR(RED_W));
-//	mvprintw(LOG_ST, STATS_X, "| cars on field %d | real cars %d", sum_vis, sum);
-//	attroff(COLOR_PAIR(RED));
-
-	dead = queue_len(cbox->rip);
+	dead = cbox->rip->len / sizeof(t_pque);
 	attron(COLOR_PAIR(RED));
 	draw_horiz_line(MAIN_ST + CHECK_H, STATS_X, STATS_W, '#');
 	draw_horiz_line(MAIN_ST + CHECK_H + 4, STATS_X, STATS_W, '#');
@@ -117,7 +99,7 @@ void	show_deaths(t_cbox *cbox)
 	refresh();
 	usleep(cbox->vbox.downtime_on_check);
 	catch_keyboard(&cbox->vbox);
-	if (! dead)
+	if (!dead)
 	{
 		clear_line(MAIN_ST + CHECK_H);
 		clear_line(MAIN_ST + CHECK_H + 2);

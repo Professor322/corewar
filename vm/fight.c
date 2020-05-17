@@ -6,13 +6,13 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:17:03 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 19:37:08 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 20:02:46 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void			refresh_heap(t_cbox *cbox, int index)
+static void				refresh_heap(t_cbox *cbox, int index)
 {
 	t_vector	*tmp;
 	t_car		*car;
@@ -35,7 +35,7 @@ void			refresh_heap(t_cbox *cbox, int index)
 ** - refresh heap in eventloop
 */
 
-void			kill_cars(t_cbox *cbox)
+static void				kill_cars(t_cbox *cbox)
 {
 	t_car			*car;
 	int				i;
@@ -46,11 +46,9 @@ void			kill_cars(t_cbox *cbox)
 	{
 		car = (t_car *)pop_que(cbox->rip).data;
 		if (cbox->flags & V_FLAG_DEATHS)
-		{
 			ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
 					car->id + 1, cbox->cycle_counter - car->last_live,
 					cbox->arena.cycles_to_die);
-		}
 		to_refresh[car->in_event_loop - 1] = 1;
 		place_car(car->pos, -car->regs[0], cbox, "pop");
 		change_car_count(-car->regs[0], cbox, -1);
@@ -59,10 +57,8 @@ void			kill_cars(t_cbox *cbox)
 	}
 	i = -1;
 	while (++i < SIZE_OF_EVENTLOOP)
-	{
 		if (to_refresh[i])
 			refresh_heap(cbox, i);
-	}
 	show_deaths(cbox);
 }
 
@@ -71,7 +67,7 @@ void			kill_cars(t_cbox *cbox)
 ** return 1 if somebody alive, otherwise 0
 */
 
-unsigned char	check_cars(t_cbox *cbox)
+static unsigned char	check_cars(t_cbox *cbox)
 {
 	ssize_t			i;
 	t_car			**cars;
@@ -101,7 +97,7 @@ unsigned char	check_cars(t_cbox *cbox)
 ** if necessary check all cars and reset constants
 */
 
-unsigned char	check(t_cbox *cbox, t_arena *arena)
+static unsigned char	check(t_cbox *cbox, t_arena *arena)
 {
 	unsigned char	out;
 
@@ -132,7 +128,7 @@ unsigned char	check(t_cbox *cbox, t_arena *arena)
 ** - execute operation
 */
 
-unsigned char	do_the_fight(t_cbox *cbox)
+unsigned char			do_the_fight(t_cbox *cbox)
 {
 	t_car	*car;
 	int		cycle;

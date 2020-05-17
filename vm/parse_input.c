@@ -33,7 +33,7 @@ static void		parse_n(char *s, int next_arg, int argc, t_cbox *cbox)
 	cbox->champs[next_nbr - 1].code_size = next_arg;
 }
 
-static int			parse_int_flag_value(char *s)
+static int		parse_int_flag_value(char *s)
 {
 	int val;
 

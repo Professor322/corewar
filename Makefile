@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: djon-con <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: mbartole <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/19 18:20:55 by djon-con          #+#    #+#              #
-#    Updated: 2020/05/09 16:37:52 by djon-con         ###   ########.fr        #
+#    Updated: 2020/05/17 20:53:19 by mbartole         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = corewar
 VM_SRC = vm/
 COMMANDS_SRC = commands/
 COMMON_SRC = common/
+VIS_SRC = vis/
 SRC = $(addprefix $(VM_SRC),  cars.c \
                               champions.c \
                               champions_parse.c \
@@ -43,12 +44,21 @@ SRC = $(addprefix $(VM_SRC),  cars.c \
                                                          arg_utils.c\
                                                          clone_utils.c\
                                                          command_utils.c\
-                                                         validation.c)
+                                                         validation.c)\
+      $(addprefix $(VM_SRC)$(VIS_SRC), catch_keyboard.c \
+                                       champ_interface.c \
+                                       checks_interface.c \
+                                       color_utils.c \
+                                       draw_utils.c \
+                                       finish_interface.c \
+                                       info_interface.c \
+                                       start_interface.c \
+                                       update_info.c) \
 LIB_PATH = libft/
 LIB_HEADER_PATH = $(LIB_PATH)includes/
 HEADER_PATH = vm/
 CW_ORIGINAL_HEADER_PATH = ./
-HEADER = $(addprefix $(LIB_HEADER_PATH), libft.h get_next_line.h ft_printf.h float.h) vm/corewar.h vm/pque.h op.h
+HEADER = $(addprefix $(LIB_HEADER_PATH), libft.h get_next_line.h ft_printf.h float.h) vm/corewar.h vm/pque.h vm/vis/vis.h op.h
 INCLUDE_FLAGS = -I $(HEADER_PATH) -I $(LIB_HEADER_PATH) -I $(CW_ORIGINAL_HEADER_PATH)
 WARNING_FLAGS = -W -Werror -Wextra -Wall
 LIB = $(LIB_PATH)libft.a

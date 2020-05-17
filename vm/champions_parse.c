@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-void	reverse_int(unsigned int *to_reverse)
+static void	reverse_int(unsigned int *to_reverse)
 {
 	unsigned char	*original;
 	int				i;
@@ -28,7 +28,7 @@ void	reverse_int(unsigned int *to_reverse)
 	}
 }
 
-char	*invalid_champion(t_champ *champ)
+static char	*invalid_champion(t_champ *champ)
 {
 	reverse_int(&champ->magic);
 	if (champ->magic != COREWAR_EXEC_MAGIC)
@@ -46,7 +46,7 @@ char	*invalid_champion(t_champ *champ)
 	return (NULL);
 }
 
-char	*get_champion(int fd, t_champ *champ, unsigned char *place)
+static char	*get_champion(int fd, t_champ *champ, unsigned char *place)
 {
 	unsigned int	real_size;
 	char			*error;
@@ -62,7 +62,7 @@ char	*get_champion(int fd, t_champ *champ, unsigned char *place)
 	return (NULL);
 }
 
-void	init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
+void		init_champion(char *file, t_cbox *cbox, int cell, t_champ *champ)
 {
 	int		fd;
 	char	*msg;

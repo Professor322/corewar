@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 14:38:14 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 19:47:52 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 18:32:06 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,23 @@ void	write_to_log(int player, t_cbox *cbox, char *mode)
 	short color;
 
 	clear_line(LOG_ST);
-	color = get_text_color(player, cbox);
+	color = get_text_color(player, NULL);
 	mvprintw(LOG_ST, STATS_X, "/%ld/ ", cbox->cycle_counter);
 	attron(COLOR_PAIR(color));
 	if (!strcmp(mode, "alive"))
-		printw("#%d called alive        ", player);
+	{
+		if (player < 5)
+			printw("#%d called alive          ", player);
+		else
+			printw("undef called alive        ");
+	}
+	else if (!strcmp(mode, "new"))
+	{
+		if (player < 5)
+			printw("#%d set new car           ", player);
+		else
+			printw("undef set new car         ");
+	}
 	attroff(COLOR_PAIR(color));
 	refresh();
 }

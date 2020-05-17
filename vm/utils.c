@@ -6,14 +6,14 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:39:01 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 19:03:43 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 18:34:08 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
 /*
-** need to clean: heps in eventloop, dead cars, rip, every car, cars
+** need to clean: heaps in eventloop, dead cars, rip, every car, cars
 */
 
 int		clean_all(t_cbox *cbox, char code_exit)
@@ -21,7 +21,6 @@ int		clean_all(t_cbox *cbox, char code_exit)
 	int	cars_count;
 	int	i;
 
-	finish_interface(cbox);
 	i = -1;
 	while (++i < SIZE_OF_EVENTLOOP)
 		if (cbox->eventloop[i])
@@ -42,33 +41,6 @@ int		clean_all(t_cbox *cbox, char code_exit)
 			}
 		ft_vdel(&cbox->cars);
 	}
+	finish_interface(cbox);
 	return (code_exit);
-}
-
-void	dump_arena(unsigned char *arena)
-{
-	int	i;
-
-	i = -1;
-	while (++i < MEM_SIZE)
-	{
-		if (!i)
-			ft_printf("0x%#.4x : ", i);
-		else if (!(i % 64))
-			ft_printf("\n%#.4x : ", i);
-		ft_printf("%c%c ", HEX[arena[i] / 16], HEX[arena[i] % 16]);
-	}
-	ft_printf("\n");
-}
-
-void	car_to_vec(t_car *car, t_vector *vec, t_cbox *cbox)
-{
-	if (!(ft_vadd(vec, &car, sizeof(t_car *))))
-		exit(clean_all(cbox, MALLOC_ERROR));
-}
-
-void	car_to_heap(t_car *car, t_vector *heap, t_cbox *cbox)
-{
-	if (!(push_que(heap, car, -car->id)))
-		exit(clean_all(cbox, MALLOC_ERROR));
 }

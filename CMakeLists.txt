@@ -6,7 +6,7 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-3")
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
-include_directories(libft/includes/ ./)
+include_directories(libft/includes/ ./ ./vm/vis)
 #include_directories(include)
 
 #aux_source_directory(src/asm src_asm)
@@ -15,7 +15,7 @@ aux_source_directory(vm src_vm)
 aux_source_directory(vm/vis src_visu)
 
 
-add_executable(corewar ${src_vm} op.h vm/utils.c vm/champions.c vm/cars.c vm/fight.c vm/operations.c vm/commands/ld.c vm/commands/common/arg_utils.c vm/commands/live.c vm/commands/st.c vm/commands/add.c vm/commands/sub.c vm/commands/and.c vm/commands/common/validation.c vm/commands/or vm/commands/xor.c vm/commands/zjmp.c vm/commands/aff.c vm/commands/ldi.c vm/commands/sti.c vm/commands/lld.c vm/commands/lldi.c vm/commands/fork.c vm/commands/lfork.c vm/commands/common/clone_utils.c vm/commands/common/command_utils.c vm/commands/common/arg_preparation.c vm/vis/draw_utils.c vm/vis/color_interface.c vm/vis/update_info.c vm/vis/start_interface.c vm/vis/color_utils.c vm/vis/finish_interface.c vm/vis/info_interface.c vm/vis/catch_keyboard.c vm/vis/checks_interface.c) # ${src_visu} ${src})
+add_executable(corewar ${src_vm} op.h vm/utils.c vm/init_arena.c vm/cars.c vm/fight.c vm/operations.c vm/commands/ld.c vm/commands/common/arg_utils.c vm/commands/live.c vm/commands/st.c vm/commands/add.c vm/commands/sub.c vm/commands/and.c vm/commands/common/validation.c vm/commands/or vm/commands/xor.c vm/commands/zjmp.c vm/commands/aff.c vm/commands/ldi.c vm/commands/sti.c vm/commands/lld.c vm/commands/lldi.c vm/commands/fork.c vm/commands/lfork.c vm/commands/common/clone_utils.c vm/commands/common/command_utils.c vm/commands/common/arg_preparation.c vm/vis/draw_utils.c vm/vis/champ_interface.c vm/vis/update_info.c vm/vis/start_interface.c vm/vis/color_utils.c vm/vis/finish_interface.c vm/vis/info_interface.c vm/vis/catch_keyboard.c vm/vis/checks_interface.c) # ${src_visu} ${src})
 target_link_libraries(corewar ${PROJECT_SOURCE_DIR}/libft/libft.a -lncurses)
 
 target_include_directories(corewar PUBLIC vm/)

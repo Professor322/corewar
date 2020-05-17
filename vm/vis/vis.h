@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 21:50:33 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/16 21:53:58 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 20:39:15 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define STATS_PADDING 2
 # define STATS_X (ARENA_ST + ARENA_W + ARENA_PADDING + 1 + STATS_PADDING)
 # define STATS_X_2 (STATS_X + 12)
-# define STATS_X_3 (STATS_X + 25)
-# define STATS_X_4 (STATS_X + 42)
+# define STATS_X_3 (STATS_X + 24)
+# define STATS_X_4 (STATS_X + 41)
 # define STATS_W 50
 
 # define COMM_ST (1 + STATS_PADDING)
@@ -103,39 +103,43 @@ typedef struct	s_draw_bytes
 
 void			start_interface(struct s_cbox *cbox);
 void			finish_interface(struct s_cbox *cbox);
-void			color_bytes(unsigned int index, int len, int player,
-				struct s_cbox *cbox);
-void			draw_champion(int number, unsigned int start_cell,
-				struct s_cbox *cbox);
-void			place_car(unsigned int place, int player, struct s_cbox *cbox,
-				char *mode);
+
+void			color_bytes(unsigned int i, int l, int pl, struct s_cbox *cbox);
+void			draw_champion(int n, unsigned int start, struct s_cbox *cbox);
+
+void			show_nbr_checks(struct s_cbox *cbox);
+void			show_nbr_lives(struct s_cbox *cbox);
+void			show_cycles_to_die(struct s_cbox *cbox);
+
+void			place_car(unsigned int i, int pl, struct s_cbox *cbox, char *m);
 void			drive_car(unsigned int old_place, unsigned int new_place,
 				int player, struct s_cbox *cbox);
+
 void			call_it_alive(int player, struct s_cbox *cbox);
 void			change_car_count(int player, struct s_cbox *cbox, int change);
 void			car_change_player(int reg, int old_player, int new_player,
 				struct s_cbox *cbox);
 void			show_cycle(struct s_cbox *cbox);
 void			show_deaths(struct s_cbox *cbox);
-void			show_nbr_checks(struct s_cbox *cbox);
-void			show_nbr_lives(struct s_cbox *cbox);
-void			show_cycles_to_die(struct s_cbox *cbox);
+
+/*
+** internal utils
+*/
+
+void			catch_keyboard(t_vbox *vbox);
+
+short			get_text_color(int player, struct s_cbox *cbox);
+int				set_new_color(int pl, struct s_cbox *cbox, int i, char *mode);
 
 void			draw_horiz_line(int y, int x, int len, char symb);
 void			draw_vert_line(int y, int x, int len, char symb);
 int				move_to_cell(unsigned int cell);
 void			clear_line(int offset);
 
-short			get_text_color(int player, struct s_cbox *cbox);
-int				set_new_color(int player, struct s_cbox *cbox, int index,
-				char *mode);
-void			write_to_log(int player, struct s_cbox *cbox, char *mode);
-
 void			call_it_pause(int pause);
 void			call_downtime(int milisec, char offset);
 void			call_it_skip_cycles(int skip);
 void			count_to_check(int check);
-
-void			catch_keyboard(t_vbox *vbox);
+void			write_to_log(int player, struct s_cbox *cbox, char *mode);
 
 #endif

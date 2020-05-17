@@ -6,7 +6,7 @@
 /*   By: mbartole <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:55:40 by mbartole          #+#    #+#             */
-/*   Updated: 2020/05/10 03:49:35 by mbartole         ###   ########.fr       */
+/*   Updated: 2020/05/17 20:56:13 by mbartole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include "pque.h"
 # include "vector.h"
-# include "vm/vis/vis.h"
+# include "vis.h"
 # include "op.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -25,7 +25,7 @@
 # define SIZE_OF_EVENTLOOP 1000
 # define SIZE_OF_CARS 1000
 
-# define NUMBER_OF_OPERATIONS 16
+# define OPERS_NUM 16
 # define CW_MAX_ARGS 4
 # define POS(x) ((x) % MEM_SIZE)
 # define REG(x) ((x) - 1)
@@ -181,31 +181,23 @@ typedef enum	e_code_exit
 }				t_code_exit;
 
 /*
-** champions, champions_parse
-*/
-
-void			greet_champions(t_cbox *cbox);
-int				count_champions(t_champ *champs);
-void			greet_winner(t_cbox	*cbox);
-void			init_champion(char *file, t_cbox *cbox, int cell,
-				t_champ *champ);
-
-/*
 ** cars
 */
 
 t_car			*fetch_free_car(t_cbox *cbox);
-void			make_car(t_cbox *cbox, char player, unsigned int pos);
 void			reschedule_car(t_cbox *cbox, t_car *car, int time_delta);
 size_t			cars_len(t_vector *cars_vec);
-size_t			queue_len(t_vector *queue_vec);
+void			car_to_vec(t_car *car, t_vector *vec, t_cbox *cbox);
+void			car_to_heap(t_car *car, t_vector *heap, t_cbox *cbox);
 
 /*
 ** others
 */
 
-t_oper			get_operation(char code);
 int				parse_input(char **argv, int argc, t_cbox *cbox);
+void			init_champion(char *file, t_cbox *cbox, int cell, t_champ *chm);
+void			init_arena(t_cbox *cbox, char **argv);
+t_oper			get_operation(char code);
 unsigned char	do_the_fight(t_cbox *cbox);
 
 /*
@@ -213,9 +205,6 @@ unsigned char	do_the_fight(t_cbox *cbox);
 */
 
 int				clean_all(t_cbox *cbox, char code_exit);
-void			dump_arena(unsigned char *arena);
-void			car_to_vec(t_car *car, t_vector *vec, t_cbox *cbox);
-void			car_to_heap(t_car *car, t_vector *heap, t_cbox *cbox);
 
 int				prepare_arguments(t_carbox *carbox, t_arg args[CW_MAX_ARGS],
 				int (*validate_permitted_types)(t_arg*));
