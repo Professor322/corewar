@@ -72,14 +72,17 @@ void	free_memory_and_close_fd(t_champ **champ)
 	ft_memdel((void **) &to_del->name);
 	ft_memdel((void **) &to_del->comment);
 	ft_memdel((void**)&to_del->line);
+	ft_memdel((void**)&to_del->o_filename);
 	while(read_line(champ) > 0)
 		ft_memdel((void**)&to_del->line);
 	ft_ptr_vec_del(&to_del->temp_labels, ft_memdel);
     ft_ptr_vec_del(&to_del->labels_vec, free_label_vec);
     ft_ptr_vec_del(&to_del->command_vec, free_t_b_command);
 	ht_delete(&to_del->labels);
-    close(to_del->fd_input);
-    close(to_del->fd_output);
+	if (to_del->fd_input != -1)
+    	close(to_del->fd_input);
+	if (to_del->fd_output != -1)
+    	close(to_del->fd_output);
 	ft_memdel((void **) champ);
 }
 

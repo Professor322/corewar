@@ -19,4 +19,6 @@ void 	parse(t_champ **champ_ptr)
 			parse_exec(champ_ptr);
 		ft_memdel((void**)&champ->line);
 	}
+	if (!champ->name || !champ->comment)
+		error_manager(UNEXPECTED_END_OF_FILE, champ_ptr);
 }

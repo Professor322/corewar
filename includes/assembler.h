@@ -136,6 +136,7 @@ typedef struct	s_champ
 	char	*name;
 	char	*comment;
 	char	*line;
+	char 	*o_filename;
 	int 	fd_input;
 	int 	fd_output;
 	size_t	counter;
