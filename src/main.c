@@ -17,14 +17,23 @@ t_champ *champ_init()
 }
 
 char *output_file_name(char *argv) {
+	char *name;
+	int is_changed;
 	int i;
 
 	i = ft_strlen(argv) - 1;
 	while (i >= 0 && argv[i] != '.')
 		--i;
+	is_changed = 0;
 	if (i >= 0 && !ft_strncmp(argv + i, ".s", 2))
+	{
+		is_changed = 1;
 		argv[i] = '\0';
-	return ft_strjoin(argv, ".cor");
+	}
+	name = ft_strjoin(argv, ".cor");
+	if (is_changed)
+		argv[i] = '.';
+	return name;
 }
 
 
@@ -32,6 +41,7 @@ int 	main(int argc, char **argv)
 {
 	char *name;
 	t_champ *champ;
+
 	if (argc == 2)
 	{
 		champ = champ_init();
