@@ -65,11 +65,13 @@ def run_asm(asm_test, asm_std, champ_name):
                 print("ERROR")
                 print("_____________________________________________________________")
                 return False
+    elif "Writing" not in std and "Writing" not in test:
+        print("OK")
+        print("_____________________________________________________________")
+        return True
     print("ERROR")
     print("_____________________________________________________________")
     return False
-
-
 
 
 def get_champs(file_path):
