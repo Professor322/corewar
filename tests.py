@@ -52,24 +52,24 @@ def run_asm(asm_test, asm_std, champ_name):
     std = execute_2(f"{asm_std} {champ_name}")
     if name in std:
         out_std = execute_2(f"xxd {name}")
-    print("OUTPUT",test, std, sep='\t', end="\t")
+    print('\033[93m%s\033[0m' % "OUTPUT",test, std, sep='\t', end="\t")
     if "Writing" in std and "Writing" in test:
         if out_std == out_test:
-            print("OK")
+            print("\033[92m%s\033[0m" %  "OK")
             print("_____________________________________________________________")
             return True
         else:
             print("\nDIFF TEST ASM WITH STANDART")
             for x in difflib.ndiff(out_test, out_std):
                 print(x)
-                print("ERROR")
+                print('\033[91m%s\033[0m' % "ERROR")
                 print("_____________________________________________________________")
                 return False
     elif "Writing" not in std and "Writing" not in test:
-        print("OK")
+        print("\033[92m%s\033[0m" % "OK")
         print("_____________________________________________________________")
         return True
-    print("ERROR")
+    print('\033[91m%s\033[0m' % "ERROR")
     print("_____________________________________________________________")
     return False
 
@@ -98,13 +98,13 @@ def main():
     err = 0
     ok = 0
     for i, champ in enumerate(champions, start=1):
-        print("TEST", i, end=' ')
+        print('\033[93m%s\033[0m' %  "TEST", '\033[93m%s\033[0m' % i, end=' ')
         if run_asm(asm, standart_asm, champ):
             ok += 1
         else:
             err += 1
 
-    print("ERROR", err, "OK", ok)
+    print('\033[91m%s\033[0m' % "ERROR", err, "\033[92m%s\033[0m" %  "OK", ok)
 
 
 
