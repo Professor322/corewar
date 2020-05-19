@@ -57,13 +57,12 @@ char	*parse_content(t_champ **champ_ptr, char **line, const enum e_header_token 
 	return output;
 }
 
-void 	parse_token(t_champ **champ_ptr, const enum e_header_token token)
+void 	parse_token(t_champ **champ_ptr, const enum e_header_token token, char *line)
 {
 	t_champ *champ;
-	char 	*line;
 
 	champ = *champ_ptr;
-	line  = champ->line + g_header[token].token_len;
+	line  = line + g_header[token].token_len;
 	skip_spaces(&line);
 	if (*line++ == QUOTE)
 	{
@@ -99,12 +98,12 @@ void 	parse_header(t_champ **champ_ptr)
 		if (!ft_strncmp(line, g_header[NAME].token,
 				g_header[NAME].token_len))
 		{
-			parse_token(champ_ptr, NAME);
+			parse_token(champ_ptr, NAME, line);
 			return ;
 		} else if (!ft_strncmp(line, g_header[COMMENT].token,
 				g_header[COMMENT].token_len))
 		{
-			parse_token(champ_ptr, COMMENT);
+			parse_token(champ_ptr, COMMENT, line);
 			return ;
 		} else
 			error_manager(UNKNOWN_TOKEN, champ_ptr);
