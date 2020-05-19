@@ -12,7 +12,7 @@ int 	check_starter_token(const char starter)
 		return (1);
 	if (starter == LABEL_CHAR)
 		return (1);
-	if (ft_isdigit(starter))
+	if (ft_isdigit(starter) || starter == '-')
 		return (1);
 	return (0);
 }
@@ -48,7 +48,9 @@ char 	*check_arg_content(char **line)
 	else
 		while (*arg_end && (ft_isdigit(*arg_end) || *arg_end == '-'))
 			arg_end++;
-	if (*arg_end && !ft_isspace(*arg_end) && *arg_end != SEPARATOR_CHAR && *arg_end != COMMENT_CHAR)
+	if (*arg_end && !ft_isspace(*arg_end) &&
+			*arg_end != SEPARATOR_CHAR &&
+			*arg_end != COMMENT_CHAR)
 		return NULL;
 
 	return (create_arg(line, arg_start, arg_end));
