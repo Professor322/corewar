@@ -21,4 +21,10 @@ void 	parse(t_champ **champ_ptr)
 	}
 	if (!champ->name || !champ->comment)
 		error_manager(UNEXPECTED_END_OF_FILE, champ_ptr);
+	while (champ->temp_labels->length)
+	{
+		ht_insert_node(champ->labels,
+				create_node(champ_ptr, ft_ptr_vec_popback(champ->temp_labels),
+						init_b_cmd(LAST_LABELS, champ, NULL)));
+	}
 }

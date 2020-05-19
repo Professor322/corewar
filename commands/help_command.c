@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jziemann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: professor <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 20:46:31 by jziemann          #+#    #+#             */
-/*   Updated: 2020/03/14 18:01:58 by jziemann         ###   ########.fr       */
+/*   Updated: 2020/05/19 23:36:31 by professor        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ t_b_command		*init_b_cmd(int cmd_code, t_champ *champ, char **cmd)
 		ft_del_twodem_arr((void***)&cmd);
 		error_manager(MALLOC_ERROR, &champ);
 	}
-	ft_ptr_vec_pushback(champ->command_vec, b_cmd);
-	b_cmd = ((t_b_command*)(champ->command_vec->data[index]));
+	if (cmd_code != LAST_LABELS)
+		ft_ptr_vec_pushback(champ->command_vec, b_cmd);
+	b_cmd = ((t_b_command*)(champ->command_vec->data[cmd_code == LAST_LABELS ?
+												  index -1 : index]));
 	b_cmd->command_code = cmd_code;
 	b_cmd->cumulative_size = champ->command_size;
 	return (b_cmd);
