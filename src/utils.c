@@ -56,16 +56,16 @@ char		*is_label(char *line)
 int 	is_command(char **line)
 {
 	int i;
-	char c;
+//	char c;
 
 	i = -1;
 	skip_spaces(line);
 	while (++i < COMMANDS_NUM)
 		if (!ft_strncmp(*line, g_commands[i].name,
 				g_commands[i].name_len)) {
-			c = *(*line + g_commands[i].name_len);
+		//	c = *(*line + g_commands[i].name_len);
 
-			return (c == '%' || c == ' ' ? i : -1);
+			return (i);
 		}
 	return (-1);
 }
