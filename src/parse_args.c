@@ -62,9 +62,9 @@ char 	*parse_arg(char **line, const int arg_num)
 
 	if (!*line)
 		return NULL;
-	if (arg_num >= 1 && *line && **line != SEPARATOR_CHAR)
+	if (arg_num >= 1 && **line != SEPARATOR_CHAR)
 		return NULL;
-	else
+	if (arg_num >= 1)
 		(*line)++;
 	skip_spaces(line);
 	if (*line && !check_starter_token(**line))

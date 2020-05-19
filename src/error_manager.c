@@ -34,13 +34,13 @@ void	error_manager(enum e_error_type error_type, t_champ **champ)
 	else if (error_type == NON_EXISTING_COMMAND)
 		error_message((*champ)->counter, "Non existing command");
 	else if (error_type == NON_EXISTING_LABEL)
-		error_message((*champ)->counter, "Labels with out command");
+		error_message((*champ)->counter, "Non existing label");
 	else if (error_type == WRONG_NUMBER_OF_ARGS)
 		error_message((*champ)->counter, "Wrong number of args");
 	else if (error_type == WRONG_TYPE_OF_ARGS)
         error_message((*champ)->counter, "Wrong type of command arguments");
 	else if (error_type == LABELS_WITHOUT_COMMAND)
-        error_message((*champ)->counter, "Wrong label");
+        error_message((*champ)->counter, "Label without command");
 	else if (error_type == NO_BACKSLASH)
 		error_message((*champ)->counter, "No backslash at the end of the file");
 	else if (error_type == UNEXPECTED_END_OF_FILE)
