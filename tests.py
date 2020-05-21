@@ -62,9 +62,9 @@ def run_asm(asm_test, asm_std, champ_name):
             print("\nDIFF TEST ASM WITH STANDART")
             for x in difflib.ndiff(out_test, out_std):
                 print(x)
-                print('\033[91m%s\033[0m' % "ERROR")
-                print("_____________________________________________________________")
-                return False
+            print('\033[91m%s\033[0m' % "ERROR")
+            print("_____________________________________________________________")
+            return False
     elif "Writing" not in std and "Writing" not in test:
         print("\033[92m%s\033[0m" % "OK")
         print("_____________________________________________________________")
