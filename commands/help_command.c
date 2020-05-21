@@ -53,9 +53,10 @@ t_b_command		*init_b_cmd(int cmd_code, t_champ *champ, char **cmd)
 		error_manager(MALLOC_ERROR, &champ);
 	}
 	if (cmd_code != LAST_LABELS)
+	{
 		ft_ptr_vec_pushback(champ->command_vec, b_cmd);
-	b_cmd = ((t_b_command*)(champ->command_vec->data[cmd_code == LAST_LABELS ?
-												  index -1 : index]));
+		b_cmd = ((t_b_command*)(champ->command_vec->data[index]));
+	}
 	b_cmd->command_code = cmd_code;
 	b_cmd->cumulative_size = champ->command_size;
 	return (b_cmd);
