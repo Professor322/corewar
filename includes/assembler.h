@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assembler.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlegros <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: professor <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 22:19:20 by vlegros           #+#    #+#             */
-/*   Updated: 2019/11/11 22:19:20 by vlegros          ###   ########.fr       */
+/*   Updated: 2020/05/19 23:21:50 by professor        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #define REG_SIZE				4
 #define DIR_SIZE				REG_SIZE
 
+#define LAST_LABELS				-1
 
 # define REG_CODE				1
 # define DIR_CODE				2
@@ -203,6 +204,7 @@ char 	**parse_args(t_champ **champ_ptr, char *line, const int cmd);
 void 	parse_exec(t_champ **champ_ptr);
 void 	parse(t_champ **champ_ptr);
 ///parse
+t_node	*create_node(t_champ **champ_ptr, const char *label, const t_b_command *command);
 void 	skip_spaces(char **line);
 char 	*is_label(char *line);
 int 	is_command(char **line);
