@@ -35,5 +35,5 @@ add_executable(asm
         src/utils.c
         ${coms}
         ${useful_func}
-        src/main.c)
+        src/main.c src/globals.c)
 target_link_libraries(asm ~/Desktop/corewar/libft/libft.a)
