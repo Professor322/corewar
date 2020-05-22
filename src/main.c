@@ -1,13 +1,22 @@
-//
-// Created by Virgil Legros on 17/01/2020.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: professor <marvin@42.fr>                   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/07 18:28:37 by vlegros           #+#    #+#             */
+/*   Updated: 2020/05/22 19:09:47 by professor        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/assembler.h"
 
-char *output_file_name(char *argv) {
-	char *name;
-	int is_changed;
-	int i;
+char		*output_file_name(char *argv)
+{
+	char	*name;
+	int		is_changed;
+	int		i;
 
 	i = ft_strlen(argv) - 1;
 	while (i >= 0 && argv[i] != '.')
@@ -21,10 +30,10 @@ char *output_file_name(char *argv) {
 	name = ft_strjoin(argv, ".cor");
 	if (is_changed)
 		argv[i] = '.';
-	return name;
+	return (name);
 }
 
-t_champ *champ_init(char *argv)
+t_champ		*champ_init(char *argv)
 {
 	t_champ	*champ;
 
@@ -39,7 +48,9 @@ t_champ *champ_init(char *argv)
 	return (champ);
 }
 
-void	check_for_file_existence_and_backslash(char *filename, t_champ **champ_ptr) {
+void		check_for_file_existence_and_backslash(char *filename,
+		t_champ **champ_ptr)
+{
 	const int	fd = open(filename, O_RDONLY);
 	char		buff[1];
 
@@ -50,10 +61,9 @@ void	check_for_file_existence_and_backslash(char *filename, t_champ **champ_ptr)
 	close(fd);
 	if (buff[0] != '\n')
 		error_manager(NO_BACKSLASH, champ_ptr);
-
 }
 
-int 	main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	t_champ *champ;
 
@@ -65,11 +75,13 @@ int 	main(int argc, char **argv)
 		check_for_file_existence_and_backslash(argv[1], &champ);
 		champ->fd_input = open(argv[1], O_RDONLY);
 		parse(&champ);
-		champ->fd_output = open(champ->o_filename,  O_WRONLY | O_CREAT| O_TRUNC, 0644);
+		champ->fd_output = open(champ->o_filename,
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		write_exec_code_in_file(champ->fd_output, champ->command_vec, champ);
 		ft_printf("Writing output to %s\n", champ->o_filename);
 		free_memory_and_close_fd(&champ);
-	} else
+	}
+	else
 		help();
 	return (0);
 }

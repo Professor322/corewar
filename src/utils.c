@@ -69,3 +69,10 @@ int 	is_command(char **line)
 		}
 	return (-1);
 }
+
+void	finish_him(t_champ **champ)
+{
+	if (*champ)
+		free_memory_and_close_fd(champ);
+	exit(1);
+}
