@@ -22,6 +22,7 @@ RES_SRC = enlarge_table.c\
   parse_exec.c\
   parse_header.c\
   parser.c\
+  globals.c\
   utils.c\
   main.c
 SRC_S = $(addprefix $(ADD_SRC), $(RES_SRC))

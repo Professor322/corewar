@@ -12,7 +12,7 @@
 
 #include "../includes/assembler.h"
 
-t_b_command		*or(char **command, t_champ *champ)
+t_b_command		*ft_or(char **command, t_champ *champ)
 {
 	t_b_command	*b_command;
 	t_arg		*args;
@@ -64,7 +64,7 @@ t_b_command		*sub(char **command, t_champ *champ)
 	return (b_command);
 }
 
-t_b_command		*xor(char **command, t_champ *champ)
+t_b_command		*ft_xor(char **command, t_champ *champ)
 {
 	t_b_command	*b_command;
 	t_arg		*args;

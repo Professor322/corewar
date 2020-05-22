@@ -40,7 +40,7 @@ t_b_command		*aff(char **command, t_champ *champ)
 	return (b_command);
 }
 
-t_b_command		*and(char **command, t_champ *champ)
+t_b_command		*ft_and(char **command, t_champ *champ)
 {
 	t_b_command	*b_command;
 	t_arg		*args;

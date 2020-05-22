@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   assembler.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: professor <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: vlegros <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 22:19:20 by vlegros           #+#    #+#             */
-/*   Updated: 2020/05/19 23:21:50 by professor        ###   ########.fr       */
+/*   Updated: 2020/05/22 20:10:01 by vlegros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __ASSEMBLER_H
 # define __ASSEMBLER_H
 
-# include "libft.h"
+# include "../libft/includes/libft.h"
 # define BYTE 8
 # define COMMANDS_NUM 16
 
@@ -165,7 +165,7 @@ typedef struct s_byte_command
 
 typedef	struct	s_command
 {
-	char 			*name;
+	char 			name[6];
 	int				name_len;
 	int				num_of_args;
 	t_b_command*	(*func)(char**, t_champ*);
@@ -185,7 +185,7 @@ typedef struct	s_node
 
 typedef	struct	s_header
 {
-	char	*token;
+	char	token[9];
 	size_t	token_len;
 	size_t	len;
 }				t_header;
@@ -226,7 +226,7 @@ void 			help_error(char **to_del, int type, t_champ **champ);
 ///commands
 t_b_command     *add(char **command, t_champ *champ);
 t_b_command     *aff(char **command, t_champ *champ);
-t_b_command     *and(char **command, t_champ *champ);
+t_b_command     *ft_and(char **command, t_champ *champ);
 t_b_command     *ft_fork(char **command, t_champ *champ);
 t_b_command     *ld(char **command, t_champ *champ);
 t_b_command     *ldi(char **command, t_champ *champ);
@@ -235,11 +235,11 @@ t_b_command     *live(char **command, t_champ *champ);
 t_b_command     *live(char **command, t_champ *champ);
 t_b_command     *lld(char **command, t_champ *champ);
 t_b_command     *lldi(char **command, t_champ *champ);
-t_b_command     *or(char **command, t_champ *champ);
+t_b_command     *ft_or(char **command, t_champ *champ);
 t_b_command     *st(char **command, t_champ *champ);
 t_b_command     *sti(char **command, t_champ *champ);
 t_b_command     *sub(char **command, t_champ *champ);
-t_b_command     *xor(char **command, t_champ *champ);
+t_b_command     *ft_xor(char **command, t_champ *champ);
 t_b_command     *zjmp(char **command, t_champ *champ);
 
 ///error management
