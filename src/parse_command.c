@@ -1,9 +1,19 @@
-//
-// Created by Virgil Legros on 16/01/2020.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_command.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: professor <marvin@42.fr>                   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/07 18:28:37 by vlegros           #+#    #+#             */
+/*   Updated: 2020/05/22 19:22:05 by professor        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/assembler.h"
 
-t_node	*create_node(t_champ **champ_ptr, const char *label, const t_b_command *command)
+t_node	*create_node(t_champ **champ_ptr, const char *label,
+		const t_b_command *command)
 {
 	t_node *new_label;
 
@@ -16,13 +26,13 @@ t_node	*create_node(t_champ **champ_ptr, const char *label, const t_b_command *c
 
 void	compile_command(t_champ **champ_ptr, const int cmd, char **args)
 {
-	const t_b_command *compiled_command =
-			g_commands[cmd].func(args, *champ_ptr);
+	const t_b_command *comp_cmd = g_commands[cmd].func(args, *champ_ptr);
+
 	while ((*champ_ptr)->temp_labels->length)
 	{
 		ht_insert_node((*champ_ptr)->labels,
 				create_node(champ_ptr,
 						ft_ptr_vec_popback((*champ_ptr)->temp_labels),
-							compiled_command));
+							comp_cmd));
 	}
 }
