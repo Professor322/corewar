@@ -5,3 +5,10 @@ cmake-build-debug
 a.out
 #tests
 *.o
+vm_champs.tar
+asm
+corewar
+__pycache__
+file_*
+control
+our
