@@ -30,7 +30,7 @@
 # define COMMENT_CMD_LEN		8
 # define QUOTE					'"'
 
-#define COMMANDS_NUM			16
+# define COMMANDS_NUM			16
 
 # define END_LINE				'\0'
 # define COR					4
@@ -53,7 +53,7 @@
 # define ZJMP_COMMAND_CODE 0x09
 
 # define LIVE_T_DIR_SIZE 4
-# define  ADD_T_DIR_SIZE 1
+# define ADD_T_DIR_SIZE 1
 # define AFF_T_DIR_SIZE 1
 # define AND_T_DIR_SIZE 4
 # define FORK_T_DIR_SIZE 2
@@ -69,7 +69,7 @@
 # define XOR_T_DIR_SIZE 4
 # define ZJMP_T_DIR_SIZE 2
 
-enum				e_arg_type
+enum					e_arg_type
 {
 	T_LABEL,
 	T_REG,
@@ -77,7 +77,7 @@ enum				e_arg_type
 	T_IND
 };
 
-enum				e_error_type
+enum					e_error_type
 {
 	UNKNOWN_TOKEN = 4,
 	NO_CHAMP_NAME,
@@ -96,13 +96,13 @@ enum				e_error_type
 	UNEXPECTED_END_OF_FILE
 };
 
-enum				e_header_token
+enum					e_header_token
 {
 	NAME,
 	COMMENT
 };
 
-typedef struct		s_champ
+typedef struct			s_champ
 {
 	t_pvec	*temp_labels;
 	t_ht	*labels;
@@ -118,16 +118,20 @@ typedef struct		s_champ
 	size_t	counter;
 }						t_champ;
 
-typedef struct s_label	t_label;
+typedef struct			s_label
+{
+	char	*name;
+	int		cumulate_size;
+}						t_label;
 
-typedef struct	s_arg
+typedef struct			s_arg
 {
 	enum e_arg_type	type;
 	t_label			*label;
 	unsigned int	bin;
 	int				size;
 	char			is_label;
-}				t_arg;
+}						t_arg;
 
 typedef struct			s_byte_command
 {
@@ -137,20 +141,13 @@ typedef struct			s_byte_command
 	t_arg			args[4];
 }						t_b_command;
 
-
 typedef	struct			s_command
 {
 	char			name[6];
 	int				name_len;
 	int				num_of_args;
-	t_b_command*	(*func)(char**, t_champ*);
+	t_b_command		*(*func)(char**, t_champ*);
 }						t_command;
-
-typedef struct			s_label
-{
-	char	*name;
-	int		cumulate_size;
-}				t_label;
 
 typedef struct			s_node
 {
@@ -165,89 +162,114 @@ typedef	struct			s_header
 	size_t	len;
 }						t_header;
 
-extern			t_command g_commands[COMMANDS_NUM];
-extern			t_header g_header[2];
+extern					t_command g_commands[COMMANDS_NUM];
+extern					t_header g_header[2];
 
 /*
 ** hashtable
 */
 
-int				ht_insert_node(t_ht *hashtable, t_node *node);
-int				ht_enlarge(t_ht *ht);
-t_node			*ht_find_node(t_ht *ht, char *name);
+int						ht_insert_node(t_ht *hashtable, t_node *node);
+int						ht_enlarge(t_ht *ht);
+t_node					*ht_find_node(t_ht *ht, char *name);
 
 /*
 ** new parse
 */
 
-int				read_line(t_champ **champ_ptr);
-void			parse_header(t_champ **champ_ptr);
-char			**parse_args(t_champ **champ_ptr, char *line, const int cmd);
-void			parse_exec(t_champ **champ_ptr);
-void			parse(t_champ **champ_ptr);
+int						read_line(t_champ **champ_ptr);
+void					parse_header(t_champ **champ_ptr);
+char					**parse_args(t_champ **champ_ptr,
+									char *line,
+									const int cmd);
+void					parse_exec(t_champ **champ_ptr);
+void					parse(t_champ **champ_ptr);
 
 /*
 ** parse
 */
 
-t_node			*create_node(t_champ **champ_ptr, const char *label, const t_b_command *command);
-void			skip_spaces(char **line);
-char			*is_label(char *line);
-int				is_command(char **line);
-void			parse_label(t_champ **champ_ptr, char **line, char *label_end);
-void			compile_command(t_champ **champ_ptr, const int cmd, char **args);
+t_node					*create_node(t_champ **champ_ptr,
+									const char *label,
+									const t_b_command *command);
+void					skip_spaces(char **line);
+char					*is_label(char *line);
+int						is_command(char **line);
+void					parse_label(t_champ **champ_ptr,
+									char **line,
+									char *label_end);
+void					compile_command(t_champ **champ_ptr,
+										const int cmd,
+										char **args);
 
 /*
 ** writing
 */
 
-void			write_exec_code_in_file(int fd, t_pvec *command_vec, t_champ *champ);
-t_arg			*get_arg(char *arg, int dir_size, t_champ *champ, t_arg *arg_parse);
-void			*dir_arg(t_arg *arg_parse, int size, char *arg, t_champ *champ);
-void			reg_arg(t_arg *arg_parse, char *arg);
-void			*label_init(t_arg *arg, int size, char *l_name, t_champ *champ);
-void			indir_arg(t_arg *arg_parse, char *arg);
-int				ft_is_numeric(char *str);
-int				reverse_int(int s);
-short			reverse_short(short s);
-t_b_command		*init_b_cmd(int cmd_code, t_champ *champ, char **cmd);
-t_b_command		*compile(int cmd_code, t_champ *champ, int d_size, char **cmd);
-void 			help_error(char **to_del, int type, t_champ **champ);
+void					write_exec_code_in_file(int fd,
+												t_pvec *command_vec,
+												t_champ *champ);
+t_arg					*get_arg(char *arg,
+								int dir_size,
+								t_champ *champ,
+								t_arg *arg_parse);
+void					*dir_arg(t_arg *arg_parse,
+									int size,
+									char *arg,
+									t_champ *champ);
+void					reg_arg(t_arg *arg_parse, char *arg);
+void					*label_init(t_arg *arg,
+									int size,
+									char *l_name,
+									t_champ *champ);
+void					indir_arg(t_arg *arg_parse, char *arg);
+int						ft_is_numeric(char *str);
+int						reverse_int(int s);
+short					reverse_short(short s);
+t_b_command				*init_b_cmd(int cmd_code,
+									t_champ *champ,
+									char **cmd);
+t_b_command				*compile(int cmd_code,
+								t_champ *champ,
+								int d_size,
+								char **cmd);
+void					help_error(char **to_del, int type, t_champ **champ);
 
 /*
 ** commands
 */
 
-t_b_command		*add(char **command, t_champ *champ);
-t_b_command		*aff(char **command, t_champ *champ);
-t_b_command		*ft_and(char **command, t_champ *champ);
-t_b_command		*ft_fork(char **command, t_champ *champ);
-t_b_command		*ld(char **command, t_champ *champ);
-t_b_command		*ldi(char **command, t_champ *champ);
-t_b_command		*lfork(char **command, t_champ *champ);
-t_b_command		*live(char **command, t_champ *champ);
-t_b_command		*live(char **command, t_champ *champ);
-t_b_command		*lld(char **command, t_champ *champ);
-t_b_command		*lldi(char **command, t_champ *champ);
-t_b_command		*ft_or(char **command, t_champ *champ);
-t_b_command		*st(char **command, t_champ *champ);
-t_b_command		*sti(char **command, t_champ *champ);
-t_b_command		*sub(char **command, t_champ *champ);
-t_b_command		*ft_xor(char **command, t_champ *champ);
-t_b_command		*zjmp(char **command, t_champ *champ);
+t_b_command				*add(char **command, t_champ *champ);
+t_b_command				*aff(char **command, t_champ *champ);
+t_b_command				*ft_and(char **command, t_champ *champ);
+t_b_command				*ft_fork(char **command, t_champ *champ);
+t_b_command				*ld(char **command, t_champ *champ);
+t_b_command				*ldi(char **command, t_champ *champ);
+t_b_command				*lfork(char **command, t_champ *champ);
+t_b_command				*live(char **command, t_champ *champ);
+t_b_command				*live(char **command, t_champ *champ);
+t_b_command				*lld(char **command, t_champ *champ);
+t_b_command				*lldi(char **command, t_champ *champ);
+t_b_command				*ft_or(char **command, t_champ *champ);
+t_b_command				*st(char **command, t_champ *champ);
+t_b_command				*sti(char **command, t_champ *champ);
+t_b_command				*sub(char **command, t_champ *champ);
+t_b_command				*ft_xor(char **command, t_champ *champ);
+t_b_command				*zjmp(char **command, t_champ *champ);
 
 /*
 ** error management
 */
 
-void			error_manager(enum e_error_type error_type, t_champ **champ);
-void			help(void);
+void					error_manager(enum e_error_type error_type,
+									t_champ **champ);
+void					help(void);
 
 /*
 ** memory freeing
 */
 
-void			finish_him(t_champ **champ);
-void			free_memory_and_close_fd(t_champ **champ);
+void					finish_him(t_champ **champ);
+void					free_memory_and_close_fd(t_champ **champ);
 
 #endif
