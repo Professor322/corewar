@@ -13,7 +13,7 @@
 #ifndef __ASSEMBLER_H
 # define __ASSEMBLER_H
 
-# include "../libft/includes/libft.h"
+# include "libft.h"
 # define BYTE 8
 # define COMMANDS_NUM 16
 
