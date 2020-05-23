@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlegros <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: djon-con <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 19:26:49 by vlegros           #+#    #+#             */
-/*   Updated: 2019/04/16 23:41:53 by vlegros          ###   ########.fr       */
+/*   Updated: 2020/05/23 14:19:17 by djon-con         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-//# include "get_next_line.h"
-//# include "ft_printf.h"
+# include <fcntl.h>
 
 # define START_CAP 100
 # define HT_START_CAP 100
