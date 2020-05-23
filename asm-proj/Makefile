@@ -6,7 +6,7 @@
 #    By: djon-con <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/23 13:58:28 by djon-con          #+#    #+#              #
-#    Updated: 2020/05/23 14:33:53 by djon-con         ###   ########.fr        #
+#    Updated: 2020/05/23 15:29:28 by djon-con         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,15 +44,17 @@ OBJ_SRC = $(SRC_S:.c=.o)
 ADD_INC = ./includes/
 ADD_LIB_H = ../libft/
 ADD_LIBFT = ../libft/libft.a
+CW_HEADER_PATH = ../
+HEADERS = $(CW_HEADER_PATH)op.h $(ADD_INC)assembler.h
 
 all: $(OUT_FILE)
 
 $(OUT_FILE):  $(OBJ_CMD) $(OBJ_SRC)
 	@$(COMPILER) -o $(OUT_FILE) $(CHECK_FLAGS) $(COMPILE_FLAGS) $(OBJ_SRC) $(OBJ_CMD) $(ADD_LIBFT)
 	@echo ======[Done]======
-%.o : %.c
+%.o : %.c $(HEADERS)
 	@echo "$(NAME) >>> Add/Update $<"
-	@$(COMPILER) -c -o $@ -I $(ADD_INC) -I ../libft/includes $(CHECK_FLAGS) $<
+	@$(COMPILER) -c -o $@ -I $(ADD_INC) -I ../libft/includes -I $(CW_HEADER_PATH) $(CHECK_FLAGS) $<
 clean:
 	@rm -f $(ADD_SRC)*.o
 	@rm -f $(ADD_CMD)*.o
