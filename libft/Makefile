@@ -11,7 +11,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS =
+FLAGS = -W -Wall -Wextra -Werror
 NAME = libft.a
 RESOURCES = $(addprefix ./str_funcs/, ft_putchar.c \
     ft_atoi_base.c \
