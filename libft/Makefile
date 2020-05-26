@@ -144,7 +144,7 @@ $(NAME): $(OBJ)
 %.o: %.c
 	gcc $(FLAGS) -Iincludes/ -c $< -o $@ 
 clean:
-	@rm -f ./char_funcs/*.o ./str_funcs/*.o ./digit_funcs/*.o ./lst_funcs/*.o ./mem_funcs/*.o ./useful_funcs/*.o ./vec_funcs/int_vec/*.o ./vec_funcs/ptr_vec/*.o ./vec_funcs/char_vec/*.o ./ft_printf/*.o ./hashtable/*.o
+	@rm -f $(OBJ)
 fclean: clean
 	@rm -f $(NAME)
 re: fclean all

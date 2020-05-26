@@ -55,7 +55,7 @@ static void	print_string_str(t_one *vault, t_buf *tbuf, char *str)
 	print_buf(tbuf);
 }
 
-short				print_string_wstr(t_one *vault, t_buf *tbuf, wchar_t *str)
+short		print_string_wstr(t_one *vault, t_buf *tbuf, wchar_t *str)
 {
 	size_t	len;
 
@@ -74,7 +74,7 @@ short				print_string_wstr(t_one *vault, t_buf *tbuf, wchar_t *str)
 	return (0);
 }
 
-short				print_string(t_one *vault, t_va *valist, t_buf *tbuf)
+short		print_string(t_one *vault, t_va *valist, t_buf *tbuf)
 {
 	char	*str;
 	wchar_t	*wstr;
