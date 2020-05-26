@@ -12,3 +12,4 @@ __pycache__
 file_*
 control
 our
+libft/libft.a
