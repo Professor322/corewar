@@ -30,6 +30,8 @@ static void	reverse_int(unsigned int *to_reverse)
 
 static char	*invalid_champion(t_champ *champ)
 {
+	char	*err;
+
 	reverse_int(&champ->magic);
 	if (champ->magic != COREWAR_EXEC_MAGIC)
 		return ("champion has an invalid header");
@@ -38,9 +40,11 @@ static char	*invalid_champion(t_champ *champ)
 	reverse_int(&champ->code_size);
 	if (champ->code_size > CHAMP_MAX_SIZE)
 	{
+		err = ft_itoa(CHAMP_MAX_SIZE);
 		ft_putstr_fd("Champion size limit is ", 2);
-		ft_putstr_fd(ft_itoa(CHAMP_MAX_SIZE), 2);
+		ft_putstr_fd(err, 2);
 		ft_putstr_fd(". ", 2);
+		free(err);
 		return ("champion size exceed max limit");
 	}
 	return (NULL);
