@@ -80,7 +80,6 @@ OBJ = $(SRC:.c=.o)
 .PHONY: clean fclean re
 
 all: $(OUT_FILE)
-	echo $(SRC)
 
 $(OUT_FILE): $(OBJ)
 	gcc $(OBJ) -o $(OUT_FILE) $(VIS_FLAG) $(LIB)

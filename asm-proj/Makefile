@@ -56,8 +56,7 @@ $(OUT_FILE):  $(OBJ_CMD) $(OBJ_SRC)
 	@echo "$(NAME) >>> Add/Update $<"
 	@$(COMPILER) -c -o $@ -I $(ADD_INC) -I ../libft/includes -I $(CW_HEADER_PATH) $(CHECK_FLAGS) $<
 clean:
-	@rm -f $(ADD_SRC)*.o
-	@rm -f $(ADD_CMD)*.o
+	@rm -f $(OBJ_CMD) $(OBJ_SRC)
 fclean: clean
 	@rm -f $(OUT_FILE)
 re: fclean all
