@@ -56,7 +56,7 @@ void		check_for_file_existence_and_backslash(char *filename,
 
 	if (fd == -1)
 		error_manager(NO_FILE, champ_ptr);
-	while (read(fd, buff, 1))
+	while (read(fd, buff, 1) > 0)
 		;
 	close(fd);
 	if (buff[0] != '\n')
