@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 static int	validate_permitted_types(t_arg *args)
 {

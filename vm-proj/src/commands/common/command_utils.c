@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 /*
 ** value is real number of champion (1, 2, .. )

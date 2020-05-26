@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 void	call_it_pause(int pause)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 static void	op_unique_commands(t_car *car,
 		t_cbox *cbox,

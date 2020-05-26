@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 /*
 ** If operation is invalid, move carry to the next byte

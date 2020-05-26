@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 /*
 ** need to clean: heaps in eventloop, dead cars, rip, every car, cars

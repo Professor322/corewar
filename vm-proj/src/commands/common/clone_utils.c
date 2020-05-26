@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 void	clone_regs(const int old[REG_NUMBER], int new[REG_NUMBER])
 {

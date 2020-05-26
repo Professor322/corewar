@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm-proj/includes/corewar.h"
+#include "corewar.h"
 
 void	move_car(t_car *car, t_arg *args, t_cbox *cbox)
 {
