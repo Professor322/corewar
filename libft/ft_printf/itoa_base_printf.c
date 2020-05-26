@@ -100,7 +100,7 @@ void				itoa_base_signed(long num_in, t_unum *nums, t_one *vault,
 	tmp = 1;
 	if (num_in < 0 || SPACE == 1 || PLUS == 1)
 		sign = 1;
-	nums->num = num_in < 0 ? (unsigned long)-(num_in + 1) + 1 : num_in;
+	nums->num = num_in < 0 ? (size_t)-(num_in + 1) + 1 : (size_t)num_in;
 	while (tmp * nums->base / nums->base == tmp &&
 			(unsigned long)(tmp * nums->base) <= nums->num && ++chars_number)
 		tmp *= nums->base;

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void inline	ft_unprint(t_buf *tbuf, int c)
+static void	ft_unprint(t_buf *tbuf, int c)
 {
 	print_buf(tbuf);
 	tbuf->count++;
@@ -20,7 +20,7 @@ static void inline	ft_unprint(t_buf *tbuf, int c)
 	ft_printf("%o", c);
 }
 
-static void inline	char_to_buf(t_one *vault, t_buf *tbuf, char **str)
+static void	char_to_buf(t_one *vault, t_buf *tbuf, char **str)
 {
 	if (FLAG == 'r')
 		ft_isprint(*(*str)) ?
@@ -29,7 +29,7 @@ static void inline	char_to_buf(t_one *vault, t_buf *tbuf, char **str)
 		add_buf(tbuf, *(*str)++);
 }
 
-static void inline	print_string_str(t_one *vault, t_buf *tbuf, char *str)
+static void	print_string_str(t_one *vault, t_buf *tbuf, char *str)
 {
 	size_t	char_count;
 	size_t	k;
@@ -57,10 +57,8 @@ static void inline	print_string_str(t_one *vault, t_buf *tbuf, char *str)
 
 short				print_string_wstr(t_one *vault, t_buf *tbuf, wchar_t *str)
 {
-	size_t	char_count;
 	size_t	len;
 
-	char_count = 0;
 	len = get_wstr_len(vault, str);
 	if (MINUS == 0)
 	{

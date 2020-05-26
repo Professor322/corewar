@@ -25,7 +25,7 @@ int		paint_output(char **str, t_buf *tbuf, char *color, int len)
 	{
 		print_buf(tbuf);
 		write(1, color, 7);
-		*str = ++*str + len + 1;
+		*str = *str + 1 + len + 1;
 		return (1);
 	}
 	return (0);

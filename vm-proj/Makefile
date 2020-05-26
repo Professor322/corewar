@@ -83,7 +83,7 @@ all: $(OUT_FILE)
 	echo $(SRC)
 
 $(OUT_FILE): $(OBJ)
-	gcc $(LIB) $(OBJ) -o $(OUT_FILE) $(VIS_FLAG)
+	gcc $(OBJ) -o $(OUT_FILE) $(VIS_FLAG) $(LIB)
 
 %.o: %.c $(HEADER)
 	gcc $(INCLUDE_FLAGS) $(WARNING_FLAGS) -c $< -o $@

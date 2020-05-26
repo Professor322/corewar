@@ -69,7 +69,7 @@ void	print_float(t_one *vault, t_va *valist, t_buf *tbuf)
 			str[0] != 'n' && str[0] != 'N' && SPACE)
 	{
 		add_buf(tbuf, ' ');
-		WIDTH = WIDTH ? --WIDTH : 0;
+		WIDTH = WIDTH ? WIDTH - 1 : 0;
 	}
 	edit_output(str, vault, tbuf, ft_strlen(str));
 }
