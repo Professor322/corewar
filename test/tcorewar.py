@@ -4,9 +4,9 @@ import math
 
 limit_dump  = 999999
 target_dump = 8000
-path_org    = "./original_n_champs/corewar"
+path_org    = "./org_corewar"
 path_our    = "../corewar"
-path_champ  = "original_n_champs/champs/"
+path_champ  = "champs/"
 v_flag      = 14
 
 def create_cmd(champ_a, champ_b, dump=None, is_org=True, v_flag=14):

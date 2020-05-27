@@ -1,7 +1,7 @@
 #!/bin/sh
 path_our_corewar="../corewar"
-path_org_corewar="./original_n_champs/corewar"
-path_dir_champs="original_n_champs/champs/"
+path_org_corewar="./org_corewar"
+path_dir_champs="champs/"
 
 
 flag_v=0

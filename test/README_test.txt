@@ -15,7 +15,7 @@ tbinary.py: 🌟
 
 tversus.py: 🌟
   - test folder vs folder with tbinary.py and timeout
-  - python tversus.py ./original_n_champs/team_a ./original_n_champs/team_a -t 3
+  - python tversus.py ./team_a ./team_a -t 3
 
 
 torgvsour.py:
